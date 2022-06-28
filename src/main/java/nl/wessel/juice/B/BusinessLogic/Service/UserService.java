@@ -5,7 +5,7 @@ import nl.wessel.juice.B.BusinessLogic.DTO.User.UserDto;
 import nl.wessel.juice.B.BusinessLogic.Exception.UsernameNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Authority;
 import nl.wessel.juice.B.BusinessLogic.Model.User;
-import nl.wessel.juice.B.BusinessLogic.Utils.RandomStringGenerator;
+import nl.wessel.juice.B.BusinessLogic.Security.Utils.RandomStringGenerator;
 import nl.wessel.juice.C.Repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

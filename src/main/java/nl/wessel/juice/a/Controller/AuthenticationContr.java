@@ -1,8 +1,8 @@
 package nl.wessel.juice.a.Controller;
 
-import nl.wessel.juice.B.BusinessLogic.Payload.AuthenticationRequest;
-import nl.wessel.juice.B.BusinessLogic.Payload.AuthenticationResponse;
-import nl.wessel.juice.B.BusinessLogic.Utils.JwtUtil;
+import nl.wessel.juice.B.BusinessLogic.Security.Payload.AuthenticationRequest;
+import nl.wessel.juice.B.BusinessLogic.Security.Payload.AuthenticationResponse;
+import nl.wessel.juice.B.BusinessLogic.Security.Utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,4 +1,4 @@
-package nl.wessel.juice.B.BusinessLogic.Configuration;
+package nl.wessel.juice.B.BusinessLogic.Security.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

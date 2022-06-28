@@ -1,7 +1,7 @@
-package nl.wessel.juice.B.BusinessLogic.Filter;
+package nl.wessel.juice.B.BusinessLogic.Security.Filter;
 
+import nl.wessel.juice.B.BusinessLogic.Security.Utils.JwtUtil;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomUserDetailsService;
-import nl.wessel.juice.B.BusinessLogic.Utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

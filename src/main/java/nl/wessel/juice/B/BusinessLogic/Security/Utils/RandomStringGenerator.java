@@ -1,4 +1,4 @@
-package nl.wessel.juice.B.BusinessLogic.Utils;
+package nl.wessel.juice.B.BusinessLogic.Security.Utils;
 import java.util.Random;
 
 public class RandomStringGenerator {

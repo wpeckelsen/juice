@@ -1,4 +1,4 @@
-package nl.wessel.juice.B.BusinessLogic.Utils;
+package nl.wessel.juice.B.BusinessLogic.Security.Utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

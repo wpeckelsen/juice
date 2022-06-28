@@ -1,7 +1,7 @@
-package nl.wessel.juice.B.BusinessLogic.Configuration;
+package nl.wessel.juice.B.BusinessLogic.Security.Configuration;
 
 
-import nl.wessel.juice.B.BusinessLogic.Filter.JwtRequestFilter;
+import nl.wessel.juice.B.BusinessLogic.Security.Filter.JwtRequestFilter;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
