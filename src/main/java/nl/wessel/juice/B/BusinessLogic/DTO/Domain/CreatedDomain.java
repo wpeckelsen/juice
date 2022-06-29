@@ -11,10 +11,6 @@ public class CreatedDomain {
     private String category;
     private int price;
 
-//   TODO
-    private Publisher publisher;
-
-
     public Long getDomainID() {
         return domainID;
     }
@@ -55,11 +51,4 @@ public class CreatedDomain {
         this.price = price;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
 }

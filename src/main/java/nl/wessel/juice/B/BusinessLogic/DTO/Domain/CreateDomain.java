@@ -8,7 +8,7 @@ public class CreateDomain {
     private String category;
     private int price;
 
-//    private Publisher publisher;
+
 
 
     public String getName() {

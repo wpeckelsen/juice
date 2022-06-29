@@ -62,12 +62,6 @@ public class ClientContr {
         return ResponseEntity.noContent().build();
     }
 
-//    @PutMapping("assign/bottle/{idBottle}/label/{idLabel}")
-//    public ResponseEntity<CreatedBottle> assign(@PathVariable Long idBottle,
-//                                                @PathVariable Long idLabel){
-//        return ResponseEntity.ok().body(labelService.sticky(idLabel, idBottle));
-//    }
-
 
     //    assign
     @PutMapping("/assign/client{clientID}/order/{orderID}")

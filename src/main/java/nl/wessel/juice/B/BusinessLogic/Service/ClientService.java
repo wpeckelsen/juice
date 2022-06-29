@@ -22,6 +22,7 @@ public class ClientService {
     private final ClientRepo clientRepo;
     private final DealRepo dealRepo;
     private final OrderRepo orderRepo;
+
     private final OrderService orderService;
 
     public ClientService(ClientRepo clientRepo, DealRepo dealRepo, OrderRepo orderRepo, OrderService orderService) {
@@ -55,6 +56,7 @@ public class ClientService {
         return createdClient;
 
     }
+
 
     public static Client clientMaker(CreateClient createClient) {
         Client client = new Client();
@@ -151,10 +153,6 @@ public class ClientService {
     }
 
 
-
-// connect order to client method
-//    client dto maker if statement
-//    controller
 
 }
 

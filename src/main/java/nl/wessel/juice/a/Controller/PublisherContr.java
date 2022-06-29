@@ -15,10 +15,13 @@ import java.util.List;
 public class PublisherContr {
 
 
-    @Autowired
+
     PublisherService publisherService;
 
-
+    @Autowired
+    public PublisherContr(PublisherService publisherService) {
+        this.publisherService = publisherService;
+    }
 
     //    CREATE
     @PostMapping("/new")
@@ -58,5 +61,13 @@ public class PublisherContr {
     public ResponseEntity<Object> deleteById(@PathVariable Long publisherID) {
         publisherService.deleteById(publisherID);
         return ResponseEntity.noContent().build();
+    }
+
+
+    //    assign
+    @PutMapping("assign/publisher/{publisherID}/domain/{domainID}")
+    public ResponseEntity<CreatedPublisher> assignDomains(@PathVariable Long publisherID,
+                                                          @PathVariable Long domainID){
+        return ResponseEntity.ok().body(publisherService.assignDomains(publisherID, domainID));
     }
 }

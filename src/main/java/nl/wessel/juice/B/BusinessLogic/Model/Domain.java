@@ -21,6 +21,7 @@ public class Domain {
     private int price;
 
     @ManyToOne
+    @JoinColumn(name = "publisher_publisherID")
     private Publisher publisher;
 
     public Long getDomainID() {

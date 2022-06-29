@@ -22,12 +22,14 @@ public class Publisher {
     @Column(length = 500)
     private String password;
 
-    @OneToMany(mappedBy = "client")
-    @JsonIgnore
-    private Collection<Deal> deals;
+//    @OneToMany(mappedBy = "client")
+//    @JsonIgnore
+//    private Collection<Deal> deals;
 
-    @OneToMany
-    private List<Order> orders;
+    @OneToMany(mappedBy = "publisher")
+    private List<Domain> domains;
+
+
 
     @ManyToMany
     private List<Market> markets;
@@ -65,20 +67,12 @@ public class Publisher {
         this.password = password;
     }
 
-    public Collection<Deal> getDeals() {
-        return deals;
+    public List<Domain> getDomains() {
+        return domains;
     }
 
-    public void setDeals(List<Deal> deals) {
-        this.deals = deals;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setDomains(List<Domain> domains) {
+        this.domains = domains;
     }
 
     public List<Market> getMarkets() {
