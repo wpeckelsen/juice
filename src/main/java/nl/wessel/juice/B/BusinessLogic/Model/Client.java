@@ -30,7 +30,8 @@ public class Client {
     @JsonIgnore
     private Collection<Deal> deals;
 
-    @OneToMany
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Order> orders;
 
     @ManyToMany

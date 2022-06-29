@@ -22,9 +22,10 @@ public class Order {
     @Column(length = 50)
     private String language;
 
-
     @ManyToOne
+    @JoinColumn(name = "client_clientID")
     Client client;
+
 
     public Client getClient() {
         return client;

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/client")
@@ -61,5 +60,19 @@ public class ClientContr {
     public ResponseEntity<Object> deleteById(@PathVariable Long clientID) {
         clientService.deleteById(clientID);
         return ResponseEntity.noContent().build();
+    }
+
+//    @PutMapping("assign/bottle/{idBottle}/label/{idLabel}")
+//    public ResponseEntity<CreatedBottle> assign(@PathVariable Long idBottle,
+//                                                @PathVariable Long idLabel){
+//        return ResponseEntity.ok().body(labelService.sticky(idLabel, idBottle));
+//    }
+
+
+    //    assign
+    @PutMapping("/assign/client{clientID}/order/{orderID}")
+    public ResponseEntity<CreatedClient> assignOrders(@PathVariable Long clientID,
+                                                      @PathVariable Long orderID) {
+        return ResponseEntity.ok().body(clientService.assignOrders(clientID, orderID));
     }
 }

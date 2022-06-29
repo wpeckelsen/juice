@@ -3,41 +3,56 @@ package nl.wessel.juice.B.BusinessLogic.Service;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Client.CreateClient;
 import nl.wessel.juice.B.BusinessLogic.DTO.Client.CreatedClient;
+import nl.wessel.juice.B.BusinessLogic.DTO.Order.CreatedOrder;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Client;
+import nl.wessel.juice.B.BusinessLogic.Model.Order;
 import nl.wessel.juice.C.Repository.ClientRepo;
 import nl.wessel.juice.C.Repository.DealRepo;
+import nl.wessel.juice.C.Repository.OrderRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
 
     private final ClientRepo clientRepo;
     private final DealRepo dealRepo;
+    private final OrderRepo orderRepo;
+    private final OrderService orderService;
 
-    public ClientService(ClientRepo clientRepo, DealRepo dealRepo) {
+    public ClientService(ClientRepo clientRepo, DealRepo dealRepo, OrderRepo orderRepo, OrderService orderService) {
         this.clientRepo = clientRepo;
         this.dealRepo = dealRepo;
+        this.orderRepo = orderRepo;
+        this.orderService = orderService;
     }
 
     public static CreatedClient clientDtoMaker(Client client) {
         CreatedClient createdClient = new CreatedClient();
-
-
         createdClient.setClientID(client.getClientID());
         createdClient.setEmail(client.getEmail());
         createdClient.setName(client.getName());
         createdClient.setPassword(client.getPassword());
-
         createdClient.setMarkets(client.getMarkets());
-        createdClient.setOrders(client.getOrders());
         createdClient.setDeals(client.getDeals());
 
-        return createdClient;
+        List<Order> orders = client.getOrders();
+        List<CreatedOrder> createdOrders = new ArrayList<>();
 
+        if(orders != null){
+            for(Order order : orders){
+                CreatedOrder createdOrder = OrderService.orderDtoMaker(order);
+                createdOrders.add(createdOrder);
+            }
+        }
+
+        client.getOrders();
+        createdClient.setOrders(createdOrders);
+        return createdClient;
 
     }
 
@@ -90,7 +105,6 @@ public class ClientService {
         }
     }
 
-
     //    update
     public CreatedClient update(Long clientID, CreateClient createClient) {
 
@@ -109,29 +123,39 @@ public class ClientService {
     }
 
     //    delete
-
     public void deleteById(Long clientID) {
         clientRepo.deleteById(clientID);
     }
 
 
-//    assign to
+//    assign to methods
+    public CreatedClient assignOrders(Long idClient, Long idOrder) {
 
-//    public CreatedClient clientwithDeals(Long clientID, Long dealID){
-//
-//        var optionalClient = clientRepo.findById(clientID);
-//        var client = optionalClient.get();
-//
-//        var optionalDeal = dealRepo.findById(dealID);
-//        var deal = optionalDeal.get();
-//
-//
-//
-//
-//        client.setDeals();
-//        clientRepo.save(deal);
-//        return clientDtoMaker(client);
-//    }
+        Optional<Client> optionalClient = clientRepo.findById(idClient);
+        Client client = optionalClient.get();
+
+        Optional<Order> optionalOrder = orderRepo.findById(idOrder);
+        Order newOrder = optionalOrder.get();
+
+        List<Order> currentOrders = client.getOrders();
+        currentOrders.add(newOrder);
+
+        for (Order order : currentOrders) {
+            order.setClient(client);
+            orderRepo.save(order);
+        }
+
+        client.setOrders(currentOrders);
+        clientRepo.save(client);
+        return clientDtoMaker(client);
+    }
+
+
+
+// connect order to client method
+//    client dto maker if statement
+//    controller
+
 }
 
 

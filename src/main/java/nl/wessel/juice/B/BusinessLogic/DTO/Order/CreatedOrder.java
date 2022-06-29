@@ -1,5 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Order;
 
+import nl.wessel.juice.B.BusinessLogic.Model.Client;
 import nl.wessel.juice.B.BusinessLogic.Model.Market;
 
 import java.net.URL;
@@ -17,10 +18,6 @@ public class CreatedOrder {
     private String topic;
     private URL anchorLink;
     private String language;
-
-//    TODO
-    private Market market;
-
 
 
     public Long getOrderID() {
@@ -71,11 +68,4 @@ public class CreatedOrder {
         this.language = language;
     }
 
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
-    }
 }

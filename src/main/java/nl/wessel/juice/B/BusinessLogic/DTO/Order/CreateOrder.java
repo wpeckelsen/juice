@@ -16,7 +16,7 @@ public class CreateOrder {
     private String language;
 
 //    TODO
-    private Market market;
+
 
     public int getWordCount() {
         return wordCount;
@@ -58,11 +58,5 @@ public class CreateOrder {
         this.language = language;
     }
 
-    public Market getMarket() {
-        return market;
-    }
 
-    public void setMarket(Market market) {
-        this.market = market;
-    }
 }
