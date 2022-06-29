@@ -80,9 +80,9 @@ public List<CreatedMarket> getList() {
 
 
     //    update
-    public CreatedMarket update(Long identityCode, CreateMarket createMarket) {
-        if (marketRepo.findById(identityCode).isPresent()) {
-            Market market = marketRepo.findById(identityCode).get();
+    public CreatedMarket update(Long marketID, CreateMarket createMarket) {
+        if (marketRepo.findById(marketID).isPresent()) {
+            Market market = marketRepo.findById(marketID).get();
             Market market1 = marketMaker(createMarket);
 
             market1.setMarketID(market.getMarketID());
@@ -96,8 +96,8 @@ public List<CreatedMarket> getList() {
 
     //    delete
 
-    public void deleteById(Long identityCode) {
-        marketRepo.deleteById(identityCode);
+    public void deleteById(Long marketID) {
+        marketRepo.deleteById(marketID);
     }
 
 

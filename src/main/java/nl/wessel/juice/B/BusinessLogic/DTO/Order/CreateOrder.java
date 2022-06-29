@@ -15,9 +15,6 @@ public class CreateOrder {
     private URL anchorLink;
     private String language;
 
-//    TODO
-
-
     public int getWordCount() {
         return wordCount;
     }

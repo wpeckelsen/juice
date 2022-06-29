@@ -11,11 +11,6 @@ public class CreateDeal {
     private String terms;
     private int price;
 
-//    private Long dealID;
-//    private Publisher publisher;
-//    private Domain domain;
-//    private Client client;
-
 
     public Date getDueDate() {
         return dueDate;

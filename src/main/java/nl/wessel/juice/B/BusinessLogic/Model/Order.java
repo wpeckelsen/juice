@@ -26,6 +26,18 @@ public class Order {
     @JoinColumn(name = "client_clientID")
     Client client;
 
+    @OneToOne
+    private Deal deal;
+
+
+
+    public Deal getDeal() {
+        return deal;
+    }
+
+    public void setDeal(Deal deal) {
+        this.deal = deal;
+    }
 
     public Client getClient() {
         return client;

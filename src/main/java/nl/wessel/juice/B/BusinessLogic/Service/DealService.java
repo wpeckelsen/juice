@@ -10,6 +10,8 @@ import nl.wessel.juice.B.BusinessLogic.Model.Deal;
 import nl.wessel.juice.B.BusinessLogic.Model.Domain;
 import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
 import nl.wessel.juice.C.Repository.DealRepo;
+import nl.wessel.juice.C.Repository.DomainRepo;
+import nl.wessel.juice.C.Repository.OrderRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,9 +22,13 @@ import java.util.List;
 public class DealService {
 
     private final DealRepo dealRepo;
+    private final OrderRepo orderRepo;
+    private final DomainRepo domainRepo;
 
-    public DealService(DealRepo dealRepo) {
+    public DealService(DealRepo dealRepo, OrderRepo orderRepo, DomainRepo domainRepo) {
         this.dealRepo = dealRepo;
+        this.orderRepo = orderRepo;
+        this.domainRepo = domainRepo;
     }
 
     public static Deal dealMaker(CreateDeal createDeal) {
@@ -42,8 +48,6 @@ public class DealService {
         createdDeal.setPaymentType(deal.getPaymentType());
         createdDeal.setTerms(deal.getTerms());
         return createdDeal;
-
-
 
 
     }
@@ -91,9 +95,9 @@ public class DealService {
 
 
     //    update
-    public CreatedDeal update(Long identityCode, CreateDeal createDeal) {
-        if (dealRepo.findById(identityCode).isPresent()) {
-            Deal deal = dealRepo.findById(identityCode).get();
+    public CreatedDeal update(Long dealID, CreateDeal createDeal) {
+        if (dealRepo.findById(dealID).isPresent()) {
+            Deal deal = dealRepo.findById(dealID).get();
             Deal deal1 = dealMaker(createDeal);
 
 
@@ -107,7 +111,35 @@ public class DealService {
     }
 
     //    delete
-    public void deleteById(Long identityCode) {
-        dealRepo.deleteById(identityCode);
+    public void deleteById(Long dealID) {
+        dealRepo.deleteById(dealID);
+    }
+
+
+    //    assign
+
+
+    public CreatedDeal assignOrderAndDeal (Long dealID, Long orderID, Long domainID){
+        var optionalOrder = orderRepo.findById(orderID);
+        var optionalDeal   = dealRepo.findById(dealID);
+        var optionalDomain = domainRepo.findById(domainID);
+
+        if (optionalDeal.isPresent() && optionalOrder.isPresent() && optionalDomain.isPresent()){
+            var order = optionalOrder.get();
+            var deal = optionalDeal.get();
+            var domain = optionalDomain.get();
+
+            deal.setOrder(order);
+            deal.setDomain(domain);
+
+            dealRepo.save(deal);
+            return dealDtoMaker(deal);
+        } else {
+            Deal deal = new Deal();
+            throw new RecordNotFound(deal);
+        }
+
+
+
     }
 }

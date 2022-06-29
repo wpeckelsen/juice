@@ -24,6 +24,16 @@ public class Domain {
     @JoinColumn(name = "publisher_publisherID")
     private Publisher publisher;
 
+
+    @OneToOne
+    private Deal deal;
+
+    public Deal getDeal() {
+        return deal;
+    }
+    public void setDeal(Deal deal) {
+        this.deal = deal;
+    }
     public Long getDomainID() {
         return domainID;
     }

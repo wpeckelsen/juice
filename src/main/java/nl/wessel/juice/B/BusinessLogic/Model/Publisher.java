@@ -26,7 +26,7 @@ public class Publisher {
 //    @JsonIgnore
 //    private Collection<Deal> deals;
 
-    @OneToMany(mappedBy = "publisher")
+    @OneToMany(mappedBy = "publisher", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Domain> domains;
 
 

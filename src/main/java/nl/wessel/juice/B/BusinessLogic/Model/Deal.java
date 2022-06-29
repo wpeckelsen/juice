@@ -21,19 +21,35 @@ public class Deal {
 
 
     @OneToOne
+    @JoinColumn(name = "deal_dealID")
     private Domain domain;
 
+    @OneToOne
+    @JoinColumn(name = "deal_dealID")
+    private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_clientID")
-    @MapsId(value = "clientID")
-    private Client client;
 
-    @ManyToOne
-    @MapsId("publisherID")
-    @JoinColumn(name = "publisher_publisherID")
-    private Publisher publisher;
 
+
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "client_clientID")
+//    @MapsId(value = "clientID")
+//    private Client client;
+//
+//    @ManyToOne
+//    @MapsId("publisherID")
+//    @JoinColumn(name = "publisher_publisherID")
+//    private Publisher publisher;
+
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     public Long getDealID() {
         return dealID;
@@ -75,13 +91,13 @@ public class Deal {
         this.terms = terms;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
-    }
+//    public Publisher getPublisher() {
+//        return publisher;
+//    }
 
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
+//    public void setPublisher(Publisher publisher) {
+//        this.publisher = publisher;
+//    }
 
     public Domain getDomain() {
         return domain;
@@ -91,11 +107,11 @@ public class Deal {
         this.domain = domain;
     }
 
-    public Client getClient() {
-        return client;
-    }
+//    public Client getClient() {
+//        return client;
+//    }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
 }

@@ -31,7 +31,7 @@ public class Client {
     private Collection<Deal> deals;
 
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Order> orders;
 
     @ManyToMany
