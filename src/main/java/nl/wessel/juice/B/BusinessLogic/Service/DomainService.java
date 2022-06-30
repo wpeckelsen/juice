@@ -31,7 +31,7 @@ public class DomainService {
         return domain;
     }
 
-    public CreatedDomain domainDtoMaker(Domain domain){
+    public static CreatedDomain domainDtoMaker(Domain domain){
         CreatedDomain createdDomain = new CreatedDomain();
         createdDomain.setDomainID(domain.getDomainID());
         createdDomain.setName(domain.getName());

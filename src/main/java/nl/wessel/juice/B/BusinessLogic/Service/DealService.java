@@ -1,14 +1,12 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
 
 
+import nl.wessel.juice.B.BusinessLogic.DTO.Order.CreatedOrder;
+import nl.wessel.juice.B.BusinessLogic.Model.*;
 import nl.wessel.juice.C.Repository.DealRepo;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
-import nl.wessel.juice.B.BusinessLogic.Model.Client;
-import nl.wessel.juice.B.BusinessLogic.Model.Deal;
-import nl.wessel.juice.B.BusinessLogic.Model.Domain;
-import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
 import nl.wessel.juice.C.Repository.DealRepo;
 import nl.wessel.juice.C.Repository.DomainRepo;
 import nl.wessel.juice.C.Repository.OrderRepo;
@@ -24,11 +22,15 @@ public class DealService {
     private final DealRepo dealRepo;
     private final OrderRepo orderRepo;
     private final DomainRepo domainRepo;
+    private final DomainService domainService;
+    private final OrderService orderService;
 
-    public DealService(DealRepo dealRepo, OrderRepo orderRepo, DomainRepo domainRepo) {
+    public DealService(DealRepo dealRepo, OrderRepo orderRepo, DomainRepo domainRepo, DomainService domainService, OrderService orderService) {
         this.dealRepo = dealRepo;
         this.orderRepo = orderRepo;
         this.domainRepo = domainRepo;
+        this.domainService = domainService;
+        this.orderService = orderService;
     }
 
     public static Deal dealMaker(CreateDeal createDeal) {
@@ -40,16 +42,17 @@ public class DealService {
         return deal;
     }
 
-    public static CreatedDeal dealDtoMaker(Deal deal) {
+    public CreatedDeal dealDtoMaker(Deal deal) {
         CreatedDeal createdDeal = new CreatedDeal();
         createdDeal.setDealID(deal.getDealID());
         createdDeal.setDueDate(deal.getDueDate());
         createdDeal.setPrice(deal.getPrice());
         createdDeal.setPaymentType(deal.getPaymentType());
         createdDeal.setTerms(deal.getTerms());
+
+        createdDeal.setOrder(OrderService.orderDtoMaker(deal.getOrder()));
+        createdDeal.setDomain(DomainService.domainDtoMaker(deal.getDomain()));
         return createdDeal;
-
-
     }
 
     //    CREATE
@@ -117,9 +120,7 @@ public class DealService {
 
 
     //    assign
-
-
-    public CreatedDeal assignOrderAndDeal (Long dealID, Long orderID, Long domainID){
+    public CreatedDeal assignOrderAndDomain (Long dealID, Long orderID, Long domainID){
         var optionalOrder = orderRepo.findById(orderID);
         var optionalDeal   = dealRepo.findById(dealID);
         var optionalDomain = domainRepo.findById(domainID);

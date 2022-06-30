@@ -1,18 +1,24 @@
 package nl.wessel.juice.a.Controller;
+
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.Service.DealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/deal")
 public class DealContr {
-    
-    @Autowired
+
     DealService dealService;
+
+    @Autowired
+    public DealContr(DealService dealService) {
+        this.dealService = dealService;
+    }
 
 
 
@@ -52,5 +58,14 @@ public class DealContr {
     public ResponseEntity<Object> deleteById(@PathVariable Long dealID) {
         dealService.deleteById(dealID);
         return ResponseEntity.noContent().build();
+    }
+
+
+    // assign
+    @PostMapping("assign/deal/{dealID}/order/{orderID}/domain/{domainID}")
+    public ResponseEntity<CreatedDeal> assignOrderAndDomain(@PathVariable Long dealID,
+                                                            @PathVariable Long orderID,
+                                                            @PathVariable Long domainID){
+        return ResponseEntity.ok().body(dealService.assignOrderAndDomain(dealID, orderID, domainID));
     }
 }

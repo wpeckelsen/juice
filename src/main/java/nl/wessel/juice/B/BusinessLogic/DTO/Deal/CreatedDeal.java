@@ -17,23 +17,23 @@ public class CreatedDeal {
     private String paymentType;
     private String terms;
 
-    private CreatedOrder createdOrder;
-    private CreatedDomain createdDomain;
+    private CreatedOrder order;
+    private CreatedDomain domain;
 
-    public CreatedOrder getCreatedOrder() {
-        return createdOrder;
+    public CreatedOrder getOrder() {
+        return order;
     }
 
-    public void setCreatedOrder(CreatedOrder createdOrder) {
-        this.createdOrder = createdOrder;
+    public void setOrder(CreatedOrder order) {
+        this.order = order;
     }
 
-    public CreatedDomain getCreatedDomain() {
-        return createdDomain;
+    public CreatedDomain getDomain() {
+        return domain;
     }
 
-    public void setCreatedDomain(CreatedDomain createdDomain) {
-        this.createdDomain = createdDomain;
+    public void setDomain(CreatedDomain domain) {
+        this.domain = domain;
     }
 
     public Long getDealID() {
