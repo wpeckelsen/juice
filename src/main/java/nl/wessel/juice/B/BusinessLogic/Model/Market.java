@@ -11,18 +11,15 @@ public class Market {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long marketID;
 
-    @Column(length = 50)
     private String name;
-
-    @Column(length = 50)
     private String TLD;
 
-    @Column(length = 50)
-    @ManyToMany
-    private List<Client> clients;
-
-    @ManyToMany
-    private List<Publisher> publishers;
+//    @Column(length = 50)
+//    @ManyToMany
+//    private List<Client> clients;
+//
+//    @ManyToMany
+//    private List<Publisher> publishers;
 
 
     public Long getMarketID() {
@@ -49,19 +46,19 @@ public class Market {
         this.TLD = TLD;
     }
 
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
-
-    public List<Publisher> getPublishers() {
-        return publishers;
-    }
-
-    public void setPublishers(List<Publisher> publishers) {
-        this.publishers = publishers;
-    }
+//    public List<Client> getClients() {
+//        return clients;
+//    }
+//
+//    public void setClients(List<Client> clients) {
+//        this.clients = clients;
+//    }
+//
+//    public List<Publisher> getPublishers() {
+//        return publishers;
+//    }
+//
+//    public void setPublishers(List<Publisher> publishers) {
+//        this.publishers = publishers;
+//    }
 }

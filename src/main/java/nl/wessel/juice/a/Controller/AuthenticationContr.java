@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
-//@CrossOrigin
+
 @RestController
 public class AuthenticationContr {
 

@@ -2,7 +2,6 @@ package nl.wessel.juice.B.BusinessLogic.Model;
 
 import javax.persistence.*;
 import java.net.URL;
-import java.util.Date;
 
 @Entity
 public class Order {
@@ -10,20 +9,14 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderID;
+
     private int wordCount;
-    private Date dueDate;
-
-    @Column(length = 50)
+    private String dueDate;
     private String topic;
-
-    @Column(length = 1000)
     private URL anchorLink;
-
-    @Column(length = 50)
     private String language;
 
     @ManyToOne
-    @JoinColumn(name = "client_clientID")
     Client client;
 
     @OneToOne
@@ -63,11 +56,11 @@ public class Order {
         this.wordCount = wordCount;
     }
 
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

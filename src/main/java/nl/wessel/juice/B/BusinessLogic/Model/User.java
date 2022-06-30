@@ -20,10 +20,7 @@ public class User implements Serializable {
     @Column(nullable = false)
     private boolean enabled = true;
 
-    @Column
     private String apikey;
-
-    @Column
     private String email;
 
     @OneToMany(

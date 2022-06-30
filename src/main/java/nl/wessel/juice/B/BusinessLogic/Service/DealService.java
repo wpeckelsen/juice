@@ -75,16 +75,16 @@ public class DealService {
         return createdDealList;
     }
 
-    public List<CreatedDeal> getListByName(String name) {
-        List<Deal> dealList = dealRepo.findDealsByName(name);
-        List<CreatedDeal> createdDealList = new ArrayList<>();
-
-        for (Deal deal : dealList) {
-            CreatedDeal createdDeal = dealDtoMaker(deal);
-            createdDealList.add(createdDeal);
-        }
-        return createdDealList;
-    }
+//    public List<CreatedDeal> getListByName(String name) {
+//        List<Deal> dealList = dealRepo.findDealsByName(name);
+//        List<CreatedDeal> createdDealList = new ArrayList<>();
+//
+//        for (Deal deal : dealList) {
+//            CreatedDeal createdDeal = dealDtoMaker(deal);
+//            createdDealList.add(createdDeal);
+//        }
+//        return createdDealList;
+//    }
 
     public CreatedDeal getByID(Long dealID) {
         if (dealRepo.findById(dealID).isPresent()) {

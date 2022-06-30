@@ -12,8 +12,8 @@ public class CreatedPublisher {
     private String name;
     private String email;
     private String password;
-    private List<Deal> deals;
-    private List<Market> markets;
+//    private List<Deal> deals;
+//    private List<Market> markets;
 
     private List<CreatedDomain> domains;
 
@@ -41,12 +41,12 @@ public class CreatedPublisher {
     public void setPassword(String password) {
         this.password = password;
     }
-    public List<Deal> getDeals() {
-        return deals;
-    }
-    public void setDeals(List<Deal> deals) {
-        this.deals = deals;
-    }
+//    public List<Deal> getDeals() {
+//        return deals;
+//    }
+//    public void setDeals(List<Deal> deals) {
+//        this.deals = deals;
+//    }
 
     public List<CreatedDomain> getDomains() {
         return domains;
@@ -56,10 +56,10 @@ public class CreatedPublisher {
         this.domains = domains;
     }
 
-    public List<Market> getMarkets() {
-        return markets;
-    }
-    public void setMarkets(List<Market> markets) {
-        this.markets = markets;
-    }
+//    public List<Market> getMarkets() {
+//        return markets;
+//    }
+//    public void setMarkets(List<Market> markets) {
+//        this.markets = markets;
+//    }
 }

@@ -38,8 +38,8 @@ public class ClientService {
         createdClient.setEmail(client.getEmail());
         createdClient.setName(client.getName());
         createdClient.setPassword(client.getPassword());
-        createdClient.setMarkets(client.getMarkets());
-        createdClient.setDeals(client.getDeals());
+//        createdClient.setMarkets(client.getMarkets());
+//        createdClient.setDeals(client.getDeals());
 
         List<Order> orders = client.getOrders();
         List<CreatedOrder> createdOrders = new ArrayList<>();

@@ -65,16 +65,16 @@ public List<CreatedOrder> getList() {
 }
 
 
-    public List<CreatedOrder> getListByName(String name) {
-        List<Order> orderList = orderRepo.findOrdersByName(name);
-        List<CreatedOrder> createdOrderList = new ArrayList<>();
-
-        for (Order order : orderList) {
-            CreatedOrder createdOrder = orderDtoMaker(order);
-            createdOrderList.add(createdOrder);
-        }
-        return createdOrderList;
-    }
+//    public List<CreatedOrder> getListByName(String name) {
+//        List<Order> orderList = orderRepo.findOrdersByName(name);
+//        List<CreatedOrder> createdOrderList = new ArrayList<>();
+//
+//        for (Order order : orderList) {
+//            CreatedOrder createdOrder = orderDtoMaker(order);
+//            createdOrderList.add(createdOrder);
+//        }
+//        return createdOrderList;
+//    }
 
     public CreatedOrder getByID(Long idOrder) {
         if (orderRepo.findById(idOrder).isPresent()) {

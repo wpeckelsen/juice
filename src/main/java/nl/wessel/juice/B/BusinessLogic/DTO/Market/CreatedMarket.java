@@ -12,8 +12,8 @@ public class CreatedMarket {
 
 //    TODO
     private String TLD;
-    private List<Client> clients;
-    private List<Publisher> publishers;
+//    private List<Client> clients;
+//    private List<Publisher> publishers;
 
 
     public Long getMarketID() {
@@ -40,19 +40,19 @@ public class CreatedMarket {
         this.TLD = TLD;
     }
 
-    public List<Client> getClients() {
-        return clients;
-    }
+//    public List<Client> getClients() {
+//        return clients;
+//    }
 
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
-
-    public List<Publisher> getPublishers() {
-        return publishers;
-    }
-
-    public void setPublishers(List<Publisher> publishers) {
-        this.publishers = publishers;
-    }
+//    public void setClients(List<Client> clients) {
+//        this.clients = clients;
+//    }
+//
+//    public List<Publisher> getPublishers() {
+//        return publishers;
+//    }
+//
+//    public void setPublishers(List<Publisher> publishers) {
+//        this.publishers = publishers;
+//    }
 }

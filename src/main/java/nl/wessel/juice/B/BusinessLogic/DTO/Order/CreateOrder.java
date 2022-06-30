@@ -1,16 +1,13 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Order;
 
-import nl.wessel.juice.B.BusinessLogic.Model.Market;
-
 import java.net.URL;
-import java.util.Date;
 
 public class CreateOrder {
 
 
 //    private Long orderID;
     private int wordCount;
-    private Date dueDate;
+    private String dueDate;
     private String topic;
     private URL anchorLink;
     private String language;
@@ -23,11 +20,11 @@ public class CreateOrder {
         this.wordCount = wordCount;
     }
 
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

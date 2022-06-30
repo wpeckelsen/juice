@@ -10,37 +10,25 @@ public class Deal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dealID;
+
     private int price;
     private Date dueDate;
-
-    @Column(length = 50)
     private String paymentType;
-
-    @Column(length = 2000)
     private String terms;
 
 
-    @OneToOne
-    @JoinColumn(name = "deal_dealID")
+    @OneToOne(mappedBy = "deal", fetch = FetchType.EAGER)
+//    @JoinColumn(name = "domain_domainID")
     private Domain domain;
 
-    @OneToOne
-    @JoinColumn(name = "deal_dealID")
+    @OneToOne(mappedBy = "deal", fetch = FetchType.EAGER)
     private Order order;
 
 
 
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "client_clientID")
-//    @MapsId(value = "clientID")
-//    private Client client;
-//
-//    @ManyToOne
-//    @MapsId("publisherID")
-//    @JoinColumn(name = "publisher_publisherID")
-//    private Publisher publisher;
+
 
 
     public Order getOrder() {

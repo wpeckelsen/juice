@@ -13,13 +13,9 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long publisherID;
 
-    @Column(length = 50)
+
     private String name;
-
-    @Column(length = 50)
     private String email;
-
-    @Column(length = 500)
     private String password;
 
 //    @OneToMany(mappedBy = "client")
@@ -30,9 +26,9 @@ public class Publisher {
     private List<Domain> domains;
 
 
-
-    @ManyToMany
-    private List<Market> markets;
+//
+//    @ManyToMany
+//    private List<Market> markets;
 
 
     public Long getPublisherID() {
@@ -75,12 +71,12 @@ public class Publisher {
         this.domains = domains;
     }
 
-    public List<Market> getMarkets() {
-        return markets;
-    }
+//    public List<Market> getMarkets() {
+//        return markets;
+//    }
 
-    public void setMarkets(List<Market> markets) {
-        this.markets = markets;
-    }
+//    public void setMarkets(List<Market> markets) {
+//        this.markets = markets;
+//    }
 
 }

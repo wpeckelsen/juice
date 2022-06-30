@@ -2,6 +2,7 @@ package nl.wessel.juice.B.BusinessLogic.Service;
 
 
 import nl.wessel.juice.B.BusinessLogic.DTO.User.UserDto;
+import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.UsernameNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Authority;
 import nl.wessel.juice.B.BusinessLogic.Model.User;
@@ -52,7 +53,7 @@ public class UserService {
         return userRepo.existsById(username);
     }
 
-    public String UserDto(UserDto userDto) {
+    public String createUser(UserDto userDto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         userDto.setApikey(randomString);
         User newUser = userRepo.save(toUser(userDto));
@@ -64,7 +65,7 @@ public class UserService {
     }
 
     public void updateUser(String username, UserDto newUser) {
-        if (!userRepo.existsById(username)) throw new UsernameNotFound(username);
+        if (!userRepo.existsById(username)) throw new BadRequest();
         User user = userRepo.findById(username).get();
         user.setPassword(newUser.getPassword());
         userRepo.save(user);
@@ -86,19 +87,15 @@ public class UserService {
     }
 
     public void removeAuthority(String username, String authority) {
-        if (!userRepo.existsById(username))
-            throw new UsernameNotFound(username);
-
+        if (!userRepo.existsById(username)) throw new UsernameNotFound(username);
         User user = userRepo.findById(username).get();
-
-        Authority authorityToRemove = user.getAuthorities().stream().filter((a) ->
-                a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
-
+        Authority authorityToRemove = user.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
         user.removeAuthority(authorityToRemove);
         userRepo.save(user);
     }
 
     public static UserDto fromUser(User user) {
+
         var dto = new UserDto();
         dto.username = user.getUsername();
         dto.password = user.getPassword();
@@ -106,12 +103,14 @@ public class UserService {
         dto.apikey = user.getApikey();
         dto.email = user.getEmail();
         dto.authorities = user.getAuthorities();
+
         return dto;
     }
 
     public User toUser(UserDto userDto) {
 
         var user = new User();
+
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
         user.setEnabled(userDto.getEnabled());

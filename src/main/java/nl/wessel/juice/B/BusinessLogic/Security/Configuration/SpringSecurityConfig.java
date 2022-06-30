@@ -28,8 +28,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    public SpringSecurityConfig(boolean disableDefaults, CustomUserDetailsService customUserDetailsService, JwtRequestFilter jwtRequestFilter) {
-        super(disableDefaults);
+    public SpringSecurityConfig(/*boolean disableDefaults,*/ CustomUserDetailsService customUserDetailsService, JwtRequestFilter jwtRequestFilter) {
+        /*super(disableDefaults);*/
         this.customUserDetailsService = customUserDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
     }

@@ -9,21 +9,14 @@ public class Domain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long domainID;
 
-    @Column(length = 50)
     private String name;
-
-    @Column(length = 50)
     private String TLD;
-
-    @Column(length = 50)
     private String category;
-
     private int price;
 
     @ManyToOne
     @JoinColumn(name = "publisher_publisherID")
     private Publisher publisher;
-
 
     @OneToOne
     private Deal deal;
