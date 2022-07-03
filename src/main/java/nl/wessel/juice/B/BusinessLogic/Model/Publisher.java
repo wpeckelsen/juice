@@ -1,9 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -18,17 +15,14 @@ public class Publisher {
     private String email;
     private String password;
 
-//    @OneToMany(mappedBy = "client")
-//    @JsonIgnore
-//    private Collection<Deal> deals;
+    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/)
+    private List<Deal> deals;
 
-    @OneToMany(mappedBy = "publisher", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
     private List<Domain> domains;
 
 
-//
-//    @ManyToMany
-//    private List<Market> markets;
+
 
 
     public Long getPublisherID() {

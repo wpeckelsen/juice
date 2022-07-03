@@ -1,5 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Publisher;
 
+import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.Model.Deal;
 import nl.wessel.juice.B.BusinessLogic.Model.Market;
@@ -12,10 +13,10 @@ public class CreatedPublisher {
     private String name;
     private String email;
     private String password;
-//    private List<Deal> deals;
-//    private List<Market> markets;
 
     private List<CreatedDomain> domains;
+    private List<CreatedDeal> deals;
+
 
     public Long getPublisherID() {
         return publisherID;
@@ -41,25 +42,16 @@ public class CreatedPublisher {
     public void setPassword(String password) {
         this.password = password;
     }
-//    public List<Deal> getDeals() {
-//        return deals;
-//    }
-//    public void setDeals(List<Deal> deals) {
-//        this.deals = deals;
-//    }
-
     public List<CreatedDomain> getDomains() {
         return domains;
     }
-
     public void setDomains(List<CreatedDomain> domains) {
         this.domains = domains;
     }
-
-//    public List<Market> getMarkets() {
-//        return markets;
-//    }
-//    public void setMarkets(List<Market> markets) {
-//        this.markets = markets;
-//    }
+    public List<CreatedDeal> getDeals() {
+        return deals;
+    }
+    public void setDeals(List<CreatedDeal> deals) {
+        this.deals = deals;
+    }
 }

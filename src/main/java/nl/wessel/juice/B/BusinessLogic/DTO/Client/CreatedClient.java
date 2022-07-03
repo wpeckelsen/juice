@@ -1,4 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Client;
+import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Order.CreatedOrder;
 import nl.wessel.juice.B.BusinessLogic.Model.Deal;
 import nl.wessel.juice.B.BusinessLogic.Model.Market;
@@ -12,18 +13,15 @@ public class CreatedClient {
     private String name;
     private String email;
     private String password;
-
-//    TODO variables
-//    private Collection<Deal> deals;
-//    private List<Market> markets;
-
+    private List<CreatedDeal> deals;
     private List<CreatedOrder> orders;
 
-
-
-
-
-
+    public List<CreatedDeal> getDeals() {
+        return deals;
+    }
+    public void setDeals(List<CreatedDeal> deals) {
+        this.deals = deals;
+    }
     public Long getClientID() {
         return clientID;
     }
@@ -48,22 +46,11 @@ public class CreatedClient {
     public void setPassword(String password) {
         this.password = password;
     }
-//    public Collection<Deal> getDeals() {
-//        return deals;
-//    }
-//    public void setDeals(Collection<Deal> deals) {
-//        this.deals = deals;
-//    }
     public List<CreatedOrder> getOrders() {
         return orders;
     }
     public void setOrders(List<CreatedOrder> orders) {
         this.orders = orders;
     }
-//    public List<Market> getMarkets() {
-//        return markets;
-//    }
-//    public void setMarkets(List<Market> markets) {
-//        this.markets = markets;
-//    }
+
 }

@@ -35,7 +35,7 @@ public class PublisherService {
         return publisher;
     }
 
-    public CreatedPublisher publisherDtoMaker(Publisher publisher) {
+    public static CreatedPublisher publisherDtoMaker(Publisher publisher) {
         CreatedPublisher createdPublisher = new CreatedPublisher();
         createdPublisher.setPublisherID(publisher.getPublisherID());
         createdPublisher.setName(publisher.getName());
@@ -47,7 +47,7 @@ public class PublisherService {
 
         if(domains != null){
             for (Domain domain : domains){
-                CreatedDomain createdDomain = domainService.domainDtoMaker(domain);
+                CreatedDomain createdDomain = DomainService.domainDtoMaker(domain);
                 createdDomains.add(createdDomain);
             }
         }

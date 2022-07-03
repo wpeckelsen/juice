@@ -17,27 +17,21 @@ public class Deal {
     private String terms;
 
 
-    @OneToOne(mappedBy = "deal", fetch = FetchType.EAGER)
-//    @JoinColumn(name = "domain_domainID")
-    private Domain domain;
+    @ManyToOne
+    @JoinColumn(name = "client_clientID")
+    private Client client;
 
-    @OneToOne(mappedBy = "deal", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "deal"/*, fetch = FetchType.EAGER*/)
     private Order order;
 
 
+    @ManyToOne
+    @JoinColumn(name = "publisher_publisherID")
+    private Publisher publisher;
 
+    @OneToOne(mappedBy = "deal"/*, fetch = FetchType.EAGER*/)
+    private Domain domain;
 
-
-
-
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
     public Long getDealID() {
         return dealID;
@@ -79,13 +73,29 @@ public class Deal {
         this.terms = terms;
     }
 
-//    public Publisher getPublisher() {
-//        return publisher;
-//    }
+    public Client getClient() {
+        return client;
+    }
 
-//    public void setPublisher(Publisher publisher) {
-//        this.publisher = publisher;
-//    }
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
 
     public Domain getDomain() {
         return domain;
@@ -94,12 +104,4 @@ public class Deal {
     public void setDomain(Domain domain) {
         this.domain = domain;
     }
-
-//    public Client getClient() {
-//        return client;
-//    }
-
-//    public void setClient(Client client) {
-//        this.client = client;
-//    }
 }

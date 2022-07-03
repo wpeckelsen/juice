@@ -25,17 +25,15 @@ public class Client {
     @Column(length = 500)
     private String password;
 
-//    @OneToMany(mappedBy = "client")
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @JsonIgnore
-//    private Collection<Deal> deals;
 
-
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
     private List<Order> orders;
 
-//    @ManyToMany
-//    private List<Market> markets;
+    @OneToMany(mappedBy = "client"/*, fetch = FetchType.EAGER*/)
+    private List<Deal> deals;
+
+
+
 
     public Long getClientID() {
         return clientID;
@@ -61,22 +59,11 @@ public class Client {
     public void setPassword(String password) {
         this.password = password;
     }
-//    public Collection<Deal> getDeals() {
-//        return deals;
-//    }
-//    public void setDeals(List<Deal> deals) {
-//        this.deals = deals;
-//    }
     public List<Order> getOrders() {
         return orders;
     }
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
-//    public List<Market> getMarkets() {
-//        return markets;
-//    }
-//    public void setMarkets(List<Market> markets) {
-//        this.markets = markets;
-//    }
+
 }
