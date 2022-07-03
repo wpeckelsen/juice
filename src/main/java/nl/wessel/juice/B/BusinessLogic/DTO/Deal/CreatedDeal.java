@@ -2,24 +2,19 @@ package nl.wessel.juice.B.BusinessLogic.DTO.Deal;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Client.CreatedClient;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
-import nl.wessel.juice.B.BusinessLogic.DTO.Order.CreatedOrder;
+import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
-import nl.wessel.juice.B.BusinessLogic.Model.Client;
-import nl.wessel.juice.B.BusinessLogic.Model.Domain;
-import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
-
-import java.util.Date;
 
 public class CreatedDeal {
 
 
     private Long dealID;
-    private Date dueDate;
+    private String deadline;
     private int price;
     private String paymentType;
     private String terms;
 
-    private CreatedOrder order;
+    private CreatedBid bid;
     private CreatedDomain domain;
     private CreatedClient client;
     private CreatedPublisher publisher;
@@ -40,12 +35,12 @@ public class CreatedDeal {
         this.publisher = publisher;
     }
 
-    public CreatedOrder getOrder() {
-        return order;
+    public CreatedBid getBid() {
+        return bid;
     }
 
-    public void setOrder(CreatedOrder order) {
-        this.order = order;
+    public void setBid(CreatedBid bid) {
+        this.bid = bid;
     }
 
     public CreatedDomain getDomain() {
@@ -64,12 +59,12 @@ public class CreatedDeal {
         this.dealID = dealID;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public String getDeadline() {
+        return deadline;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public int getPrice() {

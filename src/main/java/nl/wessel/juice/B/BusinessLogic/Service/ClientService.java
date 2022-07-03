@@ -3,13 +3,13 @@ package nl.wessel.juice.B.BusinessLogic.Service;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Client.CreateClient;
 import nl.wessel.juice.B.BusinessLogic.DTO.Client.CreatedClient;
-import nl.wessel.juice.B.BusinessLogic.DTO.Order.CreatedOrder;
+import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
+import nl.wessel.juice.B.BusinessLogic.Model.Bid;
 import nl.wessel.juice.B.BusinessLogic.Model.Client;
-import nl.wessel.juice.B.BusinessLogic.Model.Order;
 import nl.wessel.juice.C.Repository.ClientRepo;
 import nl.wessel.juice.C.Repository.DealRepo;
-import nl.wessel.juice.C.Repository.OrderRepo;
+import nl.wessel.juice.C.Repository.BidRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,15 +21,15 @@ public class ClientService {
 
     private final ClientRepo clientRepo;
     private final DealRepo dealRepo;
-    private final OrderRepo orderRepo;
+    private final BidRepo bidRepo;
 
-    private final OrderService orderService;
+    private final BidService bidService;
 
-    public ClientService(ClientRepo clientRepo, DealRepo dealRepo, OrderRepo orderRepo, OrderService orderService) {
+    public ClientService(ClientRepo clientRepo, DealRepo dealRepo, BidRepo bidRepo, BidService bidService) {
         this.clientRepo = clientRepo;
         this.dealRepo = dealRepo;
-        this.orderRepo = orderRepo;
-        this.orderService = orderService;
+        this.bidRepo = bidRepo;
+        this.bidService = bidService;
     }
 
     public static CreatedClient clientDtoMaker(Client client) {
@@ -41,18 +41,18 @@ public class ClientService {
 //        createdClient.setMarkets(client.getMarkets());
 //        createdClient.setDeals(client.getDeals());
 
-        List<Order> orders = client.getOrders();
-        List<CreatedOrder> createdOrders = new ArrayList<>();
+        List<Bid> bids = client.getBids();
+        List<CreatedBid> createdBids = new ArrayList<>();
 
-        if(orders != null){
-            for(Order order : orders){
-                CreatedOrder createdOrder = OrderService.orderDtoMaker(order);
-                createdOrders.add(createdOrder);
+        if(bids != null){
+            for(Bid bid : bids){
+                CreatedBid createdBid = BidService.bidDtoMaker(bid);
+                createdBids.add(createdBid);
             }
         }
 
-        client.getOrders();
-        createdClient.setOrders(createdOrders);
+        client.getBids();
+        createdClient.setBids(createdBids);
         return createdClient;
 
     }
@@ -131,23 +131,23 @@ public class ClientService {
 
 
 //    assign to methods
-    public CreatedClient assignOrders(Long idClient, Long idOrder) {
+    public CreatedClient assignBids(Long idClient, Long idBid) {
 
         Optional<Client> optionalClient = clientRepo.findById(idClient);
         Client client = optionalClient.get();
 
-        Optional<Order> optionalOrder = orderRepo.findById(idOrder);
-        Order newOrder = optionalOrder.get();
+        Optional<Bid> optionalBid = bidRepo.findById(idBid);
+        Bid newBid = optionalBid.get();
 
-        List<Order> currentOrders = client.getOrders();
-        currentOrders.add(newOrder);
+        List<Bid> currentBids = client.getBids();
+        currentBids.add(newBid);
 
-        for (Order order : currentOrders) {
-            order.setClient(client);
-            orderRepo.save(order);
+        for (Bid bid : currentBids) {
+            bid.setClient(client);
+            bidRepo.save(bid);
         }
 
-        client.setOrders(currentOrders);
+        client.setBids(currentBids);
         clientRepo.save(client);
         return clientDtoMaker(client);
     }

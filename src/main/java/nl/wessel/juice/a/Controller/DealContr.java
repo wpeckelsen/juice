@@ -62,10 +62,10 @@ public class DealContr {
 
 
     // assign
-    @PostMapping("assign/deal/{dealID}/order/{orderID}/domain/{domainID}")
-    public ResponseEntity<CreatedDeal> assignOrderAndDomain(@PathVariable Long dealID,
-                                                            @PathVariable Long orderID,
+    @PostMapping("assign/deal/{dealID}/bid/{bidID}/domain/{domainID}")
+    public ResponseEntity<CreatedDeal> assignBidAndDomain(@PathVariable Long dealID,
+                                                            @PathVariable Long bidID,
                                                             @PathVariable Long domainID){
-        return ResponseEntity.ok().body(dealService.assignOrderAndDomain(dealID, orderID, domainID));
+        return ResponseEntity.ok().body(dealService.assignBidAndDomain(dealID, bidID, domainID));
     }
 }

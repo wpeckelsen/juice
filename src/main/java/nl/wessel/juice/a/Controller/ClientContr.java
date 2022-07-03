@@ -22,6 +22,8 @@ public class ClientContr {
     }
 
 
+
+
     //    CREATE
     @PostMapping("/new")
     public ResponseEntity<CreatedClient> newClient(@RequestBody CreateClient client) {
@@ -64,9 +66,9 @@ public class ClientContr {
 
 
     //    assign
-    @PutMapping("/assign/client{clientID}/order/{orderID}")
-    public ResponseEntity<CreatedClient> assignOrders(@PathVariable Long clientID,
-                                                      @PathVariable Long orderID) {
-        return ResponseEntity.ok().body(clientService.assignOrders(clientID, orderID));
+    @PutMapping("/assign/client{clientID}/bid/{bidID}")
+    public ResponseEntity<CreatedClient> assignBids(@PathVariable Long clientID,
+                                                      @PathVariable Long bidID) {
+        return ResponseEntity.ok().body(clientService.assignBids(clientID, bidID));
     }
 }

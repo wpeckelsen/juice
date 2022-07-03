@@ -2,7 +2,6 @@ package nl.wessel.juice.B.BusinessLogic.Model;
 
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Deal {
@@ -12,7 +11,7 @@ public class Deal {
     private Long dealID;
 
     private int price;
-    private Date dueDate;
+    private String deadline;
     private String paymentType;
     private String terms;
 
@@ -22,7 +21,7 @@ public class Deal {
     private Client client;
 
     @OneToOne(mappedBy = "deal"/*, fetch = FetchType.EAGER*/)
-    private Order order;
+    private Bid bid;
 
 
     @ManyToOne
@@ -49,12 +48,12 @@ public class Deal {
         this.price = price;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public String getDeadline() {
+        return deadline;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public String getPaymentType() {
@@ -81,12 +80,12 @@ public class Deal {
         this.client = client;
     }
 
-    public Order getOrder() {
-        return order;
+    public Bid getBid() {
+        return bid;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setBid(Bid bid) {
+        this.bid = bid;
     }
 
     public Publisher getPublisher() {

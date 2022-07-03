@@ -1,23 +1,21 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Deal;
 
 
-import java.util.Date;
-
 public class CreateDeal {
 
 
-    private Date dueDate;
+    private String deadline;
     private String paymentType;
     private String terms;
     private int price;
 
 
-    public Date getDueDate() {
-        return dueDate;
+    public String getDeadline() {
+        return deadline;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public String getPaymentType() {

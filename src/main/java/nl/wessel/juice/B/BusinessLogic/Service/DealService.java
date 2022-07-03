@@ -16,8 +16,8 @@ import java.util.List;
 public class DealService {
 
     private final DealRepo dealRepo;
-    private final OrderRepo orderRepo;
-    private final OrderService orderService;
+    private final BidRepo bidRepo;
+    private final BidService bidService;
     private final DomainRepo domainRepo;
     private final DomainService domainService;
     private final ClientRepo clientRepo;
@@ -25,21 +25,21 @@ public class DealService {
     private final PublisherRepo publisherRepo;
     private final PublisherService publisherService;
 
-    public DealService(DealRepo dealRepo, OrderRepo orderRepo, DomainRepo domainRepo, ClientRepo clientRepo, PublisherRepo publisherRepo, DomainService domainService, OrderService orderService, ClientService clientService, PublisherService publisherService) {
+    public DealService(DealRepo dealRepo, BidRepo bidRepo, DomainRepo domainRepo, ClientRepo clientRepo, PublisherRepo publisherRepo, DomainService domainService, BidService bidService, ClientService clientService, PublisherService publisherService) {
         this.dealRepo = dealRepo;
-        this.orderRepo = orderRepo;
+        this.bidRepo = bidRepo;
         this.domainRepo = domainRepo;
         this.clientRepo = clientRepo;
         this.publisherRepo = publisherRepo;
         this.domainService = domainService;
-        this.orderService = orderService;
+        this.bidService = bidService;
         this.clientService = clientService;
         this.publisherService = publisherService;
     }
 
     public static Deal dealMaker(CreateDeal createDeal) {
         Deal deal = new Deal();
-        deal.setDueDate(createDeal.getDueDate());
+        deal.setDeadline(createDeal.getDeadline());
         deal.setPaymentType(createDeal.getPaymentType());
         deal.setTerms(createDeal.getTerms());
         deal.setPrice(createDeal.getPrice());
@@ -49,17 +49,16 @@ public class DealService {
     public CreatedDeal dealDtoMaker(Deal deal) {
         CreatedDeal createdDeal = new CreatedDeal();
         createdDeal.setDealID(deal.getDealID());
-        createdDeal.setDueDate(deal.getDueDate());
+        createdDeal.setDeadline(deal.getDeadline());
         createdDeal.setPrice(deal.getPrice());
         createdDeal.setPaymentType(deal.getPaymentType());
         createdDeal.setTerms(deal.getTerms());
 
-        createdDeal.setOrder(OrderService.orderDtoMaker(deal.getOrder()));
+        createdDeal.setBid(BidService.bidDtoMaker(deal.getBid()));
         createdDeal.setDomain(DomainService.domainDtoMaker(deal.getDomain()));
         createdDeal.setClient(ClientService.clientDtoMaker(deal.getClient()));
         createdDeal.setPublisher(PublisherService.publisherDtoMaker(deal.getPublisher()));
-//        set client
-//        set publisher
+
         return createdDeal;
     }
 
@@ -69,13 +68,13 @@ public class DealService {
         dealRepo.save(deal);
         return dealDtoMaker(deal);
     }
-    public CreatedDeal newDeal1(CreateDeal createDeal, Long orderID, Long domainID, Long clientID, Long publisherID) {
-        var optionalOrder = orderRepo.findById(orderID);
+    public CreatedDeal newDeal1(CreateDeal createDeal, Long bidID, Long domainID, Long clientID, Long publisherID) {
+        var optionalBid = bidRepo.findById(bidID);
         var optionalDomain = domainRepo.findById(domainID);
         var optionalClient = clientRepo.findById(clientID);
         var optionalPublisher = publisherRepo.findById(publisherID);
 
-        if (optionalOrder.isPresent()
+        if (optionalBid.isPresent()
                 && optionalDomain.isPresent()
                 && optionalClient.isPresent()
                 && optionalPublisher.isPresent())
@@ -84,7 +83,7 @@ public class DealService {
             dealRepo.save(deal);
             return dealDtoMaker(deal);
         } else{
-            throw new BadRequest(" A deal cannot be made unless a Client, Order, Publisher and Domain is present. " +
+            throw new BadRequest(" A deal cannot be made unless a Client, Bid, Publisher and Domain is present. " +
                     "Make these first before making a new Deal. ");
         }
 
@@ -138,17 +137,17 @@ public class DealService {
 
 
     //    assign
-    public CreatedDeal assignOrderAndDomain(Long dealID, Long orderID, Long domainID) {
-        var optionalOrder = orderRepo.findById(orderID);
+    public CreatedDeal assignBidAndDomain(Long dealID, Long bidID, Long domainID) {
+        var optionalBid = bidRepo.findById(bidID);
         var optionalDeal = dealRepo.findById(dealID);
         var optionalDomain = domainRepo.findById(domainID);
 
-        if (optionalDeal.isPresent() && optionalOrder.isPresent() && optionalDomain.isPresent()) {
-            var order = optionalOrder.get();
+        if (optionalDeal.isPresent() && optionalBid.isPresent() && optionalDomain.isPresent()) {
+            var bid = optionalBid.get();
             var deal = optionalDeal.get();
             var domain = optionalDomain.get();
 
-            deal.setOrder(order);
+            deal.setBid(bid);
             deal.setDomain(domain);
 
             dealRepo.save(deal);
@@ -160,26 +159,26 @@ public class DealService {
     }
 
 
-    public CreatedDeal makeDeal(Long dealID, Long orderID, Long domainID, Long clientID, Long publisherID) {
-        var optionalOrder = orderRepo.findById(orderID);
+    public CreatedDeal makeDeal(Long dealID, Long bidID, Long domainID, Long clientID, Long publisherID) {
+        var optionalBid = bidRepo.findById(bidID);
         var optionalDeal = dealRepo.findById(dealID);
         var optionalDomain = domainRepo.findById(domainID);
         var optionalClient = clientRepo.findById(clientID);
         var optionalPublisher = publisherRepo.findById(publisherID);
 
         if (optionalDeal.isPresent()
-                && optionalOrder.isPresent()
+                && optionalBid.isPresent()
                 && optionalDomain.isPresent()
                 && optionalClient.isPresent()
                 && optionalPublisher.isPresent()
         ) {
-            var order = optionalOrder.get();
+            var bid = optionalBid.get();
             var deal = optionalDeal.get();
             var domain = optionalDomain.get();
             var client = optionalClient.get();
             var publisher = optionalPublisher.get();
 
-            deal.setOrder(order);
+            deal.setBid(bid);
             deal.setDomain(domain);
             deal.setClient(client);
             deal.setPublisher(publisher);

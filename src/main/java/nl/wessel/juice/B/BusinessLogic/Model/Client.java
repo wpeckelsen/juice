@@ -1,11 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.Model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -27,7 +22,7 @@ public class Client {
 
 
     @OneToMany(mappedBy = "client"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
-    private List<Order> orders;
+    private List<Bid> bids;
 
     @OneToMany(mappedBy = "client"/*, fetch = FetchType.EAGER*/)
     private List<Deal> deals;
@@ -59,11 +54,11 @@ public class Client {
     public void setPassword(String password) {
         this.password = password;
     }
-    public List<Order> getOrders() {
-        return orders;
+    public List<Bid> getBids() {
+        return bids;
     }
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setBids(List<Bid> bids) {
+        this.bids = bids;
     }
 
 }

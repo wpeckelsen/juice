@@ -2,9 +2,6 @@ package nl.wessel.juice.B.BusinessLogic.DTO.Publisher;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
-import nl.wessel.juice.B.BusinessLogic.Model.Deal;
-import nl.wessel.juice.B.BusinessLogic.Model.Market;
-import nl.wessel.juice.B.BusinessLogic.Model.Order;
 
 import java.util.List;
 

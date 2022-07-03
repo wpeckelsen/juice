@@ -1,11 +1,7 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Client;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
-import nl.wessel.juice.B.BusinessLogic.DTO.Order.CreatedOrder;
-import nl.wessel.juice.B.BusinessLogic.Model.Deal;
-import nl.wessel.juice.B.BusinessLogic.Model.Market;
-import nl.wessel.juice.B.BusinessLogic.Model.Order;
+import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 
-import java.util.Collection;
 import java.util.List;
 
 public class CreatedClient {
@@ -14,7 +10,7 @@ public class CreatedClient {
     private String email;
     private String password;
     private List<CreatedDeal> deals;
-    private List<CreatedOrder> orders;
+    private List<CreatedBid> bids;
 
     public List<CreatedDeal> getDeals() {
         return deals;
@@ -46,11 +42,11 @@ public class CreatedClient {
     public void setPassword(String password) {
         this.password = password;
     }
-    public List<CreatedOrder> getOrders() {
-        return orders;
+    public List<CreatedBid> getBids() {
+        return bids;
     }
-    public void setOrders(List<CreatedOrder> orders) {
-        this.orders = orders;
+    public void setBids(List<CreatedBid> bids) {
+        this.bids = bids;
     }
 
 }

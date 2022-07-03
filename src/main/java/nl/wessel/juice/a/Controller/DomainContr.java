@@ -24,8 +24,6 @@ public class DomainContr {
     public ResponseEntity<CreatedDomain> newDomain(@RequestBody CreateDomain domain) {
         final CreatedDomain createdDomain = domainService.newDomain(domain);
         return ResponseEntity.ok().body(createdDomain);
-
-
     }
 
 
