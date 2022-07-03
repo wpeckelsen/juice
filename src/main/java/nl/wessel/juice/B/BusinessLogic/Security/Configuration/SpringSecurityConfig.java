@@ -60,15 +60,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/users/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/users/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
 
 //                .antMatchers(HttpMethod.GET, "/client/new").hasRole("USER")
                 .antMatchers(HttpMethod.POST, "domain/new/{id}").hasRole("USER")
 
                 /*voeg de antmatchers toe voor admin(post en delete) en user (overige)*/
-//                TODO roles
                 .antMatchers("/authenticated").authenticated()
-                .antMatchers("/authenticate").permitAll()/*allen dit punt mag toegankelijk zijn voor niet ingelogde gebruikers*/
+                .antMatchers("/authenticate").permitAll()/*alleen dit punt mag toegankelijk zijn voor niet ingelogde gebruikers*/
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()

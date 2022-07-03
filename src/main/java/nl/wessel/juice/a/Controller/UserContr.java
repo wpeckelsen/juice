@@ -43,7 +43,7 @@ public class UserContr {
 
     }
 
-    @PostMapping(value = "")
+    @PostMapping("/newklant")
     public ResponseEntity<UserDto> createKlant(@RequestBody UserDto dto) {
         String newUsername = userService.createUser(dto);
         userService.addAuthority(newUsername, "ROLE_USER");
@@ -53,6 +53,18 @@ public class UserContr {
 
         return ResponseEntity.created(location).build();
     }
+
+    @PostMapping("/newclient")
+    public ResponseEntity<UserDto> newClient(@RequestBody UserDto dto) {
+        String newUsername = userService.createUser(dto);
+        userService.addAuthority(newUsername, "ROLE_CLIENT");
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
+                .buildAndExpand(newUsername).toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
 
     @PutMapping(value = "/{username}")
     public ResponseEntity<UserDto> updateKlant(@PathVariable("username") String username, @RequestBody UserDto dto) {

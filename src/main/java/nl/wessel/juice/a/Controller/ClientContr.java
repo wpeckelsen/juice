@@ -29,8 +29,6 @@ public class ClientContr {
     public ResponseEntity<CreatedClient> newClient(@RequestBody CreateClient client) {
         final CreatedClient createdClient = clientService.newClient(client);
         return ResponseEntity.ok().body(createdClient);
-
-
     }
 
 
