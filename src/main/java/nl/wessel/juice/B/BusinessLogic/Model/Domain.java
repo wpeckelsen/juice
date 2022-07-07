@@ -15,8 +15,8 @@ public class Domain {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "publisher_publisherID")
-    private Publisher publisher;
+    @JoinColumn(name = "customer_username")
+    private Customer customer;
 
     @OneToOne
     private Deal deal;
@@ -67,11 +67,11 @@ public class Domain {
         this.price = price;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

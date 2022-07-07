@@ -1,6 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Market;
 
-import nl.wessel.juice.B.BusinessLogic.Model.Client;
+
 import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
 
 import java.util.List;

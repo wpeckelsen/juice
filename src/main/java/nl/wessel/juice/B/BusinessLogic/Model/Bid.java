@@ -16,8 +16,8 @@ public class Bid {
     private String vernacular;
 
     @ManyToOne
-    @JoinColumn(name = "client_clientID")
-    private Client client;
+    @JoinColumn(name = "customer_username")
+    private Customer customer;
 
     @OneToOne
     private Deal deal;
@@ -32,12 +32,12 @@ public class Bid {
         this.deal = deal;
     }
 
-    public Client getClient() {
-        return client;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Long getBidID() {

@@ -15,11 +15,11 @@ public class Publisher {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/)
-    private List<Deal> deals;
-
-    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
-    private List<Domain> domains;
+//    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/)
+//    private List<Deal> deals;
+//
+//    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
+//    private List<Domain> domains;
 
 
 
@@ -57,13 +57,9 @@ public class Publisher {
         this.password = password;
     }
 
-    public List<Domain> getDomains() {
-        return domains;
-    }
 
-    public void setDomains(List<Domain> domains) {
-        this.domains = domains;
-    }
+
+
 
 //    public List<Market> getMarkets() {
 //        return markets;

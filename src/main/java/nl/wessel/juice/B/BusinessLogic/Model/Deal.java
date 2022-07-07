@@ -15,12 +15,11 @@ public class Deal {
     private String paymentType;
     private String terms;
 
-
     @ManyToOne
-    @JoinColumn(name = "client_clientID")
-    private Client client;
+    @JoinColumn(name = "customer_username")
+    private Customer customer;
 
-    @OneToOne(mappedBy = "deal"/*, fetch = FetchType.EAGER*/)
+    @OneToOne(mappedBy = "deal")
     private Bid bid;
 
 
@@ -28,7 +27,7 @@ public class Deal {
     @JoinColumn(name = "publisher_publisherID")
     private Publisher publisher;
 
-    @OneToOne(mappedBy = "deal"/*, fetch = FetchType.EAGER*/)
+    @OneToOne(mappedBy = "deal")
     private Domain domain;
 
 
@@ -72,12 +71,12 @@ public class Deal {
         this.terms = terms;
     }
 
-    public Client getClient() {
-        return client;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Bid getBid() {

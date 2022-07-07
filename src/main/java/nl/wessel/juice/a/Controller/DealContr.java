@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/deal")
+@RequestMapping(value = "/juice/deal")
 public class DealContr {
 
     DealService dealService;
@@ -23,11 +23,11 @@ public class DealContr {
 
 
     //    CREATE
-    @PostMapping("/new")
-    public ResponseEntity<CreatedDeal> newDeal(@RequestBody CreateDeal deal) {
-        final CreatedDeal createdDeal = dealService.newDeal(deal);
-        return ResponseEntity.ok().body(createdDeal);
-    }
+//    @PostMapping("/new")
+//    public ResponseEntity<CreatedDeal> newDeal(@RequestBody CreateDeal deal) {
+//        final CreatedDeal createdDeal = dealService.newDeal(deal);
+//        return ResponseEntity.ok().body(createdDeal);
+//    }
 
 
     //    READ
@@ -62,10 +62,10 @@ public class DealContr {
 
 
     // assign
-    @PostMapping("assign/deal/{dealID}/bid/{bidID}/domain/{domainID}")
-    public ResponseEntity<CreatedDeal> assignBidAndDomain(@PathVariable Long dealID,
-                                                            @PathVariable Long bidID,
-                                                            @PathVariable Long domainID){
-        return ResponseEntity.ok().body(dealService.assignBidAndDomain(dealID, bidID, domainID));
-    }
+//    @PostMapping("assign/deal/{dealID}/bid/{bidID}/domain/{domainID}")
+//    public ResponseEntity<CreatedDeal> assignBidAndDomain(@PathVariable Long dealID,
+//                                                            @PathVariable Long bidID,
+//                                                            @PathVariable Long domainID){
+//        return ResponseEntity.ok().body(dealService.assignBidAndDomain(dealID, bidID, domainID));
+//    }
 }

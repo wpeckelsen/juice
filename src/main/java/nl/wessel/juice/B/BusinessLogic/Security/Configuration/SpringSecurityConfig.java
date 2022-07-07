@@ -57,18 +57,30 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/users/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/users/**").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/customer").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.POST, "/customer").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.POST, "/juice/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
 
-//                .antMatchers(HttpMethod.GET, "/client/new").hasRole("USER")
-                .antMatchers(HttpMethod.POST, "domain/new/{id}").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/juice/customer/bid/new").hasRole("CLIENT")
+                .antMatchers(HttpMethod.GET, "/juice/customer/list/domain").hasRole("CLIENT")
+                .antMatchers(HttpMethod.POST, "/juice/deal/new/**").hasRole("CLIENT")
 
-                /*voeg de antmatchers toe voor admin(post en delete) en user (overige)*/
+//                .antMatchers(HttpMethod.POST, "/publisher").hasRole("PUBLISHER")
+//                .antMatchers(HttpMethod.GET, "/publisher").hasRole("PUBLISHER")
+                .antMatchers(HttpMethod.POST, "/juice/customer/domain/new").hasRole("PUBLISHER")
+
+                .antMatchers(HttpMethod.POST, "/juice/deal/new/**").hasRole("PUBLISHER")
+
+
+
+
                 .antMatchers("/authenticated").authenticated()
-                .antMatchers("/authenticate").permitAll()/*alleen dit punt mag toegankelijk zijn voor niet ingelogde gebruikers*/
+                .antMatchers("/authenticate").permitAll()
+                /*alleen dit punt mag toegankelijk zijn voor niet ingelogde gebruikers*/
+
                 .anyRequest().permitAll()
                 .and()
                 .sessionManagement()

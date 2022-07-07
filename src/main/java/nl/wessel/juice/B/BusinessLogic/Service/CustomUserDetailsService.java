@@ -1,10 +1,7 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
 
 
-
-
-
-import nl.wessel.juice.B.BusinessLogic.DTO.User.UserDto;
+import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.Model.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,24 +18,27 @@ import java.util.Set;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserService userService;
+
+    private final CustomerService customerService;
 
     @Autowired
-    public CustomUserDetailsService(UserService userService) {
-        this.userService = userService;
+    public CustomUserDetailsService(CustomerService customerService) {
+        this.customerService = customerService;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) {
 
-        UserDto userDto = userService.getUser(username);
+
+        CustomerDto dto = customerService.getCustomer(username);
 
 
-        String password = userDto.getPassword();
+        String password = dto.getPassword();
 
-        Set<Authority> authorities = userDto.getAuthorities();
+        Set<Authority> authorities = dto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (Authority authority: authorities) {
+        for (Authority authority : authorities) {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
         }
 

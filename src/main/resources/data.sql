@@ -1,7 +1,25 @@
 
 
-INSERT INTO users (username, email, enabled, password) VALUES ('HENK','HENK@BAL.NL', true, '$2a$12$hwPCY6FAo7/pW/gFDuruDeMkezDe2UkHivJsfyJ0TckOh5zbzK3BW');
-INSERT INTO users (username, email, enabled, password) VALUES ('HANS', 'HANS@HINKEL.NL', false, '$2a$12$QLbptBUWyyqabMeP7J7llOhoxOIBZyTh2lX5RdBG4dMrMnXrrl6eS');
 
 
-insert into authority (username, authority) values ('HENK', 'ROLE_CLIENT');
+
+
+
+
+INSERT INTO customer    (username, email, enabled, password) VALUES ('ADMIN', 'ADMIN@MAIL.COM', true, '$2a$12$glWL3pyii1UmVub88XYWIOOFqeSK3UkL9uBb2xSEO7jdIKRKvEjmq');
+INSERT INTO authority   (username, authority) values ('ADMIN', 'ROLE_ADMIN');
+-- username : ADMIN
+-- password : ADMIN
+
+
+INSERT INTO customer     (username, email, enabled, password) VALUES ('CLIENT', 'CLIENT@MAIL.COM', true, '$2a$12$jTDRjsTkz3mRAVrLqpi1LO5onRPcXsTnt7M2nbH26eRmCtsYb1kLy');
+INSERT INTO authority   (username, authority) values ('CLIENT', 'ROLE_CLIENT');
+-- username : CLIENT
+-- password : CLIENT
+
+
+INSERT INTO customer     (username, email, enabled, password) VALUES ('PUBLISHER', 'PUBLISHER@MAIL.COM', true, '$2a$12$OWn2Qlf163MBzY5iD7DNAerTMlYawoB1y3IZRf7equ4slrjp9jJcy');
+INSERT INTO authority   (username, authority) values ('PUBLISHER', 'ROLE_PUBLISHER');
+-- username : PUBLISHER
+-- password : PUBLISHER
+

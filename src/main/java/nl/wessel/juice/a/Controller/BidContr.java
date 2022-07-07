@@ -22,11 +22,11 @@ public class BidContr {
 
 
     //    CREATE
-    @PostMapping("/new")
-    public ResponseEntity<CreatedBid> newBid(@RequestBody CreateBid bid) {
-        final CreatedBid createdBid = bidService.newBid(bid);
-        return ResponseEntity.ok().body(createdBid);
-    }
+//    @PostMapping("/new")
+//    public ResponseEntity<CreatedBid> newBid(@RequestBody CreateBid bid) {
+//        final CreatedBid createdBid = bidService.newBid(bid);
+//        return ResponseEntity.ok().body(createdBid);
+//    }
 
 
     //    READ
