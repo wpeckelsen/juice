@@ -22,15 +22,7 @@ public class CustomerDto {
 
     private List<CreatedDeal> deals;
     private List<CreatedBid> bids;
-    private List<CreatedDomain> domains;
 
-    public List<CreatedDomain> getDomains() {
-        return domains;
-    }
-
-    public void setDomains(List<CreatedDomain> domains) {
-        this.domains = domains;
-    }
 
     public String getUsername() {
         return username;

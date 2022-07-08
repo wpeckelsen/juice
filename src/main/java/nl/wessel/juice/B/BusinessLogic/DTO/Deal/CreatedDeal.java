@@ -3,6 +3,7 @@ package nl.wessel.juice.B.BusinessLogic.DTO.Deal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
+import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
 
 public class CreatedDeal {
 
@@ -16,6 +17,9 @@ public class CreatedDeal {
     private CreatedBid bid;
     private CreatedDomain domain;
     private CustomerDto dto;
+    private Publisher publisher;
+
+
 
 
     public CustomerDto getDto() {

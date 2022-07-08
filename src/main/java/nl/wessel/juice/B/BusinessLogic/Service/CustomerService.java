@@ -2,15 +2,14 @@ package nl.wessel.juice.B.BusinessLogic.Service;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
+import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.UsernameNotFound;
-import nl.wessel.juice.B.BusinessLogic.Model.Authority;
-import nl.wessel.juice.B.BusinessLogic.Model.Bid;
-import nl.wessel.juice.B.BusinessLogic.Model.Customer;
-import nl.wessel.juice.B.BusinessLogic.Model.Domain;
+import nl.wessel.juice.B.BusinessLogic.Model.*;
 import nl.wessel.juice.B.BusinessLogic.Security.Utils.RandomStringGenerator;
 import nl.wessel.juice.C.Repository.BidRepo;
 import nl.wessel.juice.C.Repository.CustomerRepo;
+import nl.wessel.juice.C.Repository.DealRepo;
 import nl.wessel.juice.C.Repository.DomainRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -29,12 +27,17 @@ public class CustomerService {
     private final BidRepo bidRepo;
     private final DomainRepo domainRepo;
 
+    private final DealRepo dealRepo;
+
     @Autowired
-    public CustomerService(CustomerRepo customerRepo, BidRepo bidRepo, DomainRepo domainRepo) {
+    public CustomerService(CustomerRepo customerRepo, BidRepo bidRepo, DomainRepo domainRepo, DealRepo dealRepo) {
         this.customerRepo = customerRepo;
         this.bidRepo = bidRepo;
         this.domainRepo = domainRepo;
+        this.dealRepo = dealRepo;
     }
+
+
 
     public List<CustomerDto> getCustomers() {
         List<CustomerDto> collection = new ArrayList<>();
@@ -56,14 +59,14 @@ public class CustomerService {
         return dto;
     }
 
-    public boolean CustomerExists(String customerName) {
+    public boolean customerExists(String customerName) {
         return customerRepo.existsById(customerName);
     }
 
-    public String createCustomer(CustomerDto CustomerDto) {
+    public String createCustomer(CustomerDto customerDto) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
-        CustomerDto.setApikey(randomString);
-        nl.wessel.juice.B.BusinessLogic.Model.Customer newCustomer = customerRepo.save(toCustomer(CustomerDto));
+        customerDto.setApikey(randomString);
+        Customer newCustomer = customerRepo.save(toCustomer(customerDto));
         return newCustomer.getUsername();
     }
 
@@ -73,9 +76,9 @@ public class CustomerService {
 
     public void updateCustomer(String customerName, CustomerDto newCustomer) {
         if (!customerRepo.existsById(customerName)) throw new BadRequest();
-        nl.wessel.juice.B.BusinessLogic.Model.Customer Customer = customerRepo.findById(customerName).get();
-        Customer.setPassword(newCustomer.getPassword());
-        customerRepo.save(Customer);
+        Customer customer = customerRepo.findById(customerName).get();
+        customer.setPassword(newCustomer.getPassword());
+        customerRepo.save(customer);
     }
 
     public Set<Authority> getAuthorities(String customerName) {
@@ -88,17 +91,17 @@ public class CustomerService {
     public void addAuthority(String customerName, String authority) {
 
         if (!customerRepo.existsById(customerName)) throw new UsernameNotFound(customerName);
-        nl.wessel.juice.B.BusinessLogic.Model.Customer Customer = customerRepo.findById(customerName).get();
-        Customer.addAuthority(new Authority(customerName, authority));
-        customerRepo.save(Customer);
+        Customer customer = customerRepo.findById(customerName).get();
+        customer.addAuthority(new Authority(customerName, authority));
+        customerRepo.save(customer);
     }
 
     public void removeAuthority(String customerName, String authority) {
         if (!customerRepo.existsById(customerName)) throw new UsernameNotFound(customerName);
-        nl.wessel.juice.B.BusinessLogic.Model.Customer Customer = customerRepo.findById(customerName).get();
-        Authority authorityToRemove = Customer.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
-        Customer.removeAuthority(authorityToRemove);
-        customerRepo.save(Customer);
+        Customer customer = customerRepo.findById(customerName).get();
+        Authority authorityToRemove = customer.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
+        customer.removeAuthority(authorityToRemove);
+        customerRepo.save(customer);
     }
 
 
@@ -123,18 +126,9 @@ public class CustomerService {
             }
         }
 
-        List<Domain> domains = customer.getDomains();
-        List<CreatedDomain> createdDomains = new ArrayList<>();
 
-        if(domains != null){
-            for (Domain domain : domains){
-                CreatedDomain createdDomain = DomainService.domainDtoMaker(domain);
-                createdDomains.add(createdDomain);
-            }
-        }
 
         dto.setBids(createdBids);
-        dto.setDomains(createdDomains);
         return dto;
     }
 
@@ -157,7 +151,7 @@ public class CustomerService {
 
     public CustomerDto assignBids(Long idBid, String username) {
 
-        nl.wessel.juice.B.BusinessLogic.Model.Customer customer = customerRepo.findById(username).get();
+        Customer customer = customerRepo.findById(username).get();
         Bid newBid = bidRepo.findById(idBid).get();
 
 
@@ -174,20 +168,21 @@ public class CustomerService {
         return fromCustomer(customer);
     }
 
-    public CustomerDto assignDomains(Long domainID, String username){
-        nl.wessel.juice.B.BusinessLogic.Model.Customer customer = customerRepo.findById(username).get();
-        Domain newDomain = domainRepo.findById(domainID).get();
+    public CustomerDto assignDeals(Long idDeal, String username){
+        var customer = customerRepo.findById(username).get();
+        var newDeal = dealRepo.findById(idDeal).get();
 
-        List<Domain> currentDomains = customer.getDomains();
-        currentDomains.add(newDomain);
+        List<Deal> currentDeals = customer.getDeals();
+        currentDeals.add(newDeal);
 
-        for (Domain domain : currentDomains){
-            domain.setCustomer(customer);
-            domainRepo.save(domain);
+        for (Deal deal : currentDeals){
+            deal.setCustomer(customer);
+            dealRepo.save(deal);
+
         }
-
-        customer.setDomains(currentDomains);
+        customer.setDeals(currentDeals);
         customerRepo.save(customer);
         return fromCustomer(customer);
     }
+
 }

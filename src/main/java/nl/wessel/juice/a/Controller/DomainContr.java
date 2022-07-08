@@ -10,14 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/domain")
+@RequestMapping(value = "juice/domain")
 public class DomainContr {
 
 
     @Autowired
     DomainService domainService;
-
-
 
     //    CREATE
     @PostMapping("/new")

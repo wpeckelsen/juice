@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/bid")
+@RequestMapping(value = "juice/bid")
 public class BidContr {
 
 
@@ -21,12 +21,12 @@ public class BidContr {
 
 
 
-    //    CREATE
-//    @PostMapping("/new")
-//    public ResponseEntity<CreatedBid> newBid(@RequestBody CreateBid bid) {
-//        final CreatedBid createdBid = bidService.newBid(bid);
-//        return ResponseEntity.ok().body(createdBid);
-//    }
+//        CREATE
+    @PostMapping("/new")
+    public ResponseEntity<CreatedBid> newBid(@RequestBody CreateBid bid) {
+        final CreatedBid createdBid = bidService.newBid(bid);
+        return ResponseEntity.ok().body(createdBid);
+    }
 
 
     //    READ

@@ -19,11 +19,6 @@ public class AdminContr {
         this.customerService = customerService;
     }
 
-    @DeleteMapping( "delete/{username}")
-    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
-        customerService.deleteCustomer(username);
-        return ResponseEntity.noContent().build();
-    }
 
 
         @GetMapping(value = "/list/customers")

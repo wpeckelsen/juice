@@ -68,14 +68,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/juice/customer/list/domain").hasRole("CLIENT")
                 .antMatchers(HttpMethod.POST, "/juice/deal/new/**").hasRole("CLIENT")
 
-//                .antMatchers(HttpMethod.POST, "/publisher").hasRole("PUBLISHER")
-//                .antMatchers(HttpMethod.GET, "/publisher").hasRole("PUBLISHER")
-                .antMatchers(HttpMethod.POST, "/juice/customer/domain/new").hasRole("PUBLISHER")
-
-                .antMatchers(HttpMethod.POST, "/juice/deal/new/**").hasRole("PUBLISHER")
-
-
-
 
                 .antMatchers("/authenticated").authenticated()
                 .antMatchers("/authenticate").permitAll()

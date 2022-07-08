@@ -12,17 +12,15 @@ public class Publisher {
 
 
     private String name;
-    private String email;
-    private String password;
-
-//    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/)
-//    private List<Deal> deals;
-//
-//    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
-//    private List<Domain> domains;
+    private String country;
+    private String niche;
 
 
+    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/)
+    private List<Deal> deals;
 
+    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
+    private List<Domain> domains;
 
 
     public Long getPublisherID() {
@@ -41,32 +39,35 @@ public class Publisher {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCountry() {
+        return country;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getPassword() {
-        return password;
+    public String getNiche() {
+        return niche;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNiche(String niche) {
+        this.niche = niche;
     }
 
+    public List<Deal> getDeals() {
+        return deals;
+    }
 
+    public void setDeals(List<Deal> deals) {
+        this.deals = deals;
+    }
 
+    public List<Domain> getDomains() {
+        return domains;
+    }
 
-
-//    public List<Market> getMarkets() {
-//        return markets;
-//    }
-
-//    public void setMarkets(List<Market> markets) {
-//        this.markets = markets;
-//    }
-
+    public void setDomains(List<Domain> domains) {
+        this.domains = domains;
+    }
 }

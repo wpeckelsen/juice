@@ -19,6 +19,7 @@ public class Deal {
     @JoinColumn(name = "customer_username")
     private Customer customer;
 
+
     @OneToOne(mappedBy = "deal")
     private Bid bid;
 

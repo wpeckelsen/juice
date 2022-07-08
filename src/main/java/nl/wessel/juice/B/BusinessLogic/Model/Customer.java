@@ -37,17 +37,13 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer")
     private List<Deal> deals;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Domain> domains;
+//    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+//    private List<Domain> domains;
 
 
-    public List<Domain> getDomains() {
-        return domains;
-    }
 
-    public void setDomains(List<Domain> domains) {
-        this.domains = domains;
-    }
+
+
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;

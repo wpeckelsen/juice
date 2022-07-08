@@ -15,18 +15,13 @@ public class Domain {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "customer_username")
-    private Customer customer;
+    @JoinColumn(name = "publisher_publisherID")
+    private Publisher publisher;
 
     @OneToOne
     private Deal deal;
 
-    public Deal getDeal() {
-        return deal;
-    }
-    public void setDeal(Deal deal) {
-        this.deal = deal;
-    }
+
     public Long getDomainID() {
         return domainID;
     }
@@ -67,11 +62,19 @@ public class Domain {
         this.price = price;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public Deal getDeal() {
+        return deal;
+    }
+
+    public void setDeal(Deal deal) {
+        this.deal = deal;
     }
 }
