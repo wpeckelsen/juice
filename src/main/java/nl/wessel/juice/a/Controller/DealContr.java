@@ -31,44 +31,36 @@ public class DealContr {
 
 
     //    READ
-    @GetMapping("/list")
-    public ResponseEntity<List<CreatedDeal>> getList() {
-        List<CreatedDeal> createdDealList;
-        createdDealList = dealService.getList();
-        return ResponseEntity.ok().body(createdDealList);
-    }
-
-    @GetMapping("/{dealID}")
-    public ResponseEntity<CreatedDeal> getByID(@PathVariable("dealID") Long dealID) {
-        CreatedDeal createdDeal = dealService.getByID(dealID);
-        return ResponseEntity.ok().body(createdDeal);
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<List<CreatedDeal>> getList() {
+//        List<CreatedDeal> createdDealList;
+//        createdDealList = dealService.getList();
+//        return ResponseEntity.ok().body(createdDealList);
+//    }
+//
+//    @GetMapping("/{dealID}")
+//    public ResponseEntity<CreatedDeal> getByID(@PathVariable("dealID") Long dealID) {
+//        CreatedDeal createdDeal = dealService.getByID(dealID);
+//        return ResponseEntity.ok().body(createdDeal);
+//    }
 
 
     //    update
-    @PutMapping("/update/{dealID}")
-    public ResponseEntity<Object> update(@PathVariable Long dealID, @RequestBody CreateDeal createDeal) {
-        CreatedDeal createdDeal = dealService.update(dealID, createDeal);
-        return ResponseEntity.ok().body(createdDeal);
-    }
+//    @PutMapping("/update/{dealID}")
+//    public ResponseEntity<Object> update(@PathVariable Long dealID, @RequestBody CreateDeal createDeal) {
+//        CreatedDeal createdDeal = dealService.update(dealID, createDeal);
+//        return ResponseEntity.ok().body(createdDeal);
+//    }
 
 
     //    delete
-    @DeleteMapping("/delete/{dealID}")
-    public ResponseEntity<Object> deleteById(@PathVariable Long dealID) {
-        dealService.deleteById(dealID);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/delete/{dealID}")
+//    public ResponseEntity<Object> deleteById(@PathVariable Long dealID) {
+//        dealService.deleteById(dealID);
+//        return ResponseEntity.noContent().build();
+//    }
 
 
     // assign // new
-    @PostMapping("{bidID}/{domainID}/{publisherID}/{name}")
-    public ResponseEntity<CreatedDeal> newDeal(@RequestBody CreateDeal createDeal,
-                                               @PathVariable("bidID") Long bidID,
-                                               @PathVariable("domainID") Long domainID,
-                                               @PathVariable("publisherID") Long publisherID,
-                                               @PathVariable("name") String name){
-        final CreatedDeal createdDeal = dealService.newDeal(createDeal, bidID, domainID, publisherID, name);
-        return ResponseEntity.ok().body(createdDeal);
-    }
+
 }

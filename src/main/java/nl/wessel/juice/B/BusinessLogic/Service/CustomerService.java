@@ -1,11 +1,14 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
+
+import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
-import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
-import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.UsernameNotFound;
-import nl.wessel.juice.B.BusinessLogic.Model.*;
+import nl.wessel.juice.B.BusinessLogic.Model.Authority;
+import nl.wessel.juice.B.BusinessLogic.Model.Bid;
+import nl.wessel.juice.B.BusinessLogic.Model.Customer;
+import nl.wessel.juice.B.BusinessLogic.Model.Deal;
 import nl.wessel.juice.B.BusinessLogic.Security.Utils.RandomStringGenerator;
 import nl.wessel.juice.C.Repository.BidRepo;
 import nl.wessel.juice.C.Repository.CustomerRepo;
@@ -18,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import static nl.wessel.juice.B.BusinessLogic.Service.BidService.bidMaker;
 
 @Service
 @Transactional
@@ -36,7 +41,6 @@ public class CustomerService {
         this.domainRepo = domainRepo;
         this.dealRepo = dealRepo;
     }
-
 
 
     public List<CustomerDto> getCustomers() {
@@ -119,13 +123,12 @@ public class CustomerService {
         List<Bid> bids = customer.getBids();
         List<CreatedBid> createdBids = new ArrayList<>();
 
-        if(bids != null){
-            for(Bid bid : bids){
+        if (bids != null) {
+            for (Bid bid : bids) {
                 CreatedBid createdBid = BidService.bidDtoMaker(bid);
                 createdBids.add(createdBid);
             }
         }
-
 
 
         dto.setBids(createdBids);
@@ -143,17 +146,21 @@ public class CustomerService {
         customer.setEmail(customerDto.getEmail());
 
         return customer;
-}
+    }
 
 
+//    public CreatedBid newBid(CreateBid createBid){
+//        Bid bid = bidMaker(createBid);
+//        bidRepo.save(bid);
+//        return bidDtoMaker(bid);
+//    }
 
 
+    public CustomerDto newBid(CreateBid createBid, String username) {
 
-    public CustomerDto assignBids(Long idBid, String username) {
 
         Customer customer = customerRepo.findById(username).get();
-        Bid newBid = bidRepo.findById(idBid).get();
-
+        Bid newBid = bidMaker(createBid);
 
         List<Bid> currentBids = customer.getBids();
         currentBids.add(newBid);
@@ -168,14 +175,14 @@ public class CustomerService {
         return fromCustomer(customer);
     }
 
-    public CustomerDto assignDeals(Long idDeal, String username){
+    public CustomerDto assignDeals(Long idDeal, String username) {
         var customer = customerRepo.findById(username).get();
         var newDeal = dealRepo.findById(idDeal).get();
 
         List<Deal> currentDeals = customer.getDeals();
         currentDeals.add(newDeal);
 
-        for (Deal deal : currentDeals){
+        for (Deal deal : currentDeals) {
             deal.setCustomer(customer);
             dealRepo.save(deal);
 

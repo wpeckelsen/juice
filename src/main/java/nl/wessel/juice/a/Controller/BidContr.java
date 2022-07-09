@@ -22,40 +22,40 @@ public class BidContr {
 
 
 //        CREATE
-    @PostMapping("/new")
-    public ResponseEntity<CreatedBid> newBid(@RequestBody CreateBid bid) {
-        final CreatedBid createdBid = bidService.newBid(bid);
-        return ResponseEntity.ok().body(createdBid);
-    }
+//    @PostMapping("/new")
+//    public ResponseEntity<CreatedBid> newBid(@RequestBody CreateBid bid) {
+//        final CreatedBid createdBid = bidService.newBid(bid);
+//        return ResponseEntity.ok().body(createdBid);
+//    }
 
 
     //    READ
-    @GetMapping("/list")
-    public ResponseEntity<List<CreatedBid>> getList() {
-        List<CreatedBid> createdBidList;
-        createdBidList = bidService.getList();
-        return ResponseEntity.ok().body(createdBidList);
-    }
-
-    @GetMapping("/{bidID}")
-    public ResponseEntity<CreatedBid> getByID(@PathVariable("bidID") Long bidID) {
-        CreatedBid createdBid = bidService.getByID(bidID);
-        return ResponseEntity.ok().body(createdBid);
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<List<CreatedBid>> getList() {
+//        List<CreatedBid> createdBidList;
+//        createdBidList = bidService.getList();
+//        return ResponseEntity.ok().body(createdBidList);
+//    }
+//
+//    @GetMapping("/{bidID}")
+//    public ResponseEntity<CreatedBid> getByID(@PathVariable("bidID") Long bidID) {
+//        CreatedBid createdBid = bidService.getByID(bidID);
+//        return ResponseEntity.ok().body(createdBid);
+//    }
 
 
     //    update
-    @PutMapping("/update/{bidID}")
-    public ResponseEntity<Object> update(@PathVariable Long bidID, @RequestBody CreateBid createBid) {
-        CreatedBid createdBid = bidService.update(bidID, createBid);
-        return ResponseEntity.ok().body(createdBid);
-    }
+//    @PutMapping("/update/{bidID}")
+//    public ResponseEntity<Object> update(@PathVariable Long bidID, @RequestBody CreateBid createBid) {
+//        CreatedBid createdBid = bidService.update(bidID, createBid);
+//        return ResponseEntity.ok().body(createdBid);
+//    }
 
 
     //    delete
-    @DeleteMapping("/delete/{bidID}")
-    public ResponseEntity<Object> deleteById(@PathVariable Long bidID) {
-        bidService.deleteById(bidID);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/delete/{bidID}")
+//    public ResponseEntity<Object> deleteById(@PathVariable Long bidID) {
+//        bidService.deleteById(bidID);
+//        return ResponseEntity.noContent().build();
+//    }
 }

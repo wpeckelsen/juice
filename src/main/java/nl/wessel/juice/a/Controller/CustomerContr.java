@@ -55,32 +55,57 @@ public class CustomerContr {
         return ResponseEntity.created(location).build();
     }
 
+    @PostMapping("bid/{username}")
+    public ResponseEntity<CustomerDto> newBid(@RequestBody CreateBid createBid,
+                                              @PathVariable String username) {
+        return ResponseEntity.ok().body(customerService.newBid(createBid, username));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<CreatedBid>> getList() {
+        List<CreatedBid> createdBidList;
+        createdBidList = bidService.getList();
+        return ResponseEntity.ok().body(createdBidList);
+    }
+
+    @GetMapping("/{bidID}")
+    public ResponseEntity<CreatedBid> getByID(@PathVariable("bidID") Long bidID) {
+        CreatedBid createdBid = bidService.getByID(bidID);
+        return ResponseEntity.ok().body(createdBid);
+    }
+
+    @PostMapping("{bidID}/{domainID}/{publisherID}/{name}")
+    public ResponseEntity<CreatedDeal> newDeal(@RequestBody CreateDeal createDeal,
+                                               @PathVariable("bidID") Long bidID,
+                                               @PathVariable("domainID") Long domainID,
+                                               @PathVariable("publisherID") Long publisherID,
+                                               @PathVariable("name") String name){
+        final CreatedDeal createdDeal = dealService.newDeal(createDeal, bidID, domainID, publisherID, name);
+        return ResponseEntity.ok().body(createdDeal);
+    }
+
 
     //    READ
 
 
 
     //    UPDATE
-    @PutMapping("update/{username}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
-                                                      @RequestBody CustomerDto customerDto) {
-        customerService.updateCustomer(username, customerDto);
-        return ResponseEntity.noContent().build();
-    }
+//    @PutMapping("update/{username}")
+//    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
+//                                                      @RequestBody CustomerDto customerDto) {
+//        customerService.updateCustomer(username, customerDto);
+//        return ResponseEntity.noContent().build();
+//    }
 
 
     //    DELETE
-    @DeleteMapping( "delete/{username}")
-    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
-        customerService.deleteCustomer(username);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping( "delete/{username}")
+//    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
+//        customerService.deleteCustomer(username);
+//        return ResponseEntity.noContent().build();
+//    }
 
 
-    @PutMapping("bid/{bidID}/{username}")
-    public ResponseEntity<CustomerDto> assignBids(@PathVariable Long bidID,
-                                                  @PathVariable String username) {
-        return ResponseEntity.ok().body(customerService.assignBids(bidID, username));
-    }
+
 
 }

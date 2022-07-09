@@ -18,11 +18,11 @@ public class DomainContr {
     DomainService domainService;
 
     //    CREATE
-    @PostMapping("/new")
-    public ResponseEntity<CreatedDomain> newDomain(@RequestBody CreateDomain domain) {
-        final CreatedDomain createdDomain = domainService.newDomain(domain);
-        return ResponseEntity.ok().body(createdDomain);
-    }
+//    @PostMapping("/new")
+//    public ResponseEntity<CreatedDomain> newDomain(@RequestBody CreateDomain domain) {
+//        final CreatedDomain createdDomain = domainService.newDomain(domain);
+//        return ResponseEntity.ok().body(createdDomain);
+//    }
 
 
     //    READ

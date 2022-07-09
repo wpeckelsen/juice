@@ -1,6 +1,9 @@
 package nl.wessel.juice.a.Controller.Admin;
 
+import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
+import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
+import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +23,65 @@ public class AdminContr {
     }
 
 
+    //    CREATE
 
-        @GetMapping(value = "/list/customers")
+
+    //    READ
+    @GetMapping(value = "/list/customers")
     public ResponseEntity<List<CustomerDto>> getCustomers() {
         List<CustomerDto> dtos = customerService.getCustomers();
         return ResponseEntity.ok().body(dtos);
     }
+
+    @GetMapping("/list/deals")
+    public ResponseEntity<List<CreatedDeal>> getdeals() {
+        List<CreatedDeal> createdDealList;
+        createdDealList = dealService.getList();
+        return ResponseEntity.ok().body(createdDealList);
+    }
+
+
+    @GetMapping("/{dealID}")
+    public ResponseEntity<CreatedDeal> getDealsByID(@PathVariable("dealID") Long dealID) {
+        CreatedDeal createdDeal = dealService.getByID(dealID);
+        return ResponseEntity.ok().body(createdDeal);
+    }
+
+
+    //    UPDATE
+    @PutMapping("/update/{bidID}")
+    public ResponseEntity<Object> updateBid(@PathVariable Long bidID, @RequestBody CreateBid createBid) {
+        CreatedBid createdBid = bidService.update(bidID, createBid);
+        return ResponseEntity.ok().body(createdBid);
+    }
+
+    @PutMapping("update/{username}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
+                                                      @RequestBody CustomerDto customerDto) {
+        customerService.updateCustomer(username, customerDto);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    //    DELETE
+    @DeleteMapping("/delete/{bidID}")
+    public ResponseEntity<Object> deleteBid(@PathVariable Long bidID) {
+        bidService.deleteById(bidID);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("delete/{username}")
+    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
+        customerService.deleteCustomer(username);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @DeleteMapping("/delete/{dealID}")
+    public ResponseEntity<Object> deleteDeal(@PathVariable Long dealID) {
+        dealService.deleteById(dealID);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

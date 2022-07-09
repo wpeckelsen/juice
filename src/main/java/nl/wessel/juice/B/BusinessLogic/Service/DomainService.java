@@ -22,31 +22,12 @@ public class DomainService {
         this.domainRepo = domainRepo;
     }
 
-    public Domain domainMaker(CreateDomain createDomain){
-        Domain domain = new Domain();
-        domain.setName(createDomain.getName());
-        domain.setTLD(createDomain.getTLD());
-        domain.setCategory(createDomain.getCategory());
-        domain.setPrice(createDomain.getPrice());
-        return domain;
-    }
-
-    public static CreatedDomain domainDtoMaker(Domain domain){
-        CreatedDomain createdDomain = new CreatedDomain();
-        createdDomain.setDomainID(domain.getDomainID());
-        createdDomain.setName(domain.getName());
-        createdDomain.setTLD(domain.getTLD());
-        createdDomain.setCategory(domain.getCategory());
-        createdDomain.setPrice(domain.getPrice());
-        return createdDomain;
-    }
-
-// create
-    public CreatedDomain newDomain(CreateDomain createDomain){
-        Domain domain = domainMaker(createDomain);
-        domainRepo.save(domain);
-        return domainDtoMaker(domain);
-    }
+    // create
+//    public CreatedDomain newDomain(CreateDomain createDomain){
+//        Domain domain = TransferService.domainMaker(createDomain);
+//        domainRepo.save(domain);
+//        return TransferService.domainDtoMaker(domain);
+//    }
 
 //    read
 public List<CreatedDomain> getList() {
@@ -54,7 +35,7 @@ public List<CreatedDomain> getList() {
     List<CreatedDomain> createdDomainList = new ArrayList<>();
 
     for (Domain domain : domainList) {
-        CreatedDomain createdDomain = domainDtoMaker(domain);
+        CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
         createdDomainList.add(createdDomain);
     }
     return createdDomainList;
@@ -66,7 +47,7 @@ public List<CreatedDomain> getList() {
         List<CreatedDomain> createdDomainList = new ArrayList<>();
 
         for (Domain domain : domainList) {
-            CreatedDomain createdDomain = domainDtoMaker(domain);
+            CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
             createdDomainList.add(createdDomain);
         }
         return createdDomainList;
@@ -75,7 +56,7 @@ public List<CreatedDomain> getList() {
     public CreatedDomain getByID(Long idDomain) {
         if (domainRepo.findById(idDomain).isPresent()) {
             Domain domain = domainRepo.findById(idDomain).get();
-            return domainDtoMaker(domain);
+            return TransferService.domainDtoMaker(domain);
         } else {
             Domain domain = new Domain();
             throw new RecordNotFound(domain);
@@ -88,11 +69,11 @@ public List<CreatedDomain> getList() {
     public CreatedDomain update(Long domainID, CreateDomain createDomain) {
         if (domainRepo.findById(domainID).isPresent()) {
             Domain domain = domainRepo.findById(domainID).get();
-            Domain domain1 = domainMaker(createDomain);
+            Domain domain1 = TransferService.domainMaker(createDomain);
 
             domain1.setDomainID(domain.getDomainID());
             domainRepo.save(domain1);
-            return domainDtoMaker(domain1);
+            return TransferService.domainDtoMaker(domain1);
         } else {
             Domain domain = new Domain();
             throw new RecordNotFound(domain);
