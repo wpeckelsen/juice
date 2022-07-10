@@ -5,8 +5,9 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
-import nl.wessel.juice.B.BusinessLogic.Model.Deal;
+import nl.wessel.juice.B.BusinessLogic.Model.*;
 import nl.wessel.juice.C.Repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,42 +18,36 @@ public class DealService {
 
     private final DealRepo dealRepo;
     private final BidRepo bidRepo;
-    private final BidService bidService;
-    private final DomainRepo domainRepo;
-    private final DomainService domainService;
-    private final CustomerRepo customerRepo;
 
+    private final DomainRepo domainRepo;
+
+    private final CustomerRepo customerRepo;
     private final PublisherRepo publisherRepo;
 
 
-    public DealService(DealRepo dealRepo, BidRepo bidRepo, BidService bidService, DomainRepo domainRepo, DomainService domainService, CustomerRepo customerRepo, PublisherRepo publisherRepo) {
+    @Autowired
+    public DealService(DealRepo dealRepo, BidRepo bidRepo, DomainRepo domainRepo, CustomerRepo customerRepo, PublisherRepo publisherRepo) {
         this.dealRepo = dealRepo;
         this.bidRepo = bidRepo;
-        this.bidService = bidService;
         this.domainRepo = domainRepo;
-        this.domainService = domainService;
         this.customerRepo = customerRepo;
-
         this.publisherRepo = publisherRepo;
-
     }
 
     public CreatedDeal newDeal(CreateDeal createDeal, Long bidID, Long domainID, Long publisherID, String name) {
 
-        var customer = customerRepo.findById(name).get();
-        var bid = bidRepo.findById(bidID).get();
 
-        var publisher = publisherRepo.findById(publisherID).get();
-        var domain = domainRepo.findById(domainID).get();
+        if (customerRepo.findById(name).isPresent()
+                && bidRepo.findById(bidID).isPresent()
+                && publisherRepo.findById(publisherID).isPresent()
+                && domainRepo.findById(domainID).isPresent()) {
 
+            Customer customer = customerRepo.findById(name).get();
+            Bid bid = bidRepo.findById(bidID).get();
+            Publisher publisher = publisherRepo.findById(publisherID).get();
+            Domain domain = domainRepo.findById(domainID).get();
 
-        if (customer != null
-                & bid != null
-                & publisher != null
-                & domain != null
-        ) {
-
-           Deal deal = TransferService.dealMaker(createDeal);
+            Deal deal = TransferService.dealMaker(createDeal);
 
             deal.setCustomer(customer);
             deal.setBid(bid);
@@ -66,7 +61,7 @@ public class DealService {
             dealRepo.save(deal);
             return TransferService.dealDtoMaker(deal);
         } else {
-            throw new BadRequest(" A deal cannot be made unless a CustomerRepo, Bid, Publisher and Domain is present. " +
+            throw new BadRequest(" A deal cannot be made unless a Customer, Bid, Publisher and Domain is present. " +
                     "Make these first before making a new Deal. ");
         }
     }
@@ -75,13 +70,19 @@ public class DealService {
     //    READ
     public List<CreatedDeal> getList() {
         List<Deal> dealList = dealRepo.findAll();
-        List<CreatedDeal> createdDealList = new ArrayList<>();
 
-        for (Deal deal : dealList) {
-            CreatedDeal createdDeal = TransferService.dealDtoMaker(deal);
-            createdDealList.add(createdDeal);
+        if (dealList.isEmpty()) {
+            Deal deal = new Deal();
+            throw new RecordNotFound(deal);
+        } else {
+            List<CreatedDeal> createdDealList = new ArrayList<>();
+
+            for (Deal deal : dealList) {
+                CreatedDeal createdDeal = TransferService.dealDtoMaker(deal);
+                createdDealList.add(createdDeal);
+            }
+            return createdDealList;
         }
-        return createdDealList;
     }
 
 

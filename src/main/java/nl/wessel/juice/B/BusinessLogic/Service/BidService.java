@@ -5,7 +5,9 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Bid;
+import nl.wessel.juice.B.BusinessLogic.Model.Customer;
 import nl.wessel.juice.C.Repository.BidRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -15,8 +17,14 @@ import java.util.List;
 @Service
 public class BidService {
 
-    private final BidRepo bidRepo;
 
+
+    private BidRepo bidRepo;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
     public BidService(BidRepo bidRepo) {
         this.bidRepo = bidRepo;
     }
@@ -99,12 +107,15 @@ public class BidService {
 
     //    update
     public CreatedBid update(Long bidID, CreateBid createBid) {
+
+
         if (bidRepo.findById(bidID).isPresent()) {
             Bid bid = bidRepo.findById(bidID).get();
             Bid bid1 = bidMaker(createBid);
 
             bid1.setBidID(bid.getBidID());
             bidRepo.save(bid1);
+
             return bidDtoMaker(bid1);
         } else {
             Bid bid = new Bid();

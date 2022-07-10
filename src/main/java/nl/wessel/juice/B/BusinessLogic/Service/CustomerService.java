@@ -32,7 +32,6 @@ public class CustomerService {
     private final CustomerRepo customerRepo;
     private final BidRepo bidRepo;
     private final DomainRepo domainRepo;
-
     private final DealRepo dealRepo;
 
     @Autowired
@@ -179,8 +178,8 @@ public class CustomerService {
             return fromCustomer(customer);
 
         } else {
-            Bid bid = new Bid();
-            throw new RecordNotFound(bid);
+
+            throw new BadRequest("A bid cannot be made without a Customer. Make a Customer first");
         }
     }
 

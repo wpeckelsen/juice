@@ -2,8 +2,10 @@ package nl.wessel.juice.a.Controller.Publisher;
 
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
+import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatePublisher;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
+import nl.wessel.juice.B.BusinessLogic.Service.DomainService;
 import nl.wessel.juice.B.BusinessLogic.Service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +19,34 @@ public class PublisherContr {
 
 
     PublisherService publisherService;
+    DomainService domainService;
 
     @Autowired
-    public PublisherContr(PublisherService publisherService) {
+    public PublisherContr(PublisherService publisherService, DomainService domainService) {
         this.publisherService = publisherService;
+        this.domainService = domainService;
     }
 
+
+
+
     //    CREATE
-    @PostMapping("/new")
+    @PostMapping("new")
     public ResponseEntity<CreatedPublisher> newPublisher(@RequestBody CreatePublisher publisher) {
         final CreatedPublisher createdPublisher = publisherService.newPublisher(publisher);
         return ResponseEntity.ok().body(createdPublisher);
     }
 
+    @PostMapping("newdomain/{publisherID}")
+    public ResponseEntity<CreatedPublisher> newDomain(@RequestBody CreateDomain createDomain,
+                                                       @PathVariable Long publisherID) {
+        return ResponseEntity.ok().body(publisherService.newDomains(createDomain, publisherID));
+    }
+
 
     //    READ
-    @GetMapping("/list")
-    public ResponseEntity<List<CreatedPublisher>> getList() {
+    @GetMapping("getpublishers")
+    public ResponseEntity<List<CreatedPublisher>> getPublishers() {
         List<CreatedPublisher> createdPublisherList;
         createdPublisherList = publisherService.getList();
         return ResponseEntity.ok().body(createdPublisherList);
@@ -47,25 +60,33 @@ public class PublisherContr {
 
 
     //    update
-    @PutMapping("/update/{publisherID}")
-    public ResponseEntity<Object> update(@PathVariable Long publisherID, @RequestBody CreatePublisher createPublisher) {
+    @PutMapping("updatepublisher/{publisherID}")
+    public ResponseEntity<Object> updatePublisher(@PathVariable Long publisherID, @RequestBody CreatePublisher createPublisher) {
         CreatedPublisher createdPublisher = publisherService.update(publisherID, createPublisher);
         return ResponseEntity.ok().body(createdPublisher);
     }
 
 
+    @PutMapping("updatedomain/{domainID}")
+    public ResponseEntity<Object> updateDomain(@PathVariable Long domainID, @RequestBody CreateDomain createDomain) {
+        CreatedDomain createdDomain = domainService.update(domainID, createDomain);
+        return ResponseEntity.ok().body(createdDomain);
+    }
+
+
     //    delete
-    @DeleteMapping("/delete/{publisherID}")
-    public ResponseEntity<Object> deleteById(@PathVariable Long publisherID) {
+    @DeleteMapping("deletepublisher/{publisherID}")
+    public ResponseEntity<Object> deletePublisher(@PathVariable Long publisherID) {
         publisherService.deleteById(publisherID);
         return ResponseEntity.noContent().build();
     }
 
-
-    //    assign
-    @PostMapping("newdomains/{publisherID}")
-    public ResponseEntity<CreatedPublisher> newDomains(@RequestBody CreateDomain createDomain,
-                                                       @PathVariable Long publisherID) {
-        return ResponseEntity.ok().body(publisherService.newDomains(createDomain, publisherID));
+    @DeleteMapping("deletedomain/{domainID}")
+    public ResponseEntity<Object> deleteDomain(@PathVariable Long domainID) {
+        domainService.deleteById(domainID);
+        return ResponseEntity.noContent().build();
     }
+
+
+
 }

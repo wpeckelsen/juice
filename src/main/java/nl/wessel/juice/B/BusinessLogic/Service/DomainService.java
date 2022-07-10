@@ -8,6 +8,7 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Domain;
 import nl.wessel.juice.C.Repository.DomainRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class DomainService {
 
     private final DomainRepo domainRepo;
 
+    @Autowired
     public DomainService(DomainRepo domainRepo) {
         this.domainRepo = domainRepo;
     }
@@ -32,26 +34,31 @@ public class DomainService {
 //    read
 public List<CreatedDomain> getList() {
     List<Domain> domainList = domainRepo.findAll();
-    List<CreatedDomain> createdDomainList = new ArrayList<>();
+        if(domainList.isEmpty()){
+            Domain domain = new Domain();
+            throw new RecordNotFound(domain);
+        } else {
+            List<CreatedDomain> createdDomainList = new ArrayList<>();
 
-    for (Domain domain : domainList) {
-        CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
-        createdDomainList.add(createdDomain);
-    }
-    return createdDomainList;
+            for (Domain domain : domainList) {
+                CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
+                createdDomainList.add(createdDomain);
+            }
+            return createdDomainList;
+        }
 }
 
 
-    public List<CreatedDomain> getListByName(String name) {
-        List<Domain> domainList = domainRepo.findDomainsByName(name);
-        List<CreatedDomain> createdDomainList = new ArrayList<>();
-
-        for (Domain domain : domainList) {
-            CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
-            createdDomainList.add(createdDomain);
-        }
-        return createdDomainList;
-    }
+//    public List<CreatedDomain> getListByName(String name) {
+//        List<Domain> domainList = domainRepo.findDomainsByName(name);
+//        List<CreatedDomain> createdDomainList = new ArrayList<>();
+//
+//        for (Domain domain : domainList) {
+//            CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
+//            createdDomainList.add(createdDomain);
+//        }
+//        return createdDomainList;
+//    }
 
     public CreatedDomain getByID(Long idDomain) {
         if (domainRepo.findById(idDomain).isPresent()) {
@@ -81,7 +88,6 @@ public List<CreatedDomain> getList() {
     }
 
     //    delete
-
     public void deleteById(Long domainID) {
         domainRepo.deleteById(domainID);
     }

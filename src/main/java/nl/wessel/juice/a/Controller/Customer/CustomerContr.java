@@ -6,6 +6,7 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
+import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.Service.BidService;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
 import nl.wessel.juice.B.BusinessLogic.Service.DealService;
@@ -30,17 +31,20 @@ public class CustomerContr {
 
 
     @Autowired
-    public CustomerContr(CustomerService customerService, DomainService domainService, BidService bidService) {
+    public CustomerContr(CustomerService customerService, DomainService domainService, BidService bidService, DealService dealService) {
         this.customerService = customerService;
         this.domainService = domainService;
         this.bidService = bidService;
+        this.dealService = dealService;
     }
+
+
 
 
 //    CREATE
 
     @PostMapping("newcustomer")
-    public ResponseEntity<CustomerDto> newCustomer(@RequestBody CustomerDto dto) {
+    public ResponseEntity<Object> newCustomer(@RequestBody CustomerDto dto) {
         String newCustomerName = customerService.createCustomer(dto);
         customerService.addAuthority(newCustomerName, "ROLE_CUSTOMER");
 
@@ -55,6 +59,7 @@ public class CustomerContr {
     public ResponseEntity<CustomerDto> newBid(@RequestBody CreateBid createBid,
                                               @PathVariable String username) {
         return ResponseEntity.ok().body(customerService.newBid(createBid, username));
+
     }
 
 
@@ -84,7 +89,18 @@ public class CustomerContr {
         return ResponseEntity.ok().body(createdBid);
     }
 
-    //    UPDATE
 
-    //    DELETE
+    @GetMapping("domainlist")
+    public ResponseEntity<List<CreatedDomain>> domainList() {
+        List<CreatedDomain> createdDomainList;
+        createdDomainList = domainService.getList();
+        return ResponseEntity.ok().body(createdDomainList);
+    }
+
+    @GetMapping("domainbyid/{domainID}")
+    public ResponseEntity<CreatedDomain> domainByID(@PathVariable("domainID") Long domainID) {
+        CreatedDomain createdDomain = domainService.getByID(domainID);
+        return ResponseEntity.ok().body(createdDomain);
+    }
+
 }

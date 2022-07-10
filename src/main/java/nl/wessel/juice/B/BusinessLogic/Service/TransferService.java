@@ -9,6 +9,7 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatePublisher;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
+import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Model.Deal;
 import nl.wessel.juice.B.BusinessLogic.Model.Domain;
 import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
@@ -84,7 +85,7 @@ public class TransferService {
                 createdDomains.add(createdDomain);
             }
         }
-//        publisher.getDomains();
+
         createdPublisher.setDomains(createdDomains);
 
 

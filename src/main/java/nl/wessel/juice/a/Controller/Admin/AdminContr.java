@@ -32,7 +32,7 @@ public class AdminContr {
 
 
     //    READ
-    @GetMapping(value = "getcustomers")
+    @GetMapping("getcustomers")
     public ResponseEntity<List<CustomerDto>> getCustomers() {
         List<CustomerDto> dtos = customerService.getCustomers();
         return ResponseEntity.ok().body(dtos);
@@ -46,8 +46,8 @@ public class AdminContr {
     }
 
 
-    @GetMapping("getdealsbyid/{dealID}")
-    public ResponseEntity<CreatedDeal> getDealsByID(@PathVariable("dealID") Long dealID) {
+    @GetMapping("getdealbyid/{dealID}")
+    public ResponseEntity<CreatedDeal> getDealByID(@PathVariable("dealID") Long dealID) {
         CreatedDeal createdDeal = dealService.getByID(dealID);
         return ResponseEntity.ok().body(createdDeal);
     }
