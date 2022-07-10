@@ -1,6 +1,7 @@
 package nl.wessel.juice.B.BusinessLogic.Model;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 public class Bid {
@@ -14,6 +15,8 @@ public class Bid {
     private String topic;
     private String anchor;
     private String vernacular;
+
+
 
     @ManyToOne
     @JoinColumn(name = "customer_username")

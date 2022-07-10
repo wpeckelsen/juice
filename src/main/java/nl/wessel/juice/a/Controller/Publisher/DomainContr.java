@@ -1,4 +1,4 @@
-package nl.wessel.juice.a.Controller;
+package nl.wessel.juice.a.Controller.Publisher;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;

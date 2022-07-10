@@ -4,6 +4,7 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
+import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Exception.UsernameNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Authority;
 import nl.wessel.juice.B.BusinessLogic.Model.Bid;
@@ -158,38 +159,46 @@ public class CustomerService {
 
     public CustomerDto newBid(CreateBid createBid, String username) {
 
+        var optCustom = customerRepo.findById(username);
 
-        Customer customer = customerRepo.findById(username).get();
-        Bid newBid = bidMaker(createBid);
 
-        List<Bid> currentBids = customer.getBids();
-        currentBids.add(newBid);
+        if (optCustom.isPresent()) {
+            Customer customer = optCustom.get();
+            Bid newBid = bidMaker(createBid);
 
-        for (Bid bid : currentBids) {
-            bid.setCustomer(customer);
-            bidRepo.save(bid);
+            List<Bid> currentBids = customer.getBids();
+            currentBids.add(newBid);
+
+            for (Bid bid : currentBids) {
+                bid.setCustomer(customer);
+                bidRepo.save(bid);
+            }
+
+            customer.setBids(currentBids);
+            customerRepo.save(customer);
+            return fromCustomer(customer);
+
+        } else {
+            Bid bid = new Bid();
+            throw new RecordNotFound(bid);
         }
-
-        customer.setBids(currentBids);
-        customerRepo.save(customer);
-        return fromCustomer(customer);
     }
 
-    public CustomerDto assignDeals(Long idDeal, String username) {
-        var customer = customerRepo.findById(username).get();
-        var newDeal = dealRepo.findById(idDeal).get();
-
-        List<Deal> currentDeals = customer.getDeals();
-        currentDeals.add(newDeal);
-
-        for (Deal deal : currentDeals) {
-            deal.setCustomer(customer);
-            dealRepo.save(deal);
-
-        }
-        customer.setDeals(currentDeals);
-        customerRepo.save(customer);
-        return fromCustomer(customer);
-    }
+//    public CustomerDto assignDeals(Long idDeal, String username) {
+//        var customer = customerRepo.findById(username).get();
+//        var newDeal = dealRepo.findById(idDeal).get();
+//
+//        List<Deal> currentDeals = customer.getDeals();
+//        currentDeals.add(newDeal);
+//
+//        for (Deal deal : currentDeals) {
+//            deal.setCustomer(customer);
+//            dealRepo.save(deal);
+//
+//        }
+//        customer.setDeals(currentDeals);
+//        customerRepo.save(customer);
+//        return fromCustomer(customer);
+//    }
 
 }

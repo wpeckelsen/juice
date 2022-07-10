@@ -1,5 +1,8 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Bid;
 
+import java.time.Instant;
+import java.time.ZonedDateTime;
+
 public class CreatedBid {
 
 
@@ -13,6 +16,15 @@ public class CreatedBid {
     private String topic;
     private String anchor;
     private String vernacular;
+    private ZonedDateTime creationTime;
+
+    public ZonedDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(ZonedDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
 
     public Long getBidID() {
         return bidID;

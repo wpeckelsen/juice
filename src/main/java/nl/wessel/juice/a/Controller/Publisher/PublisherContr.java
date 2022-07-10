@@ -1,4 +1,4 @@
-package nl.wessel.juice.a.Controller.UserPublContr;
+package nl.wessel.juice.a.Controller.Publisher;
 
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
@@ -39,7 +39,7 @@ public class PublisherContr {
         return ResponseEntity.ok().body(createdPublisherList);
     }
 
-    @GetMapping("/{publisherID}")
+    @GetMapping("getbyid/{publisherID}")
     public ResponseEntity<CreatedPublisher> getByID(@PathVariable("publisherID") Long publisherID) {
         CreatedPublisher createdPublisher = publisherService.getByID(publisherID);
         return ResponseEntity.ok().body(createdPublisher);
@@ -63,7 +63,7 @@ public class PublisherContr {
 
 
     //    assign
-    @PostMapping("assign/publisher/{publisherID}/domain")
+    @PostMapping("newdomains/{publisherID}")
     public ResponseEntity<CreatedPublisher> newDomains(@RequestBody CreateDomain createDomain,
                                                        @PathVariable Long publisherID) {
         return ResponseEntity.ok().body(publisherService.newDomains(createDomain, publisherID));

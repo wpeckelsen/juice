@@ -1,5 +1,5 @@
-//package nl.wessel.juice.a.Controller.CustomerContr;
-package nl.wessel.juice.a.Controller;
+//package nl.wessel.juice.a.Controller.Customer.CustomerContr;
+package nl.wessel.juice.a.Controller.Customer;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
@@ -22,19 +22,14 @@ import java.util.List;
 @RequestMapping(value = "/juice/customer")
 public class CustomerContr {
 
-    @Autowired
+
     CustomerService customerService;
-
-    @Autowired
     DomainService domainService;
-
-    @Autowired
     BidService bidService;
-
-    @Autowired
     DealService dealService;
 
 
+    @Autowired
     public CustomerContr(CustomerService customerService, DomainService domainService, BidService bidService) {
         this.customerService = customerService;
         this.domainService = domainService;
@@ -44,7 +39,7 @@ public class CustomerContr {
 
 //    CREATE
 
-    @PostMapping("/new")
+    @PostMapping("newcustomer")
     public ResponseEntity<CustomerDto> newCustomer(@RequestBody CustomerDto dto) {
         String newCustomerName = customerService.createCustomer(dto);
         customerService.addAuthority(newCustomerName, "ROLE_CUSTOMER");
@@ -55,31 +50,20 @@ public class CustomerContr {
         return ResponseEntity.created(location).build();
     }
 
-    @PostMapping("bid/{username}")
+
+    @PostMapping("newbid/{username}")
     public ResponseEntity<CustomerDto> newBid(@RequestBody CreateBid createBid,
                                               @PathVariable String username) {
         return ResponseEntity.ok().body(customerService.newBid(createBid, username));
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<CreatedBid>> getList() {
-        List<CreatedBid> createdBidList;
-        createdBidList = bidService.getList();
-        return ResponseEntity.ok().body(createdBidList);
-    }
 
-    @GetMapping("/{bidID}")
-    public ResponseEntity<CreatedBid> getByID(@PathVariable("bidID") Long bidID) {
-        CreatedBid createdBid = bidService.getByID(bidID);
-        return ResponseEntity.ok().body(createdBid);
-    }
-
-    @PostMapping("{bidID}/{domainID}/{publisherID}/{name}")
+    @PostMapping("newdeal/{bidID}/{domainID}/{publisherID}/{name}")
     public ResponseEntity<CreatedDeal> newDeal(@RequestBody CreateDeal createDeal,
                                                @PathVariable("bidID") Long bidID,
                                                @PathVariable("domainID") Long domainID,
                                                @PathVariable("publisherID") Long publisherID,
-                                               @PathVariable("name") String name){
+                                               @PathVariable("name") String name) {
         final CreatedDeal createdDeal = dealService.newDeal(createDeal, bidID, domainID, publisherID, name);
         return ResponseEntity.ok().body(createdDeal);
     }
@@ -87,25 +71,20 @@ public class CustomerContr {
 
     //    READ
 
+    @GetMapping("bidlist")
+    public ResponseEntity<List<CreatedBid>> bidList() {
+        List<CreatedBid> createdBidList;
+        createdBidList = bidService.getList();
+        return ResponseEntity.ok().body(createdBidList);
+    }
 
+    @GetMapping("bidbyid/{bidID}")
+    public ResponseEntity<CreatedBid> bidByID(@PathVariable("bidID") Long bidID) {
+        CreatedBid createdBid = bidService.getByID(bidID);
+        return ResponseEntity.ok().body(createdBid);
+    }
 
     //    UPDATE
-//    @PutMapping("update/{username}")
-//    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
-//                                                      @RequestBody CustomerDto customerDto) {
-//        customerService.updateCustomer(username, customerDto);
-//        return ResponseEntity.noContent().build();
-//    }
-
 
     //    DELETE
-//    @DeleteMapping( "delete/{username}")
-//    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
-//        customerService.deleteCustomer(username);
-//        return ResponseEntity.noContent().build();
-//    }
-
-
-
-
 }

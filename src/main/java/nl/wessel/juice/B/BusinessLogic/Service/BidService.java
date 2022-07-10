@@ -3,14 +3,12 @@ package nl.wessel.juice.B.BusinessLogic.Service;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
-
-
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Bid;
 import nl.wessel.juice.C.Repository.BidRepo;
-
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,8 @@ public class BidService {
         this.bidRepo = bidRepo;
     }
 
-    public static Bid bidMaker(CreateBid createBid){
+    public static Bid bidMaker(CreateBid createBid) {
+
         Bid bid = new Bid();
         bid.setWords(createBid.getWords());
         bid.setDeadline(createBid.getDeadline());
@@ -33,8 +32,11 @@ public class BidService {
         return bid;
     }
 
-    public static CreatedBid bidDtoMaker(Bid bid){
+    public static CreatedBid bidDtoMaker(Bid bid) {
         CreatedBid createdBid = new CreatedBid();
+        ZonedDateTime rightNow = ZonedDateTime.now();
+
+        createdBid.setCreationTime(rightNow);
         createdBid.setBidID(bid.getBidID());
         createdBid.setWords(bid.getWords());
         createdBid.setDeadline(bid.getDeadline());
@@ -45,26 +47,32 @@ public class BidService {
     }
 
 
-
 //    CREATE
 
-    public CreatedBid newBid(CreateBid createBid){
-        Bid bid = bidMaker(createBid);
-        bidRepo.save(bid);
-        return bidDtoMaker(bid);
-    }
+//    public CreatedBid newBid(CreateBid createBid){
+//        Bid bid = bidMaker(createBid);
+//        bidRepo.save(bid);
+//        return bidDtoMaker(bid);
+//    }
 
-//    READ
-public List<CreatedBid> getList() {
-    List<Bid> bidList = bidRepo.findAll();
-    List<CreatedBid> createdBidList = new ArrayList<>();
+    //    READ
+    public List<CreatedBid> getList() {
 
-    for (Bid bid : bidList) {
-        CreatedBid createdBid = bidDtoMaker(bid);
-        createdBidList.add(createdBid);
+        List<Bid> bidList = bidRepo.findAll();
+
+        if (bidList.isEmpty()) {
+            Bid bid = new Bid();
+            throw new RecordNotFound(bid);
+        } else {
+            List<CreatedBid> createdBidList = new ArrayList<>();
+
+            for (Bid bid : bidList) {
+                CreatedBid createdBid = bidDtoMaker(bid);
+                createdBidList.add(createdBid);
+            }
+            return createdBidList;
+        }
     }
-    return createdBidList;
-}
 
 
 //    public List<CreatedBid> getListByName(String name) {
@@ -89,7 +97,6 @@ public List<CreatedBid> getList() {
     }
 
 
-
     //    update
     public CreatedBid update(Long bidID, CreateBid createBid) {
         if (bidRepo.findById(bidID).isPresent()) {
@@ -110,10 +117,6 @@ public List<CreatedBid> getList() {
     public void deleteById(Long bidID) {
         bidRepo.deleteById(bidID);
     }
-
-
-
-
 
 
 }
