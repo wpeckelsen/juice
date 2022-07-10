@@ -1,4 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.Security.Utils;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -48,7 +49,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + validTime ))
+                .setExpiration(new Date(System.currentTimeMillis() + validTime))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }

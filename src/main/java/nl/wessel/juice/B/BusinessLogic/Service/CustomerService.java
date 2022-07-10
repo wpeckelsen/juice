@@ -4,12 +4,10 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
-import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Exception.UsernameNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Authority;
 import nl.wessel.juice.B.BusinessLogic.Model.Bid;
 import nl.wessel.juice.B.BusinessLogic.Model.Customer;
-import nl.wessel.juice.B.BusinessLogic.Model.Deal;
 import nl.wessel.juice.B.BusinessLogic.Security.Utils.RandomStringGenerator;
 import nl.wessel.juice.C.Repository.BidRepo;
 import nl.wessel.juice.C.Repository.CustomerRepo;
@@ -149,13 +147,6 @@ public class CustomerService {
     }
 
 
-//    public CreatedBid newBid(CreateBid createBid){
-//        Bid bid = bidMaker(createBid);
-//        bidRepo.save(bid);
-//        return bidDtoMaker(bid);
-//    }
-
-
     public CustomerDto newBid(CreateBid createBid, String username) {
 
         var optCustom = customerRepo.findById(username);
@@ -183,21 +174,5 @@ public class CustomerService {
         }
     }
 
-//    public CustomerDto assignDeals(Long idDeal, String username) {
-//        var customer = customerRepo.findById(username).get();
-//        var newDeal = dealRepo.findById(idDeal).get();
-//
-//        List<Deal> currentDeals = customer.getDeals();
-//        currentDeals.add(newDeal);
-//
-//        for (Deal deal : currentDeals) {
-//            deal.setCustomer(customer);
-//            dealRepo.save(deal);
-//
-//        }
-//        customer.setDeals(currentDeals);
-//        customerRepo.save(customer);
-//        return fromCustomer(customer);
-//    }
 
 }

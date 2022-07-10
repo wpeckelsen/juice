@@ -1,7 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.Model;
 
 import javax.persistence.*;
-import java.time.Instant;
 
 @Entity
 public class Bid {
@@ -16,15 +15,12 @@ public class Bid {
     private String anchor;
     private String vernacular;
 
-
-
     @ManyToOne
     @JoinColumn(name = "customer_username")
     private Customer customer;
 
     @OneToOne
     private Deal deal;
-
 
 
     public Deal getDeal() {
@@ -90,8 +86,6 @@ public class Bid {
     public void setVernacular(String vernacular) {
         this.vernacular = vernacular;
     }
-
-
 
 
 }

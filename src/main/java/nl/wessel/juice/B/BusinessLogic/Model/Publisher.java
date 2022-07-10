@@ -16,10 +16,10 @@ public class Publisher {
     private String niche;
 
 
-    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/)
+    @OneToMany(mappedBy = "publisher")
     private List<Deal> deals;
 
-    @OneToMany(mappedBy = "publisher"/*, fetch = FetchType.EAGER*/, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
     private List<Domain> domains;
 
 

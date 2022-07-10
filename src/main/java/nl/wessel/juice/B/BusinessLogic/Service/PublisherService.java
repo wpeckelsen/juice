@@ -7,7 +7,6 @@ import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Domain;
 import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
-import nl.wessel.juice.C.Repository.DealRepo;
 import nl.wessel.juice.C.Repository.DomainRepo;
 import nl.wessel.juice.C.Repository.PublisherRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,6 @@ public class PublisherService {
 
     private final PublisherRepo publisherRepo;
     private final DomainRepo domainRepo;
-//    private final DomainService domainService;
-//    private final DealService dealService;
-//    private final DealRepo dealRepo;
 
 
     @Autowired
@@ -61,18 +57,6 @@ public class PublisherService {
             return createdPublisherList;
         }
     }
-
-
-//    public List<CreatedPublisher> getListByName(String name) {
-//        List<Publisher> publisherList = publisherRepo.findPublishersByName(name);
-//        List<CreatedPublisher> createdPublisherList = new ArrayList<>();
-//
-//        for (Publisher publisher : publisherList) {
-//            CreatedPublisher createdPublisher = TransferService.publisherDtoMaker(publisher);
-//            createdPublisherList.add(createdPublisher);
-//        }
-//        return createdPublisherList;
-//    }
 
 
     public CreatedPublisher getByID(Long publisherID) {

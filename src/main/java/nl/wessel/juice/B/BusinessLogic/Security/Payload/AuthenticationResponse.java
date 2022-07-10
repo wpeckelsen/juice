@@ -1,4 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.Security.Payload;
+
 public class AuthenticationResponse {
 
     private final String jwt;

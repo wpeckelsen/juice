@@ -5,7 +5,6 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Bid;
-import nl.wessel.juice.B.BusinessLogic.Model.Customer;
 import nl.wessel.juice.C.Repository.BidRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @Service
 public class BidService {
-
 
 
     private BidRepo bidRepo;
@@ -55,14 +53,6 @@ public class BidService {
     }
 
 
-//    CREATE
-
-//    public CreatedBid newBid(CreateBid createBid){
-//        Bid bid = bidMaker(createBid);
-//        bidRepo.save(bid);
-//        return bidDtoMaker(bid);
-//    }
-
     //    READ
     public List<CreatedBid> getList() {
 
@@ -81,18 +71,6 @@ public class BidService {
             return createdBidList;
         }
     }
-
-
-//    public List<CreatedBid> getListByName(String name) {
-//        List<Bid> bidList = bidRepo.findBidsByName(name);
-//        List<CreatedBid> createdBidList = new ArrayList<>();
-//
-//        for (Bid bid : bidList) {
-//            CreatedBid createdBid = bidDtoMaker(bid);
-//            createdBidList.add(createdBid);
-//        }
-//        return createdBidList;
-//    }
 
     public CreatedBid getByID(Long idBid) {
         if (bidRepo.findById(idBid).isPresent()) {
@@ -124,7 +102,6 @@ public class BidService {
     }
 
     //    delete
-
     public void deleteById(Long bidID) {
         bidRepo.deleteById(bidID);
     }

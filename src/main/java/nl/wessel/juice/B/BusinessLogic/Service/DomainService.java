@@ -1,10 +1,8 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
 
 
-
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
-
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Domain;
 import nl.wessel.juice.C.Repository.DomainRepo;
@@ -24,17 +22,11 @@ public class DomainService {
         this.domainRepo = domainRepo;
     }
 
-    // create
-//    public CreatedDomain newDomain(CreateDomain createDomain){
-//        Domain domain = TransferService.domainMaker(createDomain);
-//        domainRepo.save(domain);
-//        return TransferService.domainDtoMaker(domain);
-//    }
 
-//    read
-public List<CreatedDomain> getList() {
-    List<Domain> domainList = domainRepo.findAll();
-        if(domainList.isEmpty()){
+    //    read
+    public List<CreatedDomain> getList() {
+        List<Domain> domainList = domainRepo.findAll();
+        if (domainList.isEmpty()) {
             Domain domain = new Domain();
             throw new RecordNotFound(domain);
         } else {
@@ -46,19 +38,8 @@ public List<CreatedDomain> getList() {
             }
             return createdDomainList;
         }
-}
+    }
 
-
-//    public List<CreatedDomain> getListByName(String name) {
-//        List<Domain> domainList = domainRepo.findDomainsByName(name);
-//        List<CreatedDomain> createdDomainList = new ArrayList<>();
-//
-//        for (Domain domain : domainList) {
-//            CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
-//            createdDomainList.add(createdDomain);
-//        }
-//        return createdDomainList;
-//    }
 
     public CreatedDomain getByID(Long idDomain) {
         if (domainRepo.findById(idDomain).isPresent()) {
@@ -69,7 +50,6 @@ public List<CreatedDomain> getList() {
             throw new RecordNotFound(domain);
         }
     }
-
 
 
     //    update

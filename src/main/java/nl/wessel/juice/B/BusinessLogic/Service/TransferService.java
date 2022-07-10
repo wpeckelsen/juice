@@ -9,7 +9,6 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatePublisher;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
-import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Model.Deal;
 import nl.wessel.juice.B.BusinessLogic.Model.Domain;
 import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
@@ -20,8 +19,6 @@ import java.util.List;
 
 @Service
 public class TransferService {
-
-
 
 
     public static Deal dealMaker(CreateDeal createDeal) {
@@ -79,8 +76,8 @@ public class TransferService {
         List<Domain> domains = publisher.getDomains();
         List<CreatedDomain> createdDomains = new ArrayList<>();
 
-        if(domains != null){
-            for (Domain domain : domains){
+        if (domains != null) {
+            for (Domain domain : domains) {
                 CreatedDomain createdDomain = domainDtoMaker(domain);
                 createdDomains.add(createdDomain);
             }
@@ -88,19 +85,6 @@ public class TransferService {
 
         createdPublisher.setDomains(createdDomains);
 
-
-
-//        List<Deal> deals = publisher.getDeals();
-//        List<CreatedDeal> createdDeals = new ArrayList<>();
-//
-//        if(deals != null){
-//            for(Deal deal : deals){
-//                CreatedDeal createdDeal = dealDtoMaker(deal);
-//                createdDeals.add(createdDeal);
-//            }
-//        }
-//        publisher.getDeals();
-//        createdPublisher.setDeals(createdDeals);
 
         return createdPublisher;
     }
@@ -113,7 +97,7 @@ public class TransferService {
         return publisher;
     }
 
-    public static CreatedDomain domainDtoMaker(Domain domain){
+    public static CreatedDomain domainDtoMaker(Domain domain) {
         CreatedDomain createdDomain = new CreatedDomain();
         createdDomain.setDomainID(domain.getDomainID());
         createdDomain.setName(domain.getName());
@@ -123,7 +107,7 @@ public class TransferService {
         return createdDomain;
     }
 
-    public static Domain domainMaker(CreateDomain createDomain){
+    public static Domain domainMaker(CreateDomain createDomain) {
         Domain domain = new Domain();
         domain.setName(createDomain.getName());
         domain.setTLD(createDomain.getTLD());
