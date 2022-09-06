@@ -17,15 +17,16 @@ import java.util.List;
 public class BidService {
 
 
-    private BidRepo bidRepo;
+    private final BidRepo bidRepo;
+    private final CustomerService customerService;
 
     @Autowired
-    private CustomerService customerService;
-
-    @Autowired
-    public BidService(BidRepo bidRepo) {
+    public BidService(BidRepo bidRepo, CustomerService customerService) {
         this.bidRepo = bidRepo;
+        this.customerService = customerService;
     }
+
+
 
     public static Bid bidMaker(CreateBid createBid) {
 

@@ -63,6 +63,8 @@ public class CustomerContr {
     }
 
 
+
+
     @PostMapping("newdeal/{bidID}/{domainID}/{publisherID}/{name}")
     public ResponseEntity<CreatedDeal> newDeal(@RequestBody CreateDeal createDeal,
                                                @PathVariable("bidID") Long bidID,
@@ -83,8 +85,26 @@ public class CustomerContr {
         return ResponseEntity.ok().body(createdBidList);
     }
 
+//    api key
+//    @GetMapping("bidlistapi/{username}")
+//    public ResponseEntity<List<CreatedBid>> bidListApi(@PathVariable("username") String username,
+//                                                       @RequestBody String api) {
+//
+//
+//        List<CreatedBid> createdBidList;
+//        createdBidList = bidService.getList();
+//        return ResponseEntity.ok().body(createdBidList);
+//    }
+
+
     @GetMapping("bidbyid/{bidID}")
     public ResponseEntity<CreatedBid> bidByID(@PathVariable("bidID") Long bidID) {
+        CreatedBid createdBid = bidService.getByID(bidID);
+        return ResponseEntity.ok().body(createdBid);
+    }
+
+    @GetMapping("stringbidbyid/{bidID}")
+    public ResponseEntity<CreatedBid> stringBidByID(@PathVariable("bidID") Long bidID) {
         CreatedBid createdBid = bidService.getByID(bidID);
         return ResponseEntity.ok().body(createdBid);
     }

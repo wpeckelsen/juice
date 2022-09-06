@@ -18,9 +18,7 @@ public class DealService {
 
     private final DealRepo dealRepo;
     private final BidRepo bidRepo;
-
     private final DomainRepo domainRepo;
-
     private final CustomerRepo customerRepo;
     private final PublisherRepo publisherRepo;
 

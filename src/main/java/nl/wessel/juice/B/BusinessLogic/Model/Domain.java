@@ -59,7 +59,12 @@ public class Domain {
     }
 
     public void setPrice(int price) {
-        this.price = price;
+//        this.price = price;
+        if (price >= 0){
+            this.price = price;
+        } else {
+            this.price = 0;
+        }
     }
 
     public Publisher getPublisher() {

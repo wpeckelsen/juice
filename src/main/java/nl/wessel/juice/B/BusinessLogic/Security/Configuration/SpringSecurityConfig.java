@@ -58,19 +58,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
 
+                .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/juice/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.POST, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
 
-                .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CLIENT")
-                .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CLIENT")
-                .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CLIENT")
-                .antMatchers(HttpMethod.DELETE, "/juice/customer/**").hasRole("CLIENT")
-
-//                .antMatchers(HttpMethod.POST, "/juice/customer/bid/new").hasRole("CLIENT")
-//                .antMatchers(HttpMethod.GET, "/juice/customer/list/domain").hasRole("CLIENT")
-//                .antMatchers(HttpMethod.POST, "/juice/deal/new/**").hasRole("CLIENT")
 
 
                 .antMatchers("/authenticated").authenticated()

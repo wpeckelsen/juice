@@ -23,9 +23,14 @@ public class AdminContr {
     BidService bidService;
 
     @Autowired
-    public AdminContr(CustomerService customerService) {
+    public AdminContr(CustomerService customerService, DealService dealService, BidService bidService) {
         this.customerService = customerService;
+        this.dealService = dealService;
+        this.bidService = bidService;
     }
+
+
+
 
 
     //    CREATE
@@ -86,6 +91,12 @@ public class AdminContr {
     public ResponseEntity<Object> deleteDeal(@PathVariable Long dealID) {
         dealService.deleteById(dealID);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("abcxyz")
+    public ResponseEntity<String> abcxyz() {
+        String string = "abcxyz";
+        return ResponseEntity.ok().body(string);
     }
 
 
