@@ -9,8 +9,10 @@ import nl.wessel.juice.C.Repository.DomainRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DomainService {
@@ -50,6 +52,8 @@ public class DomainService {
             throw new RecordNotFound(domain);
         }
     }
+
+
 
 
     //    update
