@@ -61,7 +61,12 @@ public class AuthenticationContr {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         final String jwt = jwtUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+
+//        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+//        this returns a JSON body containing a jwt token
+
+          return ResponseEntity.ok(jwt);
+//        this returns a jwt token as a String
     }
 
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,9 +29,6 @@ public class AdminContr {
         this.dealService = dealService;
         this.bidService = bidService;
     }
-
-
-
 
 
     //    CREATE
@@ -93,11 +91,47 @@ public class AdminContr {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("collatz")
+    public ResponseEntity<Object> collatz(@RequestBody int n) {
+//      this is a test request, it is not part of the whole project
+
+//      collatz Conjecture -
+//      Start with a number n > 1.
+
+//      Apply the following rule:
+//          If n is even, divide it by 2. n/2
+//          If n is odd multiply it by 3 and add 1. 3n+1
+//      Take the outcome and apply either rule to it again.
+
+//      Find the number of steps it takes to reach 1.
+
+//      you will see how the result will always be 1,
+//      but the >amount< of steps it takes to get to 1 is random for each number.
+
+        int input = n;
+
+        List<Integer> list = new ArrayList<>();
+
+        int count;
+        count = 0;
+        while (n != 1) {
+            if (n % 2 == 0) {
+                n = n / 2;
+            } else n = 3 * n + 1;
+            count = count + 1;
+            list.add(n);
+
+        }
+        return ResponseEntity.ok().body("for " + input + " to reach 1, it takes " + count + " steps. this ArrayList shows how: "
+                + list);
+    }
+
+
+
     @GetMapping("abcxyz")
-    public ResponseEntity<String> abcxyz() {
+    public ResponseEntity<String> abcxyz(){
         String string = "abcxyz";
         return ResponseEntity.ok().body(string);
     }
-
 
 }
