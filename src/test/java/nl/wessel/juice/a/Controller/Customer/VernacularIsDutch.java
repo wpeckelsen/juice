@@ -2,6 +2,9 @@ package nl.wessel.juice.a.Controller.Customer;
 
 import nl.wessel.juice.B.BusinessLogic.Security.Utils.JwtUtil;
 import nl.wessel.juice.B.BusinessLogic.Service.BidService;
+import nl.wessel.juice.B.BusinessLogic.Service.CustomUserDetailsService;
+import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
+import nl.wessel.juice.B.BusinessLogic.Service.DealService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +25,24 @@ import static org.hamcrest.Matchers.is;
 class VernacularIsDutch {
 
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
 
     @MockBean
-    JwtUtil jwt;
+    CustomUserDetailsService customUserDetailsService;
+
+    @MockBean
+    JwtUtil jwtUtil;
+
+    @MockBean
+    CustomerService customerService;
+
+    @MockBean
+    DealService dealService;
 
     @MockBean
     BidService bidService;
+
+
 
 
     @Test
