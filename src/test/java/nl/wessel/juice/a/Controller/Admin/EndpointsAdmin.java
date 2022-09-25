@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(AdminContr.class)
 @AutoConfigureMockMvc
-class EndpointsOK {
+class EndpointsAdmin {
 
     @Autowired
     MockMvc mvc;
@@ -54,7 +54,9 @@ class EndpointsOK {
     @Test
     @DisplayName("returns HTTP status code 200 for endpoint: list of deals")
     @WithMockUser(username = "ADMIN", roles = "ADMIN", password = "ADMIN")
-    void getdeals() {
+    void getdeals() throws Exception{
+        mvc.perform(get("juice/admin/getdeals"))
+                .andExpect(status().is(200));
     }
 
     @Test

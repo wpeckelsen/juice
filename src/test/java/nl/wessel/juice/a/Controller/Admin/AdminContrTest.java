@@ -16,8 +16,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import nl.wessel.juice.B.BusinessLogic.Security.Utils.JwtUtil;
 import nl.wessel.juice.B.BusinessLogic.Service.BidService;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomUserDetailsService;
-import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
 import nl.wessel.juice.B.BusinessLogic.Service.DealService;
+import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
 
 @WebMvcTest(AdminContr.class)
 class AdminContrTest {
@@ -42,7 +42,7 @@ class AdminContrTest {
 
 
     @Test
-    @DisplayName("should return abcxyz as response body")
+    @DisplayName("Returns abcxyz as response body")
     @WithMockUser(username = "ADMIN", password = "ADMIN", roles = {"ADMIN"} )
     void abcxyz() throws Exception {
         this.mvc.

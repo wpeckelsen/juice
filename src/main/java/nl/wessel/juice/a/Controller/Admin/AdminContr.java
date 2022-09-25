@@ -91,6 +91,16 @@ public class AdminContr {
         return ResponseEntity.noContent().build();
     }
 
+
+
+    @GetMapping("abcxyz")
+    public ResponseEntity<String> abcxyz(){
+        String string = "abcxyz";
+        return ResponseEntity.ok().body(string);
+    }
+
+
+
     @PostMapping("collatz")
     public ResponseEntity<Object> collatz(@RequestBody int n) {
 //      this is a test request, it is not part of the whole project
@@ -109,10 +119,9 @@ public class AdminContr {
 //      but the >amount< of steps it takes to get to 1 is random for each number.
 
         int input = n;
-
         List<Integer> list = new ArrayList<>();
-
         int count;
+
         count = 0;
         while (n != 1) {
             if (n % 2 == 0) {
@@ -124,14 +133,6 @@ public class AdminContr {
         }
         return ResponseEntity.ok().body("for " + input + " to reach 1, it takes " + count + " steps. this ArrayList shows how: "
                 + list);
-    }
-
-
-
-    @GetMapping("abcxyz")
-    public ResponseEntity<String> abcxyz(){
-        String string = "abcxyz";
-        return ResponseEntity.ok().body(string);
     }
 
 }
