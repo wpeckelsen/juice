@@ -30,10 +30,6 @@ public class AdminContr {
         this.bidService = bidService;
     }
 
-
-    //    CREATE
-
-
     //    READ
     @GetMapping("getcustomers")
     public ResponseEntity<List<CustomerDto>> getCustomers() {

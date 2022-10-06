@@ -59,8 +59,8 @@ public class DealService {
             dealRepo.save(deal);
             return TransferService.dealDtoMaker(deal);
         } else {
-            throw new BadRequest(" A deal cannot be made unless a Customer, Bid, Publisher and Domain is present. " +
-                    "Make these first before making a new Deal. ");
+            throw new BadRequest(" You must include an ID for an existing Customer, Bid, Publisher and Domain in your URL. " +
+                    "Are you sure you are using the correct IDs? And are you sure all these entities exist already?");
         }
     }
 

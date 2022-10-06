@@ -58,20 +58,25 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
 
-                .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.DELETE, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers("/authenticated").authenticated()
+                .antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
 
+                .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/juice/customer/**").hasRole("CUSTOMER")
+
+                .antMatchers(HttpMethod.POST, "/juice/publisher/**").hasRole("PUBLISHER")
+                .antMatchers(HttpMethod.GET, "/juice/publisher/**").hasRole("PUBLISHER")
+                .antMatchers(HttpMethod.PUT, "/juice/publisher/**").hasRole("PUBLISHER")
+                .antMatchers(HttpMethod.DELETE, "/juice/publisher/**").hasRole("PUBLISHER")
 
 
-                .antMatchers("/authenticated").authenticated()
-                .antMatchers("/authenticate").permitAll()
-                /*alleen dit punt mag toegankelijk zijn voor niet ingelogde gebruikers*/
+
 
                 .anyRequest().permitAll()
                 .and()
