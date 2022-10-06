@@ -11,8 +11,8 @@ public class CreatedPublisher {
     private String country;
     private String niche;
 
-    private List<CreatedDomain> domains;
-    private List<CreatedDeal> deals;
+//    private List<CreatedDomain> domains;
+//    private List<CreatedDeal> deals;
 
 
     public Long getPublisherID() {
@@ -47,19 +47,19 @@ public class CreatedPublisher {
         this.niche = niche;
     }
 
-    public List<CreatedDomain> getDomains() {
-        return domains;
-    }
-
-    public void setDomains(List<CreatedDomain> domains) {
-        this.domains = domains;
-    }
-
-    public List<CreatedDeal> getDeals() {
-        return deals;
-    }
-
-    public void setDeals(List<CreatedDeal> deals) {
-        this.deals = deals;
-    }
+//    public List<CreatedDomain> getDomains() {
+//        return domains;
+//    }
+//
+//    public void setDomains(List<CreatedDomain> domains) {
+//        this.domains = domains;
+//    }
+//
+//    public List<CreatedDeal> getDeals() {
+//        return deals;
+//    }
+//
+//    public void setDeals(List<CreatedDeal> deals) {
+//        this.deals = deals;
+//    }
 }

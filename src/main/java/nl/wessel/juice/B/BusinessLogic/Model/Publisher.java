@@ -16,11 +16,11 @@ public class Publisher {
     private String niche;
 
 
-    @OneToMany(mappedBy = "publisher")
-    private List<Deal> deals;
-
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
-    private List<Domain> domains;
+//    @OneToMany(mappedBy = "publisher")
+//    private List<Deal> deals;
+//
+//    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
+//    private List<Domain> domains;
 
 
     public Long getPublisherID() {
@@ -55,19 +55,19 @@ public class Publisher {
         this.niche = niche;
     }
 
-    public List<Deal> getDeals() {
-        return deals;
-    }
-
-    public void setDeals(List<Deal> deals) {
-        this.deals = deals;
-    }
-
-    public List<Domain> getDomains() {
-        return domains;
-    }
-
-    public void setDomains(List<Domain> domains) {
-        this.domains = domains;
-    }
+//    public List<Deal> getDeals() {
+//        return deals;
+//    }
+//
+//    public void setDeals(List<Deal> deals) {
+//        this.deals = deals;
+//    }
+//
+//    public List<Domain> getDomains() {
+//        return domains;
+//    }
+//
+//    public void setDomains(List<Domain> domains) {
+//        this.domains = domains;
+//    }
 }

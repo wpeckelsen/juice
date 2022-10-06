@@ -2,6 +2,7 @@ package nl.wessel.juice.a.Controller.Customer;
 
 import nl.wessel.juice.B.BusinessLogic.Security.Utils.JwtUtil;
 import nl.wessel.juice.B.BusinessLogic.Service.*;
+import nl.wessel.juice.a.Controller.CustomerContr;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

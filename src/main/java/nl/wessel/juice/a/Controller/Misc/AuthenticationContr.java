@@ -1,4 +1,4 @@
-package nl.wessel.juice.a.Controller;
+package nl.wessel.juice.a.Controller.Misc;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.Security.Payload.AuthenticationRequest;
@@ -20,7 +20,6 @@ import java.util.List;
 
 
 @RestController
-//@RequestMapping(value = "")
 public class AuthenticationContr {
 
 
@@ -62,11 +61,13 @@ public class AuthenticationContr {
         final String jwt = jwtUtil.generateToken(userDetails);
 
 
-//        return ResponseEntity.ok(new AuthenticationResponse(jwt));
-//        this returns a JSON body containing a jwt token
+//           this returns a JSON body containing a jwt token
+//      return ResponseEntity.ok(new AuthenticationResponse(jwt));
 
-          return ResponseEntity.ok(jwt);
+
+
 //        this returns a jwt token as a String
+        return ResponseEntity.ok(jwt);
     }
 
 

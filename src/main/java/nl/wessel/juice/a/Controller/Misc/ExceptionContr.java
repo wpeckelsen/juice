@@ -1,4 +1,4 @@
-package nl.wessel.juice.a.Controller;
+package nl.wessel.juice.a.Controller.Misc;
 
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;

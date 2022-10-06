@@ -65,6 +65,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
 
+                .antMatchers(HttpMethod.POST, "/juice/common/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/juice/common/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.PUT, "/juice/common/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/juice/common/**").hasRole("CUSTOMER")
+
+                .antMatchers(HttpMethod.POST, "/juice/common/**").hasRole("PUBLISHER")
+                .antMatchers(HttpMethod.GET, "/juice/common/**").hasRole("PUBLISHER")
+                .antMatchers(HttpMethod.PUT, "/juice/common/**").hasRole("PUBLISHER")
+                .antMatchers(HttpMethod.DELETE, "/juice/common/**").hasRole("PUBLISHER")
+
                 .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")
@@ -74,9 +84,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/juice/publisher/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.PUT, "/juice/publisher/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.DELETE, "/juice/publisher/**").hasRole("PUBLISHER")
-
-
-
 
                 .anyRequest().permitAll()
                 .and()

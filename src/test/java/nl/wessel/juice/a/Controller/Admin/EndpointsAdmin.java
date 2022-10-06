@@ -5,6 +5,7 @@ import nl.wessel.juice.B.BusinessLogic.Service.BidService;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomUserDetailsService;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
 import nl.wessel.juice.B.BusinessLogic.Service.DealService;
+import nl.wessel.juice.a.Controller.AdminContr;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

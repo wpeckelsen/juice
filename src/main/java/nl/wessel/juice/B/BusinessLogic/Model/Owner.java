@@ -1,5 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.Model;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -7,8 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
+@Table(name = "owner")
+public class Owner implements Serializable {
+
 
     @Id
     @Column(nullable = false, unique = true)
@@ -31,42 +33,20 @@ public class Customer implements Serializable {
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Bid> bids;
-
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "owner")
     private List<Deal> deals;
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
+
+    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
+    private List<Domain> domains;
+
+
+    public List<Domain> getDomains() {
+        return domains;
     }
 
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
-    }
-
-    public void removeAuthority(Authority authority) {
-        this.authorities.remove(authority);
-    }
-
-    public void addAuthority(Authority authority) {
-        this.authorities.add(authority);
-    }
-
-    public List<Bid> getBids() {
-        return bids;
-    }
-
-    public void setBids(List<Bid> bids) {
-        this.bids = bids;
-    }
-
-    public List<Deal> getDeals() {
-        return deals;
-    }
-
-    public void setDeals(List<Deal> deals) {
-        this.deals = deals;
+    public void setDomains(List<Domain> domains) {
+        this.domains = domains;
     }
 
     public String getUsername() {
@@ -109,5 +89,27 @@ public class Customer implements Serializable {
         this.email = email;
     }
 
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
 
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public List<Deal> getDeals() {
+        return deals;
+    }
+
+    public void setDeals(List<Deal> deals) {
+        this.deals = deals;
+    }
+
+    public void removeAuthority(Authority authority) {
+        this.authorities.remove(authority);
+    }
+
+    public void addAuthority(Authority authority) {
+        this.authorities.add(authority);
+    }
 }

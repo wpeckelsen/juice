@@ -25,12 +25,19 @@ public class Deal {
 
 
     @ManyToOne
-    @JoinColumn(name = "publisher_publisherID")
-    private Publisher publisher;
+    @JoinColumn(name = "owner_username")
+    private Owner owner;
 
     @OneToOne(mappedBy = "deal")
     private Domain domain;
 
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
 
     public Long getDealID() {
         return dealID;
@@ -86,14 +93,6 @@ public class Deal {
 
     public void setBid(Bid bid) {
         this.bid = bid;
-    }
-
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
     }
 
     public Domain getDomain() {

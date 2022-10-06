@@ -9,10 +9,8 @@ import nl.wessel.juice.C.Repository.DomainRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DomainService {
@@ -22,6 +20,25 @@ public class DomainService {
     @Autowired
     public DomainService(DomainRepo domainRepo) {
         this.domainRepo = domainRepo;
+    }
+
+    public static CreatedDomain domainDtoMaker(Domain domain) {
+        CreatedDomain createdDomain = new CreatedDomain();
+        createdDomain.setDomainID(domain.getDomainID());
+        createdDomain.setName(domain.getName());
+        createdDomain.setTLD(domain.getTLD());
+        createdDomain.setCategory(domain.getCategory());
+        createdDomain.setPrice(domain.getPrice());
+        return createdDomain;
+    }
+
+    public static Domain domainMaker(CreateDomain createDomain) {
+        Domain domain = new Domain();
+        domain.setName(createDomain.getName());
+        domain.setTLD(createDomain.getTLD());
+        domain.setCategory(createDomain.getCategory());
+        domain.setPrice(createDomain.getPrice());
+        return domain;
     }
 
 
@@ -35,7 +52,7 @@ public class DomainService {
             List<CreatedDomain> createdDomainList = new ArrayList<>();
 
             for (Domain domain : domainList) {
-                CreatedDomain createdDomain = TransferService.domainDtoMaker(domain);
+                CreatedDomain createdDomain = domainDtoMaker(domain);
                 createdDomainList.add(createdDomain);
             }
             return createdDomainList;
@@ -46,7 +63,7 @@ public class DomainService {
     public CreatedDomain getByID(Long idDomain) {
         if (domainRepo.findById(idDomain).isPresent()) {
             Domain domain = domainRepo.findById(idDomain).get();
-            return TransferService.domainDtoMaker(domain);
+            return domainDtoMaker(domain);
         } else {
             Domain domain = new Domain();
             throw new RecordNotFound(domain);
@@ -60,11 +77,11 @@ public class DomainService {
     public CreatedDomain update(Long domainID, CreateDomain createDomain) {
         if (domainRepo.findById(domainID).isPresent()) {
             Domain domain = domainRepo.findById(domainID).get();
-            Domain domain1 = TransferService.domainMaker(createDomain);
+            Domain domain1 = domainMaker(createDomain);
 
             domain1.setDomainID(domain.getDomainID());
             domainRepo.save(domain1);
-            return TransferService.domainDtoMaker(domain1);
+            return domainDtoMaker(domain1);
         } else {
             Domain domain = new Domain();
             throw new RecordNotFound(domain);
