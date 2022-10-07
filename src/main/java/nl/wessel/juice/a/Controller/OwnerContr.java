@@ -1,14 +1,10 @@
 package nl.wessel.juice.a.Controller;
 
 
-import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
-import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Owner.OwnerDto;
-import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatePublisher;
-import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
 import nl.wessel.juice.B.BusinessLogic.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +25,7 @@ public class OwnerContr {
     OwnerService ownerService;
 
 
+    @Autowired
     public OwnerContr(CustomerService customerService, DomainService domainService, BidService bidService, DealService dealService, OwnerService ownerService) {
         this.customerService = customerService;
         this.domainService = domainService;
@@ -37,7 +34,6 @@ public class OwnerContr {
         this.ownerService = ownerService;
     }
 
-    @Autowired
 
 
 
@@ -53,31 +49,30 @@ public class OwnerContr {
         return ResponseEntity.created(location).build();
     }
 
-//    2
+    //    2
     @PostMapping("newdomain/{username}")
     public ResponseEntity<OwnerDto> newDomain(@RequestBody CreateDomain createDomain,
                                               @PathVariable String username) {
-        return ResponseEntity.ok().body(domainService.newDomain(createDomain, username));
-
+        return ResponseEntity.ok().body(ownerService.newDomain(createDomain, username));
     }
 
-//    3
-@PutMapping("updatepublisher/{publisherID}")
-public ResponseEntity<Object> updatePublisher(@PathVariable Long publisherID, @RequestBody CreatePublisher createPublisher) {
-    CreatedPublisher createdPublisher = publisherService.update(publisherID, createPublisher);
-    return ResponseEntity.ok().body(createdPublisher);
-}
+    //    3
+    @PutMapping("updatepublisher/{publisherID}")
+    public ResponseEntity<OwnerDto> updateOwner(@PathVariable("username") String ownerName,
+                                                @RequestBody OwnerDto ownerDto) {
+        ownerService.updateOwner(ownerName, ownerDto);
+        return ResponseEntity.noContent().build();
+    }
 
-
-//  4
+    //  4
     @PutMapping("updatedomain/{domainID}")
     public ResponseEntity<Object> updateDomain(@PathVariable Long domainID, @RequestBody CreateDomain createDomain) {
-        CreatedDomain createdDomain = domainService.update(domainID, createDomain);
-        return ResponseEntity.ok().body(createdDomain);
+        domainService.update(domainID, createDomain);
+        return ResponseEntity.noContent().build();
     }
 
 
-//    5
+    //    5
     @DeleteMapping("deletepublisher/{username}")
     public ResponseEntity<Object> deletePublisher(@PathVariable String username) {
         ownerService.deleteOwner(username);
@@ -92,13 +87,12 @@ public ResponseEntity<Object> updatePublisher(@PathVariable Long publisherID, @R
     }
 
 
-//    6
+    //    6
     @DeleteMapping("deletedomain/{domainID}")
     public ResponseEntity<Object> deleteDomain(@PathVariable Long domainID) {
         domainService.deleteById(domainID);
         return ResponseEntity.noContent().build();
     }
-
 
 
 }

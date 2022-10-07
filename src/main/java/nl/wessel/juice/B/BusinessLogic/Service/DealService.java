@@ -1,13 +1,10 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
-
-
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Owner.OwnerDto;
-import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.CreatedPublisher;
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.*;

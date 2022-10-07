@@ -37,7 +37,7 @@ public class Owner implements Serializable {
     private List<Deal> deals;
 
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Domain> domains;
 
 

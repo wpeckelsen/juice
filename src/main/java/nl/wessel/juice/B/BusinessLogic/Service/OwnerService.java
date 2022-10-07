@@ -152,6 +152,7 @@ public class OwnerService {
 
 
 
+//    assigns a domain to an owner
     public OwnerDto newDomain(CreateDomain createDomain, String username) {
 
         var optCustom = ownerRepo.findById(username);
