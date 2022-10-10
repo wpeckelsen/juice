@@ -41,10 +41,10 @@ class VernacularIsDutch {
 
     @Test
     @DisplayName("Gives back 550 as Words in Bid")
-    @WithMockUser(username = "CUSTOMER1", roles = "CUSTOMER", password = "CUSTOMER1")
+    @WithMockUser(username = "ADMIN", roles = "ADMIN", password = "ADMIN")
     void bidByID() throws Exception {
         this.mvc.
-                perform((RequestBuilder) get("/juice/customer/bidbyid/40")
+                perform((RequestBuilder) get("/juice/common/bidbyid/1")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.words", is(550)))

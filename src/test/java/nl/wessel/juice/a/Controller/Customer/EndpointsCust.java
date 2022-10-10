@@ -40,7 +40,7 @@ class EndpointsCust {
 
     @Test
     @DisplayName("returns HTTP status code 201 for endpoint: new Customer")
-    @WithMockUser(username = "CUSTOMER1", roles = "CUSTOMER", password = "CUSTOMER1")
+    @WithMockUser(username = "CUSTOMER", roles = "CUSTOMER", password = "CUSTOMER")
     void newCustomer() throws Exception {
 
         Customer customer = new Customer();
