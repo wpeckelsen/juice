@@ -1,10 +1,11 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
+
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
-import nl.wessel.juice.B.BusinessLogic.DTO.Owner.OwnerDto;
+import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.B.BusinessLogic.Exception.BadRequest;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.*;
@@ -22,16 +23,16 @@ public class DealService {
     private final BidRepo bidRepo;
     private final DomainRepo domainRepo;
     private final CustomerRepo customerRepo;
-    private final OwnerRepo ownerRepo;
+    private final PublisherRepo publisherRepo;
 
 
     @Autowired
-    public DealService(DealRepo dealRepo, BidRepo bidRepo, DomainRepo domainRepo, CustomerRepo customerRepo, OwnerRepo ownerRepo) {
+    public DealService(DealRepo dealRepo, BidRepo bidRepo, DomainRepo domainRepo, CustomerRepo customerRepo, PublisherRepo publisherRepo) {
         this.dealRepo = dealRepo;
         this.bidRepo = bidRepo;
         this.domainRepo = domainRepo;
         this.customerRepo = customerRepo;
-        this.ownerRepo = ownerRepo;
+        this.publisherRepo = publisherRepo;
     }
 
     public static Deal dealMaker(CreateDeal createDeal) {
@@ -54,12 +55,12 @@ public class DealService {
         var domain = deal.getDomain();
         var bid = deal.getBid();
         var customer = deal.getCustomer();
-        var owner = deal.getOwner();
+        var publisher = deal.getPublisher();
 
         if (domain != null
                 && bid != null
                 && customer != null
-                && owner != null
+                && publisher != null
         ) {
             CreatedDomain createdDomain = DomainService.domainDtoMaker(domain);
             createdDeal.setDomain(createdDomain);
@@ -70,8 +71,8 @@ public class DealService {
             CustomerDto customerDto = CustomerService.fromCustomer(customer);
             createdDeal.setCustomer(customerDto);
 
-            OwnerDto ownerDto = OwnerService.fromOwner(owner);
-            createdDeal.setOwner(ownerDto);
+            PublisherDto publisherDto = PublisherService.fromPublisher(publisher);
+            createdDeal.setPublisher(publisherDto);
         }
 
 
@@ -79,17 +80,19 @@ public class DealService {
     }
 
     //    CREATE
-    public CreatedDeal newDeal(CreateDeal createDeal, Long bidID, Long domainID, String ownerName, String Customername) {
+    public CreatedDeal newDeal(CreateDeal createDeal, Long bidID, Long domainID, String publisherName, String Customername) {
 
 
-        if (customerRepo.findById(Customername).isPresent()
+        if (
+                domainRepo.findById(domainID).isPresent()
+                && customerRepo.findById(Customername).isPresent()
                 && bidRepo.findById(bidID).isPresent()
-                && ownerRepo.findById(Customername).isPresent()
-                && domainRepo.findById(domainID).isPresent()) {
+                && publisherRepo.findById(publisherName).isPresent()
+        ) {
 
             Customer customer = customerRepo.findById(Customername).get();
             Bid bid = bidRepo.findById(bidID).get();
-            Owner owner = ownerRepo.findById(ownerName).get();
+            Publisher publisher = publisherRepo.findById(publisherName).get();
             Domain domain = domainRepo.findById(domainID).get();
 
             Deal deal = dealMaker(createDeal);
@@ -97,7 +100,7 @@ public class DealService {
             deal.setCustomer(customer);
             deal.setBid(bid);
 
-            deal.setOwner(owner);
+            deal.setPublisher(publisher);
             deal.setDomain(domain);
 
             domain.setDeal(deal);
@@ -106,7 +109,7 @@ public class DealService {
             dealRepo.save(deal);
             return dealDtoMaker(deal);
         } else {
-            throw new BadRequest(" You must include an ID for an existing Customer, Bid, Owner and Domain in your URL. " +
+            throw new BadRequest(" You must include an ID for an existing Customer, Bid, Publisher and Domain in your URL. " +
                     "Are you sure you are using the correct IDs? And are you sure all these entities exist already?");
         }
     }

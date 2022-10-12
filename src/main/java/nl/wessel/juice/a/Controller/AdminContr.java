@@ -1,8 +1,5 @@
 package nl.wessel.juice.a.Controller;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
-import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
-import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
-import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.Service.BidService;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
 import nl.wessel.juice.B.BusinessLogic.Service.DealService;
@@ -30,6 +27,7 @@ public class AdminContr {
 
     @PutMapping("updatedeal/{dealID}")
     public ResponseEntity<Object> updateDeal(@PathVariable Long dealID, @RequestBody CreateDeal createDeal){
+
         dealService.update(dealID, createDeal);
         return ResponseEntity.noContent().build();
     }
@@ -85,64 +83,3 @@ public class AdminContr {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//    READ
-//    @GetMapping("getcustomers")
-//    public ResponseEntity<List<CustomerDto>> getCustomers() {
-//        List<CustomerDto> dtos = customerService.getCustomers();
-//        return ResponseEntity.ok().body(dtos);
-//    }
-
-//    @GetMapping("getdeals")
-//    public ResponseEntity<List<CreatedDeal>> getdeals() {
-//        List<CreatedDeal> createdDealList;
-//        createdDealList = dealService.getList();
-//        return ResponseEntity.ok().body(createdDealList);
-//    }
-
-
-//    @GetMapping("getdealbyid/{dealID}")
-//    public ResponseEntity<CreatedDeal> getDealByID(@PathVariable("dealID") Long dealID) {
-//        CreatedDeal createdDeal = dealService.getByID(dealID);
-//        return ResponseEntity.ok().body(createdDeal);
-//    }
-
-
-//    UPDATE
-//    @PutMapping("updatebid/{bidID}")
-//    public ResponseEntity<Object> updateBid(@PathVariable Long bidID, @RequestBody CreateBid createBid) {
-//        CreatedBid createdBid = bidService.update(bidID, createBid);
-//        return ResponseEntity.ok().body(createdBid);
-//    }
-
-//    @PutMapping("updatecustomer/{username}")
-//    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
-//                                                      @RequestBody CustomerDto customerDto) {
-//        customerService.updateCustomer(username, customerDto);
-//        return ResponseEntity.noContent().build();
-//    }
-
-
-//    //    DELETE
-//    @DeleteMapping("deletebid/{bidID}")
-//    public ResponseEntity<Object> deleteBid(@PathVariable Long bidID) {
-//        bidService.deleteById(bidID);
-//        return ResponseEntity.noContent().build();
-//    }
-
-//    @DeleteMapping("deletecustomer/{username}")
-//    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
-//        customerService.deleteCustomer(username);
-//        return ResponseEntity.noContent().build();
-//    }

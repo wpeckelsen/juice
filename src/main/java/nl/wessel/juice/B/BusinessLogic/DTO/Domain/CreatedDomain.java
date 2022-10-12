@@ -1,7 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Domain;
 
-import nl.wessel.juice.B.BusinessLogic.Model.Publisher;
-
 public class CreatedDomain {
 
 

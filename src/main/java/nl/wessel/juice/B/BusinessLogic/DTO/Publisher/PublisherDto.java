@@ -1,4 +1,4 @@
-package nl.wessel.juice.B.BusinessLogic.DTO.Owner;
+package nl.wessel.juice.B.BusinessLogic.DTO.Publisher;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
@@ -7,7 +7,7 @@ import nl.wessel.juice.B.BusinessLogic.Model.Authority;
 import java.util.List;
 import java.util.Set;
 
-public class OwnerDto {
+public class PublisherDto {
 
     public String username;
     public String password;

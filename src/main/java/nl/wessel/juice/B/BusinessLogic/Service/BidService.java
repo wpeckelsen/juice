@@ -27,7 +27,6 @@ public class BidService {
     }
 
 
-
     public static Bid bidMaker(CreateBid createBid) {
 
         Bid bid = new Bid();

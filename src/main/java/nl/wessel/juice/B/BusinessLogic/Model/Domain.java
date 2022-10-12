@@ -15,18 +15,18 @@ public class Domain {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "owner_username")
-    private Owner owner;
+    @JoinColumn(name = "publisher_username")
+    private Publisher publisher;
 
     @OneToOne
     private Deal deal;
 
-    public Owner getOwner() {
-        return owner;
+    public Publisher getPublisher() {
+        return publisher;
     }
 
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public Long getDomainID() {
@@ -66,7 +66,7 @@ public class Domain {
     }
 
     public void setPrice(int price) {
-        if (price >= 0){
+        if (price >= 0) {
             this.price = price;
         } else {
             this.price = 0;

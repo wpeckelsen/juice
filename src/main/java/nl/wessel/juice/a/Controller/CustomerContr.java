@@ -62,13 +62,6 @@ public class CustomerContr {
     }
 
 
-//
-//    @GetMapping("bidlist")
-//    public ResponseEntity<List<CreatedBid>> bidList() {
-//        List<CreatedBid> createdBidList;
-//        createdBidList = bidService.getList();
-//        return ResponseEntity.ok().body(createdBidList);
-//    }
 
 
     @GetMapping("stringbidbyid/{bidID}")
@@ -78,31 +71,11 @@ public class CustomerContr {
     }
 
 
-//    @GetMapping("domainlist")
-//    public ResponseEntity<List<CreatedDomain>> domainList() {
-//        List<CreatedDomain> createdDomainList;
-//        createdDomainList = domainService.getList();
-//        return ResponseEntity.ok().body(createdDomainList);
-//    }
-
-//    @GetMapping("domainbyid/{domainID}")
-//    public ResponseEntity<CreatedDomain> domainByID(@PathVariable("domainID") Long domainID) {
-//        CreatedDomain createdDomain = domainService.getByID(domainID);
-//        return ResponseEntity.ok().body(createdDomain);
-//    }
-
-
-//    @GetMapping("bidbyid/{bidID}")
-//    public ResponseEntity<CreatedBid> bidByID(@PathVariable("bidID") Long bidID) {
-//        CreatedBid createdBid = bidService.getByID(bidID);
-//        return ResponseEntity.ok().body(createdBid);
-//    }
-
-
     //    4
     @PutMapping("updatecustomer/{username}")
     public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
                                                       @RequestBody CustomerDto customerDto) {
+//        customerService.updateCustomer(username, customerDto);
         customerService.updateCustomer(username, customerDto);
         return ResponseEntity.noContent().build();
     }

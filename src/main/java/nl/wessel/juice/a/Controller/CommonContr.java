@@ -5,7 +5,7 @@ import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
-import nl.wessel.juice.B.BusinessLogic.DTO.Owner.OwnerDto;
+import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.B.BusinessLogic.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,31 +23,27 @@ public class CommonContr {
     DealService dealService;
     BidService bidService;
     DomainService domainService;
-    OwnerService ownerService;
+    PublisherService publisherService;
 
     @Autowired
-    public CommonContr(CustomerService customerService, DealService dealService, BidService bidService, DomainService domainService, OwnerService ownerService) {
+    public CommonContr(CustomerService customerService, DealService dealService, BidService bidService, DomainService domainService, PublisherService publisherService) {
         this.customerService = customerService;
         this.dealService = dealService;
         this.bidService = bidService;
         this.domainService = domainService;
-        this.ownerService = ownerService;
+        this.publisherService = publisherService;
     }
 
     //    1
-    @PostMapping("newdeal/{bidID}/{domainID}/{ownerName}/{customerName}")
+    @PostMapping("newdeal/{bidID}/{domainID}/{publisherName}/{customerName}")
     public ResponseEntity<CreatedDeal> newDeal(@RequestBody CreateDeal createDeal,
-                                               @PathVariable("bidID") Long bidID,
-                                               @PathVariable("domainID") Long domainID,
-                                               @PathVariable("ownerName") String ownerName,
-                                               @PathVariable("customerName") String customerName) {
-        final CreatedDeal createdDeal = dealService.newDeal(createDeal, bidID, domainID, ownerName, customerName);
+                                               @PathVariable(value = "bidID") Long bidID,
+                                               @PathVariable(value = "domainID") Long domainID,
+                                               @PathVariable(value = "publisherName") String publisherName,
+                                               @PathVariable(value = "customerName") String customerName) {
+        final CreatedDeal createdDeal = dealService.newDeal(createDeal, bidID, domainID, publisherName, customerName);
 
-        URI newDeal = ServletUriComponentsBuilder.fromCurrentRequest().path("newdeal")
-                .buildAndExpand(createdDeal).toUri();
-
-        return ResponseEntity.created(newDeal).build();
-
+        return ResponseEntity.ok().body(createdDeal);
     }
 
 
@@ -68,9 +64,9 @@ public class CommonContr {
     }
 
     //    4
-    @GetMapping("ownerlist")
-    public ResponseEntity<List<OwnerDto>> ownerList() {
-        List<OwnerDto> dtos = ownerService.getOwners();
+    @GetMapping("publisherlist")
+    public ResponseEntity<List<PublisherDto>> publisherList() {
+        List<PublisherDto> dtos = publisherService.getPublishers();
         return ResponseEntity.ok().body(dtos);
     }
 
@@ -92,8 +88,8 @@ public class CommonContr {
 
 
     //    7
-    @GetMapping("customerbyid/{customername}")
-    public ResponseEntity<CustomerDto> customerByID(@PathVariable("customerName") String customerName) {
+    @GetMapping("customerbyid/{customerName}")
+    public ResponseEntity<CustomerDto> customerByID(@PathVariable(value = "customerName") String customerName) {
         CustomerDto customerDto = customerService.getCustomer(customerName);
         return ResponseEntity.ok().body(customerDto);
     }
@@ -101,30 +97,31 @@ public class CommonContr {
 
     //    8
     @GetMapping("bidbyid/{bidID}")
-    public ResponseEntity<CreatedBid> bidByID(@PathVariable("bidID") Long bidID) {
+    public ResponseEntity<CreatedBid> bidByID(@PathVariable(value = "bidID") Long bidID) {
         CreatedBid createdBid = bidService.getByID(bidID);
         return ResponseEntity.ok().body(createdBid);
     }
 
 
     //    9
-    @GetMapping("ownerbyid/{ownerName}")
-    public ResponseEntity<OwnerDto> ownerByID(@PathVariable("ownerName") String ownerName) {
-        OwnerDto ownerDto = ownerService.getOwner(ownerName);
-        return ResponseEntity.ok().body(ownerDto);
+    @GetMapping("publisherbyid/{publisherName}")
+    public ResponseEntity<PublisherDto> publisherByID(@PathVariable(value = "publisherName") String publisherName) {
+        PublisherDto publisherDto = publisherService.getPublisher(publisherName);
+        return ResponseEntity.ok().body(publisherDto);
     }
+
 
 
     //    10
     @GetMapping("domainbyid/{domainID}")
-    public ResponseEntity<CreatedDomain> domainByID(@PathVariable("domainID") Long domainID) {
+    public ResponseEntity<CreatedDomain> domainByID(@PathVariable(value = "domainID") Long domainID) {
         CreatedDomain createdDomain = domainService.getByID(domainID);
         return ResponseEntity.ok().body(createdDomain);
     }
 
     //    11
     @GetMapping("dealbyid/{dealID}")
-    public ResponseEntity<CreatedDeal> dealByID(@PathVariable("dealID") Long dealID) {
+    public ResponseEntity<CreatedDeal> dealByID(@PathVariable(value = "dealID") Long dealID) {
         CreatedDeal createdDeal = dealService.getByID(dealID);
         return ResponseEntity.ok().body(createdDeal);
     }

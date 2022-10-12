@@ -80,6 +80,7 @@ public class CustomerService {
         if (!customerRepo.existsById(customerName)) throw new BadRequest();
         Customer customer = customerRepo.findById(customerName).get();
         customer.setPassword(newCustomer.getPassword());
+        customer.setUsername(newCustomer.getUsername());
         customerRepo.save(customer);
     }
 

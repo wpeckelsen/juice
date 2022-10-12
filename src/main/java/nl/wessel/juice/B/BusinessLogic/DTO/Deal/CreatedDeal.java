@@ -3,7 +3,7 @@ package nl.wessel.juice.B.BusinessLogic.DTO.Deal;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
-import nl.wessel.juice.B.BusinessLogic.DTO.Owner.OwnerDto;
+import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.PublisherDto;
 
 public class CreatedDeal {
 
@@ -17,26 +17,16 @@ public class CreatedDeal {
     private CreatedBid bid;
     private CreatedDomain domain;
     private CustomerDto customer;
-    private OwnerDto owner;
-//    private CreatedPublisher publisher;
+    private PublisherDto publisher;
 
 
 
-//    public CreatedPublisher getPublisher() {
-//        return publisher;
-//    }
-
-//    public void setPublisher(CreatedPublisher publisher) {
-//        this.publisher = publisher;
-//    }
-
-
-    public OwnerDto getOwner() {
-        return owner;
+    public PublisherDto getPublisher() {
+        return publisher;
     }
 
-    public void setOwner(OwnerDto owner) {
-        this.owner = owner;
+    public void setPublisher(PublisherDto publisher) {
+        this.publisher = publisher;
     }
 
     public CustomerDto getCustomer() {
