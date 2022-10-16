@@ -3,7 +3,6 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-Juice.postman_collection.json
 
 ### STS ###
 .apt_generated
