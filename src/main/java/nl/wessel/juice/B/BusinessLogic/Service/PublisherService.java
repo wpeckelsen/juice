@@ -172,7 +172,7 @@ public class PublisherService {
 
         } else {
 
-            throw new BadRequest("A domain cannot be made without a Publisher. Make an Publisher first");
+            throw new BadRequest("This Publisher does not show up in the Database. Are you sure you made it?");
         }
     }
 

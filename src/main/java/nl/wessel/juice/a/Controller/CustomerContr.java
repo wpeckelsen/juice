@@ -62,20 +62,10 @@ public class CustomerContr {
     }
 
 
-
-
-    @GetMapping("stringbidbyid/{bidID}")
-    public ResponseEntity<CreatedBid> stringBidByID(@PathVariable("bidID") Long bidID) {
-        CreatedBid createdBid = bidService.getByID(bidID);
-        return ResponseEntity.ok().body(createdBid);
-    }
-
-
     //    4
     @PutMapping("updatecustomer/{username}")
     public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
                                                       @RequestBody CustomerDto customerDto) {
-//        customerService.updateCustomer(username, customerDto);
         customerService.updateCustomer(username, customerDto);
         return ResponseEntity.noContent().build();
     }

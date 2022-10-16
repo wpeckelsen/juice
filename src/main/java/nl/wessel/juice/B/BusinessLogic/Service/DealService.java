@@ -81,15 +81,12 @@ public class DealService {
 
     //    CREATE
     public CreatedDeal newDeal(CreateDeal createDeal, Long bidID, Long domainID, String publisherName, String Customername) {
-
-
         if (
                 domainRepo.findById(domainID).isPresent()
-                && customerRepo.findById(Customername).isPresent()
-                && bidRepo.findById(bidID).isPresent()
-                && publisherRepo.findById(publisherName).isPresent()
+                        && customerRepo.findById(Customername).isPresent()
+                        && bidRepo.findById(bidID).isPresent()
+                        && publisherRepo.findById(publisherName).isPresent()
         ) {
-
             Customer customer = customerRepo.findById(Customername).get();
             Bid bid = bidRepo.findById(bidID).get();
             Publisher publisher = publisherRepo.findById(publisherName).get();

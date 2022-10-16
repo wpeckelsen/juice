@@ -171,7 +171,7 @@ public class CustomerService {
 
         } else {
 
-            throw new BadRequest("A bid cannot be made without a Customer. Make a Customer first");
+            throw new BadRequest("This Customer does not show up in the Database. Are you sure you made it?");
         }
     }
 
