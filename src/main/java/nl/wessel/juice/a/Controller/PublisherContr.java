@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 @RestController
@@ -21,21 +22,21 @@ public class PublisherContr {
     BidService bidService;
     DealService dealService;
     PublisherService publisherService;
+    PhotoService photoService;
 
 
     @Autowired
-    public PublisherContr(CustomerService customerService, DomainService domainService, BidService bidService, DealService dealService, PublisherService publisherService) {
+    public PublisherContr(CustomerService customerService, DomainService domainService, BidService bidService, DealService dealService, PublisherService publisherService, PhotoService photoService) {
         this.customerService = customerService;
         this.domainService = domainService;
         this.bidService = bidService;
         this.dealService = dealService;
         this.publisherService = publisherService;
+        this.photoService = photoService;
     }
 
 
-
-
-//    1
+    //    1
     @PostMapping("newpublisher")
     public ResponseEntity<Object> newPublisher(@RequestBody PublisherDto dto) {
         String newPublisherName = publisherService.createPublisher(dto);
@@ -50,14 +51,14 @@ public class PublisherContr {
     //    2
     @PostMapping("newdomain/{username}")
     public ResponseEntity<PublisherDto> newDomain(@RequestBody CreateDomain createDomain,
-                                              @PathVariable String username) {
+                                                  @PathVariable String username) {
         return ResponseEntity.ok().body(publisherService.newDomain(createDomain, username));
     }
 
     //    3
     @PutMapping("updatepublisher/{username}")
     public ResponseEntity<PublisherDto> updatePublisher(@PathVariable("username") String username,
-                                                @RequestBody PublisherDto publisherDto) {
+                                                        @RequestBody PublisherDto publisherDto) {
         publisherService.updatePublisher(username, publisherDto);
         return ResponseEntity.noContent().build();
     }
@@ -82,6 +83,14 @@ public class PublisherContr {
     public ResponseEntity<Object> deleteDomain(@PathVariable Long domainID) {
         domainService.deleteById(domainID);
         return ResponseEntity.noContent().build();
+    }
+
+
+    //    7
+    @GetMapping("/downloadsinglephoto/{photoName}")
+    ResponseEntity<byte[]> downloadSinglePhoto(@PathVariable String photoName, HttpServletRequest httpServletRequest) {
+        var photo =  photoService.DownloadSinglePhoto(photoName, httpServletRequest);
+        return photo;
     }
 
 

@@ -22,6 +22,9 @@ public class Bid {
     @OneToOne
     private Deal deal;
 
+    @OneToOne(mappedBy = "bid")
+    private Photo photo;
+
 
     public Deal getDeal() {
         return deal;
@@ -87,5 +90,11 @@ public class Bid {
         this.vernacular = vernacular;
     }
 
+    public Photo getPhoto() {
+        return photo;
+    }
 
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
 }

@@ -4,16 +4,18 @@ package nl.wessel.juice.a.Controller;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
-import nl.wessel.juice.B.BusinessLogic.Service.BidService;
-import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
-import nl.wessel.juice.B.BusinessLogic.Service.DealService;
-import nl.wessel.juice.B.BusinessLogic.Service.DomainService;
+import nl.wessel.juice.B.BusinessLogic.DTO.Photo.PhotoDto;
+import nl.wessel.juice.B.BusinessLogic.Model.Photo;
+import nl.wessel.juice.B.BusinessLogic.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/juice/customer")
@@ -24,14 +26,16 @@ public class CustomerContr {
     DomainService domainService;
     BidService bidService;
     DealService dealService;
+    PhotoService photoService;
 
 
     @Autowired
-    public CustomerContr(CustomerService customerService, DomainService domainService, BidService bidService, DealService dealService) {
+    public CustomerContr(CustomerService customerService, DomainService domainService, BidService bidService, DealService dealService, PhotoService photoService) {
         this.customerService = customerService;
         this.domainService = domainService;
         this.bidService = bidService;
         this.dealService = dealService;
+        this.photoService = photoService;
     }
 
 
@@ -83,6 +87,21 @@ public class CustomerContr {
     public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
         customerService.deleteCustomer(username);
         return ResponseEntity.noContent().build();
+    }
+
+    //    7
+    @PostMapping("uploadsinglephoto")
+    public PhotoDto UploadSinglePhoto(@RequestParam("file") MultipartFile file) throws IOException {
+        Photo photo = photoService.UploadSinglePhoto(file);
+        String url = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/uploadsinglephoto/")
+                .path(Objects.requireNonNull(file.getOriginalFilename()))
+                .toUriString();
+
+        String contentType = file.getContentType();
+
+        return new PhotoDto(photo.getFileName(), url, contentType);
     }
 
 

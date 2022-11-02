@@ -3,9 +3,11 @@ package nl.wessel.juice.B.BusinessLogic.Service;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
+import nl.wessel.juice.B.BusinessLogic.DTO.Photo.PhotoDto;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Bid;
 import nl.wessel.juice.C.Repository.BidRepo;
+import nl.wessel.juice.C.Repository.PhotoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +20,17 @@ public class BidService {
 
 
     private final BidRepo bidRepo;
-    private final CustomerService customerService;
+    private final PhotoRepo photoRepo;
 
     @Autowired
-    public BidService(BidRepo bidRepo, CustomerService customerService) {
+    public BidService(BidRepo bidRepo, PhotoRepo photoRepo) {
         this.bidRepo = bidRepo;
-        this.customerService = customerService;
+        this.photoRepo = photoRepo;
     }
+
+
+
+
 
 
     public static Bid bidMaker(CreateBid createBid) {
@@ -49,6 +55,7 @@ public class BidService {
         createdBid.setTopic(bid.getTopic());
         createdBid.setAnchor(bid.getAnchor());
         createdBid.setVernacular(bid.getVernacular());
+
         return createdBid;
     }
 

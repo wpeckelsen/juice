@@ -1,12 +1,15 @@
 package nl.wessel.juice.a.Controller;
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
+import nl.wessel.juice.B.BusinessLogic.Model.Photo;
 import nl.wessel.juice.B.BusinessLogic.Service.BidService;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomerService;
 import nl.wessel.juice.B.BusinessLogic.Service.DealService;
+import nl.wessel.juice.B.BusinessLogic.Service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -17,13 +20,16 @@ public class AdminContr {
     CustomerService customerService;
     DealService dealService;
     BidService bidService;
+    PhotoService photoService;
 
     @Autowired
-    public AdminContr(CustomerService customerService, DealService dealService, BidService bidService) {
+    public AdminContr(CustomerService customerService, DealService dealService, BidService bidService, PhotoService photoService) {
         this.customerService = customerService;
         this.dealService = dealService;
         this.bidService = bidService;
+        this.photoService = photoService;
     }
+
 
     @PutMapping("updatedeal/{dealID}")
     public ResponseEntity<Object> updateDeal(@PathVariable Long dealID, @RequestBody CreateDeal createDeal){
@@ -38,6 +44,10 @@ public class AdminContr {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/findallphotos")
+    public Collection<Photo> findAllPhotos() {
+        return photoService.findAllPhotos();
+    }
 
 
     @GetMapping("abcxyz")
@@ -45,6 +55,8 @@ public class AdminContr {
         String string = "abcxyz";
         return ResponseEntity.ok().body(string);
     }
+
+
 
 
 
