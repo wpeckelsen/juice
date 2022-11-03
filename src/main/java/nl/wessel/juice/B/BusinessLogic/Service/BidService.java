@@ -69,16 +69,16 @@ public class BidService {
 //    corresponding method in CustomerContr is commented out as well
 
 
-//    @Transactional
-//    public CreatedBid bidAndPhoto(Long bidID, String name, CreateBid createBid){
-//        Bid foundBid = bidRepo.findById(bidID).get();
-//        var photo = photoRepo.findPhotoByFileName(name);
-//        Bid bid = bidMaker(createBid);
-//        bid.setBidID(foundBid.getBidID());
-//        bid.setPhoto(photo);
-//        bidRepo.save(bid);
-//        return bidDtoMaker(bid);
-//    }
+    @Transactional
+    public CreatedBid bidAndPhoto(Long bidID, String name, CreateBid createBid){
+        Bid foundBid = bidRepo.findById(bidID).get();
+        var photo = photoRepo.findPhotoByFileName(name);
+        Bid bid = bidMaker(createBid);
+        bid.setBidID(foundBid.getBidID());
+        bid.setPhoto(photo);
+        bidRepo.save(bid);
+        return bidDtoMaker(bid);
+    }
 
     //    READ
     public List<CreatedBid> getList() {
