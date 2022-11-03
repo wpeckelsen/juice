@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
@@ -53,6 +54,7 @@ public class PhotoService {
     }
 
     //  2  single download
+    @Transactional
     public ResponseEntity<byte[]> DownloadSinglePhoto(String fileName, HttpServletRequest request) {
         Photo photo = photoRepo.findPhotoByFileName(fileName);
 

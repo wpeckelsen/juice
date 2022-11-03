@@ -2,7 +2,6 @@
 package nl.wessel.juice.a.Controller;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
-import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Customer.CustomerDto;
 import nl.wessel.juice.B.BusinessLogic.DTO.Photo.PhotoDto;
 import nl.wessel.juice.B.BusinessLogic.Model.Photo;
@@ -65,6 +64,15 @@ public class CustomerContr {
         return ResponseEntity.noContent().build();
     }
 
+//    this method gives an error:
+//   > non-transient entity has a null id: nl.wessel.juice.B.BusinessLogic.Model.Photo
+//    corresponding method in BidService is commented out as well
+//    @PostMapping("bidandphoto/{bidID}/{name}")
+//    public ResponseEntity<Object> bidAndPhoto(@PathVariable Long bidID, @PathVariable String name, @RequestBody CreateBid createBid) {
+//        var bid = bidService.bidAndPhoto(bidID, name, createBid);
+//        return ResponseEntity.ok().body(bid);
+//    }
+
 
     //    4
     @PutMapping("updatecustomer/{username}")
@@ -73,6 +81,7 @@ public class CustomerContr {
         customerService.updateCustomer(username, customerDto);
         return ResponseEntity.noContent().build();
     }
+
 
     //    5
     @DeleteMapping("deletebid/{bidID}")
@@ -90,12 +99,12 @@ public class CustomerContr {
     }
 
     //    7
-    @PostMapping("uploadsinglephoto")
-    public PhotoDto UploadSinglePhoto(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("photo/upload")
+    public PhotoDto uploadSinglePhoto(@RequestParam("file") MultipartFile file) throws IOException {
         Photo photo = photoService.UploadSinglePhoto(file);
         String url = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/uploadsinglephoto/")
+                .path("/download/")
                 .path(Objects.requireNonNull(file.getOriginalFilename()))
                 .toUriString();
 

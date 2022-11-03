@@ -22,7 +22,7 @@ public class Bid {
     @OneToOne
     private Deal deal;
 
-    @OneToOne(mappedBy = "bid")
+    @OneToOne(mappedBy = "bid", cascade = CascadeType.ALL)
     private Photo photo;
 
 

@@ -87,7 +87,7 @@ public class PublisherContr {
 
 
     //    7
-    @GetMapping("/downloadsinglephoto/{photoName}")
+    @GetMapping("photo/download/{photoName}")
     ResponseEntity<byte[]> downloadSinglePhoto(@PathVariable String photoName, HttpServletRequest httpServletRequest) {
         var photo =  photoService.DownloadSinglePhoto(photoName, httpServletRequest);
         return photo;

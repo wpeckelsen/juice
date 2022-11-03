@@ -1,5 +1,8 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Bid;
 
+import nl.wessel.juice.B.BusinessLogic.DTO.Photo.PhotoDto;
+import nl.wessel.juice.B.BusinessLogic.Model.Photo;
+
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
@@ -17,6 +20,15 @@ public class CreatedBid {
     private String anchor;
     private String vernacular;
     private ZonedDateTime creationTime;
+    private PhotoDto photo;
+
+    public PhotoDto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoDto photo) {
+        this.photo = photo;
+    }
 
     public ZonedDateTime getCreationTime() {
         return creationTime;
