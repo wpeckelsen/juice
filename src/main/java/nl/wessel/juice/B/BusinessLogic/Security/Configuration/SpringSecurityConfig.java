@@ -1,6 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.Security.Configuration;
 
-
 import nl.wessel.juice.B.BusinessLogic.Security.Filter.JwtRequestFilter;
 import nl.wessel.juice.B.BusinessLogic.Service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,10 +59,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/authenticated").authenticated()
                 .antMatchers("/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST, "/juice/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
+
+
+
 
                 .antMatchers(HttpMethod.POST, "/juice/common/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.GET, "/juice/common/**").hasRole("CUSTOMER")
@@ -84,6 +82,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/juice/publisher/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.PUT, "/juice/publisher/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.DELETE, "/juice/publisher/**").hasRole("PUBLISHER")
+
+                .antMatchers(HttpMethod.POST, "/juice/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
 
                 .anyRequest().permitAll()
                 .and()

@@ -1,4 +1,3 @@
-//package nl.wessel.juice.a.Controller.CustomerContr;
 package nl.wessel.juice.a.Controller;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.Objects;

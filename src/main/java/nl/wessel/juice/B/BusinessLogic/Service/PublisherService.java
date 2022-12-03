@@ -1,6 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
 
-
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.PublisherDto;
@@ -12,11 +11,9 @@ import nl.wessel.juice.C.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import static nl.wessel.juice.B.BusinessLogic.Service.DomainService.domainMaker;
 
 @Service

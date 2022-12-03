@@ -1,9 +1,6 @@
 package nl.wessel.juice.B.BusinessLogic.DTO.Bid;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Photo.PhotoDto;
-import nl.wessel.juice.B.BusinessLogic.Model.Photo;
-
-import java.time.Instant;
 import java.time.ZonedDateTime;
 
 public class CreatedBid {

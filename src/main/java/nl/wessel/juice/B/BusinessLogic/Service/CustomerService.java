@@ -16,11 +16,9 @@ import nl.wessel.juice.C.Repository.DomainRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
 import static nl.wessel.juice.B.BusinessLogic.Service.BidService.bidMaker;
 
 @Service
@@ -132,6 +130,7 @@ public class CustomerService {
         dto.setBids(createdBids);
         return dto;
     }
+
 
     public Customer toCustomer(CustomerDto customerDto) {
 

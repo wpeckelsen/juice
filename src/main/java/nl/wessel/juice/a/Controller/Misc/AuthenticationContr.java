@@ -2,7 +2,6 @@ package nl.wessel.juice.a.Controller.Misc;
 
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
 import nl.wessel.juice.B.BusinessLogic.Security.Payload.AuthenticationRequest;
-import nl.wessel.juice.B.BusinessLogic.Security.Payload.AuthenticationResponse;
 import nl.wessel.juice.B.BusinessLogic.Security.Utils.JwtUtil;
 import nl.wessel.juice.B.BusinessLogic.Service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.util.List;
 

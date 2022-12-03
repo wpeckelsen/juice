@@ -10,9 +10,6 @@ import nl.wessel.juice.B.BusinessLogic.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -45,7 +42,6 @@ public class CommonContr {
 
         return ResponseEntity.ok().body(createdDeal);
     }
-
 
 
     //    2
@@ -109,7 +105,6 @@ public class CommonContr {
         PublisherDto publisherDto = publisherService.getPublisher(publisherName);
         return ResponseEntity.ok().body(publisherDto);
     }
-
 
 
     //    10

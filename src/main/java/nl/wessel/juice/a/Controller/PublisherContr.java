@@ -1,6 +1,5 @@
 package nl.wessel.juice.a.Controller;
 
-
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.B.BusinessLogic.Service.*;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 

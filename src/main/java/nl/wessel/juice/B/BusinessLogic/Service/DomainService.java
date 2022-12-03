@@ -1,6 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
 
-
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreateDomain;
 import nl.wessel.juice.B.BusinessLogic.DTO.Domain.CreatedDomain;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
@@ -8,7 +7,6 @@ import nl.wessel.juice.B.BusinessLogic.Model.Domain;
 import nl.wessel.juice.C.Repository.DomainRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

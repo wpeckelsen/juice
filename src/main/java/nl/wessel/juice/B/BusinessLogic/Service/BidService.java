@@ -1,16 +1,11 @@
 package nl.wessel.juice.B.BusinessLogic.Service;
 
-
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreateBid;
 import nl.wessel.juice.B.BusinessLogic.DTO.Bid.CreatedBid;
-import nl.wessel.juice.B.BusinessLogic.DTO.Photo.PhotoDto;
 import nl.wessel.juice.B.BusinessLogic.Exception.RecordNotFound;
 import nl.wessel.juice.B.BusinessLogic.Model.Bid;
-import nl.wessel.juice.B.BusinessLogic.Model.Photo;
 import nl.wessel.juice.C.Repository.BidRepo;
-import nl.wessel.juice.C.Repository.CustomerRepo;
 import nl.wessel.juice.C.Repository.PhotoRepo;
-import nl.wessel.juice.a.Controller.CustomerContr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

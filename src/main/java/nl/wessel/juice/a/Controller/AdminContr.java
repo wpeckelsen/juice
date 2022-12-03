@@ -1,4 +1,5 @@
 package nl.wessel.juice.a.Controller;
+
 import nl.wessel.juice.B.BusinessLogic.DTO.Deal.CreateDeal;
 import nl.wessel.juice.B.BusinessLogic.Model.Photo;
 import nl.wessel.juice.B.BusinessLogic.Service.BidService;
@@ -8,9 +9,8 @@ import nl.wessel.juice.B.BusinessLogic.Service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+
 
 @RestController
 @RequestMapping(value = "/juice/admin")

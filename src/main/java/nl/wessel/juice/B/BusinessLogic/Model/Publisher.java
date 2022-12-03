@@ -1,6 +1,5 @@
 package nl.wessel.juice.B.BusinessLogic.Model;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
