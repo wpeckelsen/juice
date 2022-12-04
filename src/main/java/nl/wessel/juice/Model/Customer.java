@@ -34,6 +34,9 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Bid> bids;
 
+
+
+
     @OneToMany(mappedBy = "customer")
     private List<Deal> deals;
 

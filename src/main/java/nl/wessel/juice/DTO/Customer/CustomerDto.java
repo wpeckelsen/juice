@@ -22,6 +22,11 @@ public class CustomerDto {
     private List<CreatedBid> bids;
 
 
+
+
+
+
+
     public String getUsername() {
         return username;
     }

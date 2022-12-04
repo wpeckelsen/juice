@@ -115,6 +115,8 @@ public class CustomerService {
         dto.email = customer.getEmail();
         dto.authorities = customer.getAuthorities();
 
+//        List<Long> bidIDs = customer.get
+
         List<Bid> bids = customer.getBids();
         List<CreatedBid> createdBids = new ArrayList<>();
 
