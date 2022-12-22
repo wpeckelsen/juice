@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import nl.wessel.juice.DTO.Bid.CreatedBid;
 import nl.wessel.juice.DTO.Deal.CreatedDeal;
 import nl.wessel.juice.Model.Authority;
+import nl.wessel.juice.Model.Bid;
+import nl.wessel.juice.Model.Deal;
+
 import java.util.List;
 import java.util.Set;
 
@@ -18,13 +21,8 @@ public class CustomerDto {
     public Set<Authority> authorities;
 
 
-    private List<CreatedDeal> deals;
-    private List<CreatedBid> bids;
-
-
-
-
-
+    public List<CreatedDeal> deals;
+    public List<CreatedBid> bids;
 
 
     public String getUsername() {

@@ -114,8 +114,6 @@ public class PublisherService {
         dto.apikey = publisher.getApikey();
         dto.email = publisher.getEmail();
         dto.authorities = publisher.getAuthorities();
-
-
         List<Domain> domains = publisher.getDomains();
         List<CreatedDomain> createdDomains = new ArrayList<>();
 
@@ -149,16 +147,17 @@ public class PublisherService {
 //    assigns a domain to a publisher
     public PublisherDto newDomain(CreateDomain createDomain, String username) {
 
-        var optCustom = publisherRepository.findById(username);
+        var foundPublisher = publisherRepository.findById(username);
 
 
-        if (optCustom.isPresent()) {
-            Publisher publisher = optCustom.get();
+        if (foundPublisher.isPresent()) {
+            Publisher publisher = foundPublisher.get();
             Domain newDomain = DomainService.domainMaker(createDomain);
 
             List<Domain> currentDomains = publisher.getDomains();
             currentDomains.add(newDomain);
 
+//            assigns publisher to domain. for every domain in List current domains: set this publisher.
             for (Domain domain : currentDomains) {
                 domain.setPublisher(publisher);
                 domainRepository.save(domain);
