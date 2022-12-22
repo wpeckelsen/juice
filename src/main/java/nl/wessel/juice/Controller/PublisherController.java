@@ -33,9 +33,7 @@ public class PublisherController {
         this.photoService = photoService;
     }
 
-
-    //    1
-    @PostMapping("newpublisher")
+    @PostMapping("post/publisher")
     public ResponseEntity<Object> newPublisher(@RequestBody PublisherDto dto) {
         String newPublisherName = publisherService.createPublisher(dto);
         publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
@@ -46,49 +44,41 @@ public class PublisherController {
         return ResponseEntity.created(location).build();
     }
 
-    //    2
-    @PostMapping("newdomain/{username}")
+
+    @PostMapping("post/{username}")
     public ResponseEntity<PublisherDto> newDomain(@RequestBody CreateDomain createDomain,
                                                   @PathVariable String username) {
         return ResponseEntity.ok().body(publisherService.newDomain(createDomain, username));
     }
 
-    //    3
-    @PutMapping("updatepublisher/{username}")
+    @PutMapping("update/{username}")
     public ResponseEntity<PublisherDto> updatePublisher(@PathVariable("username") String username,
                                                         @RequestBody PublisherDto publisherDto) {
         publisherService.updatePublisher(username, publisherDto);
         return ResponseEntity.noContent().build();
     }
 
-    //  4
-    @PutMapping("updatedomain/{domainID}")
+    @PutMapping("update/{domainID}")
     public ResponseEntity<Object> updateDomain(@PathVariable Long domainID, @RequestBody CreateDomain createDomain) {
         domainService.update(domainID, createDomain);
         return ResponseEntity.noContent().build();
     }
 
-
-    //    5
-    @DeleteMapping("deletepublisher/{username}")
+    @DeleteMapping("delete/{username}")
     public ResponseEntity<Object> deletePublisher(@PathVariable String username) {
         publisherService.deletePublisher(username);
         return ResponseEntity.noContent().build();
     }
 
-    //    6
-    @DeleteMapping("deletedomain/{domainID}")
+    @DeleteMapping("delete/{domainID}")
     public ResponseEntity<Object> deleteDomain(@PathVariable Long domainID) {
         domainService.deleteById(domainID);
         return ResponseEntity.noContent().build();
     }
 
-
-    //    7
-    @GetMapping("photo/download/{photoName}")
+    @GetMapping("get/{photoName}")
     ResponseEntity<byte[]> downloadSinglePhoto(@PathVariable String photoName, HttpServletRequest httpServletRequest) {
-        var photo =  photoService.DownloadSinglePhoto(photoName, httpServletRequest);
-        return photo;
+        return photoService.DownloadSinglePhoto(photoName, httpServletRequest);
     }
 
 

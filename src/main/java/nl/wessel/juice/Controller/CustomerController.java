@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/juice/customer")
+@RequestMapping("/juice/customer")
 public class CustomerController {
 
 
@@ -35,9 +35,7 @@ public class CustomerController {
         this.photoService = photoService;
     }
 
-
-    //    1
-    @PostMapping("newcustomer")
+    @PostMapping("post/customer")
     public ResponseEntity<Object> newCustomer(@RequestBody CustomerDto dto) {
         String newCustomerName = customerService.createCustomer(dto);
         customerService.addAuthority(newCustomerName, "ROLE_CUSTOMER");
@@ -46,59 +44,8 @@ public class CustomerController {
         return ResponseEntity.created(location).build();
     }
 
-
-    //    2
-    @PostMapping("newbid/{username}")
-    public ResponseEntity<CustomerDto> newBid(@RequestBody CreateBid createBid,
-                                              @PathVariable String username) {
-        return ResponseEntity.ok().body(customerService.newBid(createBid, username));
-
-    }
-
-    //    3
-    @PutMapping("updatebid/{bidID}")
-    public ResponseEntity<Object> updateBid(@PathVariable Long bidID, @RequestBody CreateBid createBid) {
-        bidService.update(bidID, createBid);
-        return ResponseEntity.noContent().build();
-    }
-
-//    this method gives an error:
-//   > non-transient entity has a null id: nl.wessel.juice.B.BusinessLogic.Model.Photo
-//    corresponding method in BidService is commented out as well
-//    @PostMapping("bidandphoto/{bidID}/{name}")
-//    public ResponseEntity<Object> bidAndPhoto(@PathVariable Long bidID, @PathVariable String name, @RequestBody CreateBid createBid) {
-//        var bid = bidService.bidAndPhoto(bidID, name, createBid);
-//        return ResponseEntity.ok().body(bid);
-//    }
-
-
-    //    4
-    @PutMapping("updatecustomer/{username}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
-                                                      @RequestBody CustomerDto customerDto) {
-        customerService.updateCustomer(username, customerDto);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    //    5
-    @DeleteMapping("deletebid/{bidID}")
-    public ResponseEntity<Object> deleteBid(@PathVariable Long bidID) {
-        bidService.deleteById(bidID);
-        return ResponseEntity.noContent().build();
-    }
-
-
-    //    6
-    @DeleteMapping("deletecustomer/{username}")
-    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
-        customerService.deleteCustomer(username);
-        return ResponseEntity.noContent().build();
-    }
-
-    //    7
-    @PostMapping("photo/upload")
-    public PhotoDto uploadSinglePhoto(@RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping("post/photo")
+    public PhotoDto newPhoto(@RequestParam("file") MultipartFile file) throws IOException {
         Photo photo = photoService.UploadSinglePhoto(file);
         String url = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
@@ -107,9 +54,38 @@ public class CustomerController {
                 .toUriString();
 
         String contentType = file.getContentType();
-
         return new PhotoDto(photo.getFileName(), url, contentType);
     }
 
+    @PostMapping("post/{username}")
+    public ResponseEntity<CustomerDto> newBid(@RequestBody CreateBid createBid,
+                                              @PathVariable String username) {
+        return ResponseEntity.ok().body(customerService.newBid(createBid, username));
 
+    }
+
+    @PutMapping("put/{bidID}")
+    public ResponseEntity<Object> updateBid(@PathVariable Long bidID, @RequestBody CreateBid createBid) {
+        bidService.update(bidID, createBid);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("put/{username}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
+                                                      @RequestBody CustomerDto customerDto) {
+        customerService.updateCustomer(username, customerDto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("delete/{bidID}")
+    public ResponseEntity<Object> deleteBid(@PathVariable Long bidID) {
+        bidService.deleteById(bidID);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("delete/{username}")
+    public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
+        customerService.deleteCustomer(username);
+        return ResponseEntity.noContent().build();
+    }
 }
