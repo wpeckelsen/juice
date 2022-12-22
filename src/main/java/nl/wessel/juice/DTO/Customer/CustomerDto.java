@@ -17,9 +17,9 @@ public class CustomerDto {
     public Boolean enabled;
     public String apikey;
     public String email;
+
     @JsonSerialize
     public Set<Authority> authorities;
-
 
     public List<CreatedDeal> deals;
     public List<CreatedBid> bids;
