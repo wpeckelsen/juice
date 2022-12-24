@@ -39,16 +39,16 @@ public class CustomerService {
         var dto = new CustomerDto();
         dto.username = customer.getUsername();
         dto.password = customer.getPassword();
-        dto.enabled = customer.isEnabled();
-        dto.apikey = customer.getApikey();
-        dto.email = customer.getEmail();
+//        dto.enabled = customer.isEnabled();
+//        dto.apikey = customer.getApikey();
+//        dto.email = customer.getEmail();
         dto.authorities = customer.getAuthorities();
         List<Bid> bids = customer.getBids();
         List<CreatedBid> createdBids = new ArrayList<>();
 
         if (bids != null) {
-            for(Bid bid : bids){
-                CreatedBid createdBid  = BidService.bidDtoMaker(bid);
+            for (Bid bid : bids) {
+                CreatedBid createdBid = BidService.bidDtoMaker(bid);
                 createdBids.add(createdBid);
             }
 
@@ -59,18 +59,14 @@ public class CustomerService {
     }
 
     public Customer toCustomer(CustomerDto customerDto) {
-
-
-        var customer = new Customer();
+        Customer customer = new Customer();
         customer.setUsername(customerDto.getUsername());
         customer.setPassword(customerDto.getPassword());
-        customer.setEnabled(customerDto.getEnabled());
-        customer.setApikey(customerDto.getApikey());
-        customer.setEmail(customerDto.getEmail());
-
+//        customer.setEnabled(customerDto.getEnabled());
+//        customer.setApikey(customerDto.getApikey());
+//        customer.setEmail(customerDto.getEmail());
         return customer;
     }
-
 
 
     public CustomerDto newBid(CreateBid createBid, String username) {
@@ -85,7 +81,6 @@ public class CustomerService {
 
             List<Bid> currentBids = customer.getBids();
             currentBids.add(newBid);
-
 
 
 //            assigns customer to domain
@@ -171,11 +166,6 @@ public class CustomerService {
         customer.removeAuthority(authorityToRemove);
         customerRepository.save(customer);
     }
-
-
-
-
-
 
 
 }
