@@ -1,7 +1,7 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Bid.CreateBid;
-import nl.wessel.juice.DTO.Bid.CreatedBid;
+import nl.wessel.juice.DTO.Bid.CreateBidDto;
+import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Repository.BidRepository;
@@ -29,33 +29,32 @@ public class BidService {
 
     }
 
-    public static Bid bidMaker(CreateBid createBid) {
-
+    public static Bid bidMaker(CreateBidDto createBidDto) {
         Bid bid = new Bid();
-        bid.setWords(createBid.getWords());
-        bid.setDeadline(createBid.getDeadline());
-        bid.setTopic(createBid.getTopic());
-        bid.setAnchor(createBid.getAnchor());
-        bid.setVernacular(createBid.getVernacular());
+        bid.setWords(createBidDto.getWords());
+        bid.setDeadline(createBidDto.getDeadline());
+        bid.setTopic(createBidDto.getTopic());
+        bid.setAnchor(createBidDto.getAnchor());
+        bid.setVernacular(createBidDto.getVernacular());
         return bid;
     }
 
 
 
 
-    public static CreatedBid bidDtoMaker(Bid bid) {
-        CreatedBid createdBid = new CreatedBid();
+    public static CreatedBidDTO bidDtoMaker(Bid bid) {
+        CreatedBidDTO createdBidDTO = new CreatedBidDTO();
         ZonedDateTime rightNow = ZonedDateTime.now();
 
-        createdBid.setCreationTime(rightNow);
-        createdBid.setBidID(bid.getBidID());
-        createdBid.setWords(bid.getWords());
-        createdBid.setDeadline(bid.getDeadline());
-        createdBid.setTopic(bid.getTopic());
-        createdBid.setAnchor(bid.getAnchor());
-        createdBid.setVernacular(bid.getVernacular());
+        createdBidDTO.setCreationTime(rightNow);
+        createdBidDTO.setBidID(bid.getBidID());
+        createdBidDTO.setWords(bid.getWords());
+        createdBidDTO.setDeadline(bid.getDeadline());
+        createdBidDTO.setTopic(bid.getTopic());
+        createdBidDTO.setAnchor(bid.getAnchor());
+        createdBidDTO.setVernacular(bid.getVernacular());
 
-        return createdBid;
+        return createdBidDTO;
     }
 
 
@@ -65,10 +64,10 @@ public class BidService {
 
 
     @Transactional
-    public CreatedBid bidAndPhoto(Long bidID, String name, CreateBid createBid){
+    public CreatedBidDTO bidAndPhoto(Long bidID, String name, CreateBidDto createBidDto){
         Bid foundBid = bidRepository.findById(bidID).get();
         var photo = photoRepository.findPhotoByFileName(name);
-        Bid bid = bidMaker(createBid);
+        Bid bid = bidMaker(createBidDto);
         bid.setBidID(foundBid.getBidID());
         bid.setPhoto(photo);
         bidRepository.save(bid);
@@ -76,7 +75,7 @@ public class BidService {
     }
 
     //    READ
-    public List<CreatedBid> getList() {
+    public List<CreatedBidDTO> getList() {
 
         List<Bid> bidList = bidRepository.findAll();
 
@@ -84,17 +83,17 @@ public class BidService {
             Bid bid = new Bid();
             throw new RecordNotFound(bid);
         } else {
-            List<CreatedBid> createdBidList = new ArrayList<>();
+            List<CreatedBidDTO> createdBidDTOList = new ArrayList<>();
 
             for (Bid bid : bidList) {
-                CreatedBid createdBid = bidDtoMaker(bid);
-                createdBidList.add(createdBid);
+                CreatedBidDTO createdBidDTO = bidDtoMaker(bid);
+                createdBidDTOList.add(createdBidDTO);
             }
-            return createdBidList;
+            return createdBidDTOList;
         }
     }
 
-    public CreatedBid getByID(Long idBid) {
+    public CreatedBidDTO getByID(Long idBid) {
         if (bidRepository.findById(idBid).isPresent()) {
             Bid bid = bidRepository.findById(idBid).get();
             return bidDtoMaker(bid);
@@ -105,13 +104,12 @@ public class BidService {
     }
 
 
-    //    update
-    public CreatedBid update(Long bidID, CreateBid createBid) {
+    public CreatedBidDTO update(Long bidID, CreateBidDto createBidDto) {
 
 
         if (bidRepository.findById(bidID).isPresent()) {
             Bid bid = bidRepository.findById(bidID).get();
-            Bid bid1 = bidMaker(createBid);
+            Bid bid1 = bidMaker(createBidDto);
 
             bid1.setBidID(bid.getBidID());
             bidRepository.save(bid1);
@@ -123,10 +121,7 @@ public class BidService {
         }
     }
 
-    //    delete
-    public void deleteById(Long bidID) {
+    public void delete(Long bidID) {
         bidRepository.deleteById(bidID);
     }
-
-
 }

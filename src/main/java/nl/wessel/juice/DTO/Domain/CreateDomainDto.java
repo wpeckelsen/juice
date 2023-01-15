@@ -1,21 +1,15 @@
 package nl.wessel.juice.DTO.Domain;
 
-public class CreatedDomain {
+public class CreateDomainDto {
 
 
-    private Long domainID;
     private String name;
     private String TLD;
     private String category;
     private int price;
 
-    public Long getDomainID() {
-        return domainID;
-    }
 
-    public void setDomainID(Long domainID) {
-        this.domainID = domainID;
-    }
+
 
     public String getName() {
         return name;
@@ -48,5 +42,4 @@ public class CreatedDomain {
     public void setPrice(int price) {
         this.price = price;
     }
-
 }

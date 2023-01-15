@@ -1,6 +1,6 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Customer.CustomerDto;
+import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.Model.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
 
 
-        CustomerDto dto = customerService.getCustomer(username);
+        CreatedCustomerDto dto = customerService.getCustomer(username);
 
 
         String password = dto.getPassword();

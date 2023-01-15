@@ -1,7 +1,9 @@
 package nl.wessel.juice.Controller;
 
-import nl.wessel.juice.DTO.Bid.CreateBid;
-import nl.wessel.juice.DTO.Customer.CustomerDto;
+import nl.wessel.juice.DTO.Bid.CreateBidDto;
+import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
+import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Photo.PhotoDto;
 import nl.wessel.juice.Model.Photo;
 import nl.wessel.juice.Service.*;
@@ -35,9 +37,9 @@ public class CustomerController {
         this.photoService = photoService;
     }
 
-    @PostMapping("post/customer")
-    public ResponseEntity<Object> newCustomer(@RequestBody CustomerDto dto) {
-        String newCustomerName = customerService.createCustomer(dto);
+    @PostMapping("customer")
+    public ResponseEntity<Object> newCustomer(@RequestBody CreateCustomerDto createCustomerDto) {
+        String newCustomerName = customerService.createCustomer(createCustomerDto);
         customerService.addAuthority(newCustomerName, "ROLE_CUSTOMER");
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newCustomerName}")
                 .buildAndExpand(newCustomerName).toUri();
@@ -58,34 +60,34 @@ public class CustomerController {
     }
 
     @PostMapping("post/{username}")
-    public ResponseEntity<CustomerDto> newBid(@RequestBody CreateBid createBid,
-                                              @PathVariable String username) {
-        return ResponseEntity.ok().body(customerService.newBid(createBid, username));
+    public ResponseEntity<CreatedBidDTO> newBid(@RequestBody CreateBidDto createBidDto,
+                                                @PathVariable String username) {
+        return ResponseEntity.ok().body(customerService.newBid(createBidDto, username));
 
     }
 
     @PutMapping("put/{bidID}")
-    public ResponseEntity<Object> updateBid(@PathVariable Long bidID, @RequestBody CreateBid createBid) {
-        bidService.update(bidID, createBid);
+    public ResponseEntity<Object> updateBid(@PathVariable Long bidID, @RequestBody CreateBidDto createBidDto) {
+        bidService.update(bidID, createBidDto);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("put/{username}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
-                                                      @RequestBody CustomerDto customerDto) {
-        customerService.updateCustomer(username, customerDto);
+    public ResponseEntity<CreatedCustomerDto> updateCustomer(@PathVariable("username") String username,
+                                                             @RequestBody CreateCustomerDto createCustomerDto) {
+        customerService.update(username, createCustomerDto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("delete/{bidID}")
     public ResponseEntity<Object> deleteBid(@PathVariable Long bidID) {
-        bidService.deleteById(bidID);
+        bidService.delete(bidID);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("delete/{username}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
-        customerService.deleteCustomer(username);
+        customerService.delete(username);
         return ResponseEntity.noContent().build();
     }
 }

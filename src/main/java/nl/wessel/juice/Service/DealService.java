@@ -1,11 +1,11 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Bid.CreatedBid;
-import nl.wessel.juice.DTO.Customer.CustomerDto;
-import nl.wessel.juice.DTO.Deal.CreateDeal;
-import nl.wessel.juice.DTO.Deal.CreatedDeal;
-import nl.wessel.juice.DTO.Domain.CreatedDomain;
-import nl.wessel.juice.DTO.Publisher.PublisherDto;
+import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
+import nl.wessel.juice.DTO.Deal.CreateDealDto;
+import nl.wessel.juice.DTO.Deal.CreatedDealDto;
+import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
+import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.*;
@@ -34,22 +34,22 @@ public class DealService {
         this.publisherRepository = publisherRepository;
     }
 
-    public static Deal dealMaker(CreateDeal createDeal) {
+    public static Deal dealMaker(CreateDealDto createDealDto) {
         Deal deal = new Deal();
-        deal.setDeadline(createDeal.getDeadline());
-        deal.setPaymentType(createDeal.getPaymentType());
-        deal.setTerms(createDeal.getTerms());
-        deal.setPrice(createDeal.getPrice());
+        deal.setDeadline(createDealDto.getDeadline());
+        deal.setPaymentType(createDealDto.getPaymentType());
+        deal.setTerms(createDealDto.getTerms());
+        deal.setPrice(createDealDto.getPrice());
         return deal;
     }
 
-    public static CreatedDeal dealDtoMaker(Deal deal) {
-        CreatedDeal createdDeal = new CreatedDeal();
-        createdDeal.setDealID(deal.getDealID());
-        createdDeal.setDeadline(deal.getDeadline());
-        createdDeal.setPrice(deal.getPrice());
-        createdDeal.setPaymentType(deal.getPaymentType());
-        createdDeal.setTerms(deal.getTerms());
+    public static CreatedDealDto dealDtoMaker(Deal deal) {
+        CreatedDealDto createdDealDTO = new CreatedDealDto();
+        createdDealDTO.setDealID(deal.getDealID());
+        createdDealDTO.setDeadline(deal.getDeadline());
+        createdDealDTO.setPrice(deal.getPrice());
+        createdDealDTO.setPaymentType(deal.getPaymentType());
+        createdDealDTO.setTerms(deal.getTerms());
 
         var domain = deal.getDomain();
         var bid = deal.getBid();
@@ -61,25 +61,25 @@ public class DealService {
                 && customer != null
                 && publisher != null
         ) {
-            CreatedDomain createdDomain = DomainService.domainDtoMaker(domain);
-            createdDeal.setDomain(createdDomain);
+            CreatedDomainDto createdDomainDTO = DomainService.domainDtoMaker(domain);
+            createdDealDTO.setDomain(createdDomainDTO);
 
-            CreatedBid createdBid = BidService.bidDtoMaker(bid);
-            createdDeal.setBid(createdBid);
+            CreatedBidDTO createdBidDTO = BidService.bidDtoMaker(bid);
+            createdDealDTO.setBid(createdBidDTO);
 
-            CustomerDto customerDto = CustomerService.fromCustomer(customer);
-            createdDeal.setCustomer(customerDto);
+            CreatedCustomerDto createdCustomerDto = CustomerService.customerDtoMaker(customer);
+            createdDealDTO.setCustomer(createdCustomerDto);
 
-            PublisherDto publisherDto = PublisherService.fromPublisher(publisher);
-            createdDeal.setPublisher(publisherDto);
+            CreatedPublisherDto createdPublisherDto = PublisherService.publisherDtoMaker(publisher);
+            createdDealDTO.setPublisher(createdPublisherDto);
         }
 
 
-        return createdDeal;
+        return createdDealDTO;
     }
 
     //    CREATE
-    public CreatedDeal newDeal(CreateDeal createDeal, Long bidID, Long domainID, String publisherName, String Customername) {
+    public CreatedDealDto newDeal(CreateDealDto createDealDto, Long bidID, Long domainID, String publisherName, String Customername) {
         if (
                 domainRepository.findById(domainID).isPresent()
                         && customerRepository.findById(Customername).isPresent()
@@ -91,7 +91,7 @@ public class DealService {
             Publisher publisher = publisherRepository.findById(publisherName).get();
             Domain domain = domainRepository.findById(domainID).get();
 
-            Deal deal = dealMaker(createDeal);
+            Deal deal = dealMaker(createDealDto);
 
             deal.setCustomer(customer);
             deal.setBid(bid);
@@ -101,7 +101,6 @@ public class DealService {
 
             domain.setDeal(deal);
             bid.setDeal(deal);
-
             dealRepository.save(deal);
             return dealDtoMaker(deal);
         } else {
@@ -112,25 +111,25 @@ public class DealService {
 
 
     //    READ
-    public List<CreatedDeal> getList() {
+    public List<CreatedDealDto> getList() {
         List<Deal> dealList = dealRepository.findAll();
 
         if (dealList.isEmpty()) {
             Deal deal = new Deal();
             throw new RecordNotFound(deal);
         } else {
-            List<CreatedDeal> createdDealList = new ArrayList<>();
+            List<CreatedDealDto> createdDealDtoList = new ArrayList<>();
 
             for (Deal deal : dealList) {
-                CreatedDeal createdDeal = dealDtoMaker(deal);
-                createdDealList.add(createdDeal);
+                CreatedDealDto createdDealDTO = dealDtoMaker(deal);
+                createdDealDtoList.add(createdDealDTO);
             }
-            return createdDealList;
+            return createdDealDtoList;
         }
     }
 
 
-    public CreatedDeal getByID(Long dealID) {
+    public CreatedDealDto getByID(Long dealID) {
         if (dealRepository.findById(dealID).isPresent()) {
             Deal deal = dealRepository.findById(dealID).get();
             return dealDtoMaker(deal);
@@ -142,10 +141,10 @@ public class DealService {
 
 
     //    update
-    public CreatedDeal update(Long dealID, CreateDeal createDeal) {
+    public CreatedDealDto update(Long dealID, CreateDealDto createDealDto) {
         if (dealRepository.findById(dealID).isPresent()) {
             Deal deal = dealRepository.findById(dealID).get();
-            Deal deal1 = dealMaker(createDeal);
+            Deal deal1 = dealMaker(createDealDto);
 
 
             deal1.setDealID(deal.getDealID());

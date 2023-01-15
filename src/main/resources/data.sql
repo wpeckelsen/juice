@@ -10,18 +10,16 @@ VALUES ('PUBLISHER', 'PUBLISHER@MAIL.COM', true, '$2a$12$vUDT8b75EhnOGI5SJSs/0.X
 INSERT INTO authority (username, authority)
 VALUES ('PUBLISHER', 'ROLE_PUBLISHER');
 
-INSERT INTO customer (username, email, enabled, password)
-VALUES ('CUSTOMER', 'CUSTOMER@MAIL.COM', true, '$2a$12$6hcJfTwGeb7W.QQBEJUUP.NfTdLFjlqtKSA7.qLVZDMR7N0qDGRbG');
+INSERT INTO customer (username, password)
+VALUES ('CUSTOMER', '$2a$12$6hcJfTwGeb7W.QQBEJUUP.NfTdLFjlqtKSA7.qLVZDMR7N0qDGRbG');
 -- username : CUSTOMER
 -- password : CUSTOMER
 
 INSERT INTO authority (username, authority)
 VALUES ('CUSTOMER', 'ROLE_CUSTOMER');
 
-
-
-INSERT INTO customer (username, email, enabled, password)
-VALUES ('ADMIN', 'ADMIN@MAIL.COM', true, '$2a$12$glWL3pyii1UmVub88XYWIOOFqeSK3UkL9uBb2xSEO7jdIKRKvEjmq');
+INSERT INTO customer (username, password)
+VALUES ('ADMIN', '$2a$12$glWL3pyii1UmVub88XYWIOOFqeSK3UkL9uBb2xSEO7jdIKRKvEjmq');
 
 INSERT INTO publisher (username, email, enabled, password)
 VALUES ('ADMIN', 'ADMIN@MAIL.COM', true, '$2a$12$glWL3pyii1UmVub88XYWIOOFqeSK3UkL9uBb2xSEO7jdIKRKvEjmq');

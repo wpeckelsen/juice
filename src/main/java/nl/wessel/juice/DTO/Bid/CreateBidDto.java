@@ -1,6 +1,6 @@
 package nl.wessel.juice.DTO.Bid;
 
-public class CreateBid {
+public class CreateBidDto {
 
     public int words;
     public String deadline;

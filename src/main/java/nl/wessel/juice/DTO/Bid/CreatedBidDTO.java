@@ -4,7 +4,7 @@ import nl.wessel.juice.DTO.Photo.PhotoDto;
 
 import java.time.ZonedDateTime;
 
-public class CreatedBid {
+public class CreatedBidDTO {
 
 
 

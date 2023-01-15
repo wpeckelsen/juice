@@ -1,8 +1,9 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Bid.CreateBid;
-import nl.wessel.juice.DTO.Bid.CreatedBid;
-import nl.wessel.juice.DTO.Customer.CustomerDto;
+import nl.wessel.juice.DTO.Bid.CreateBidDto;
+import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
+import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.UsernameNotFound;
 import nl.wessel.juice.Model.Authority;
@@ -10,13 +11,13 @@ import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Model.Customer;
 import nl.wessel.juice.Repository.BidRepository;
 import nl.wessel.juice.Repository.CustomerRepository;
-import nl.wessel.juice.Security.Utils.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -33,88 +34,68 @@ public class CustomerService {
         this.bidRepository = bidRepository;
     }
 
-
-    public static CustomerDto fromCustomer(Customer customer) {
-
-        var dto = new CustomerDto();
-        dto.username = customer.getUsername();
-        dto.password = customer.getPassword();
-//        dto.enabled = customer.isEnabled();
-//        dto.apikey = customer.getApikey();
-//        dto.email = customer.getEmail();
-        dto.authorities = customer.getAuthorities();
-        List<Bid> bids = customer.getBids();
-        List<CreatedBid> createdBids = new ArrayList<>();
-
-        if (bids != null) {
-            for (Bid bid : bids) {
-                CreatedBid createdBid = BidService.bidDtoMaker(bid);
-                createdBids.add(createdBid);
-            }
-
-        }
-
-        dto.setBids(createdBids);
-        return dto;
-    }
-
-    public Customer toCustomer(CustomerDto customerDto) {
-        Customer customer = new Customer();
-        customer.setUsername(customerDto.getUsername());
-        customer.setPassword(customerDto.getPassword());
-//        customer.setEnabled(customerDto.getEnabled());
-//        customer.setApikey(customerDto.getApikey());
-//        customer.setEmail(customerDto.getEmail());
+    public Customer customerMaker2(CreateCustomerDto createCustomerDto){
+        Customer customer  = new Customer();
+        customer.setUsername(createCustomerDto.getUsername());
+        customer.setPassword(createCustomerDto.getPassword());
         return customer;
     }
 
+    public static CreatedCustomerDto customerDtoMaker(Customer customer) {
+        CreatedCustomerDto createdCustomerDto = new CreatedCustomerDto();
+        createdCustomerDto.setUsername(customer.getUsername());
+        createdCustomerDto.setPassword(customer.getPassword());
+        List<Bid> bids = customer.getBids();
+        List<Long> bidIDs = new ArrayList<>();
+        if (bids != null) {
+            for (Bid bid : bids) {
+                bidIDs.add(bid.getBidID());
+            }
+        }
+        createdCustomerDto.setBidIDs(bidIDs);
+        return createdCustomerDto;
+    }
 
-    public CustomerDto newBid(CreateBid createBid, String username) {
 
-        var foundCustomer = customerRepository.findById(username);
 
+    public CreatedBidDTO newBid(CreateBidDto createBidDto, String username) {
+        Optional<Customer> foundCustomer = customerRepository.findById(username);
 
         if (foundCustomer.isPresent()) {
             Customer customer = foundCustomer.get();
-            Bid newBid = BidService.bidMaker(createBid);
-
-
+            Bid newBid = BidService.bidMaker(createBidDto);
             List<Bid> currentBids = customer.getBids();
             currentBids.add(newBid);
 
-
-//            assigns customer to domain
             for (Bid bid : currentBids) {
-//                needs to get Bid object from BidID and set customerID to Bid
                 bid.setCustomer(customer);
                 bidRepository.save(newBid);
             }
 
             customer.setBids(currentBids);
             customerRepository.save(customer);
-            return fromCustomer(customer);
+            return BidService.bidDtoMaker(newBid);
 
         } else {
-
             throw new BadRequest("This Customer does not show up in the Database. Are you sure you made it?");
         }
     }
 
 
-    public List<CustomerDto> getCustomers() {
-        List<CustomerDto> collection = new ArrayList<>();
+    public List<CreatedCustomerDto> getCustomers() {
+        List<CreatedCustomerDto> collection = new ArrayList<>();
         List<Customer> list = customerRepository.findAll();
         for (Customer customer : list) {
-            collection.add(fromCustomer(customer));
+            collection.add(customerDtoMaker(customer));
         }
         return collection;
     }
 
-    public CustomerDto getCustomer(String customerName) {
-        CustomerDto dto;
-        var customer = customerRepository.findById(customerName);
+    public CreatedCustomerDto getCustomer(String customerName) {
+        CreatedCustomerDto dto;
+        Optional<Customer> customer = customerRepository.findById(customerName);
         if (customer.isPresent()) {
-            dto = fromCustomer(customer.get());
+            dto = customerDtoMaker(customer.get());
         } else {
             throw new UsernameNotFound(customerName);
         }
@@ -125,34 +106,33 @@ public class CustomerService {
         return customerRepository.existsById(customerName);
     }
 
-    public String createCustomer(CustomerDto customerDto) {
-        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
-        customerDto.setApikey(randomString);
-        Customer newCustomer = customerRepository.save(toCustomer(customerDto));
-        return newCustomer.getUsername();
+    public String createCustomer(CreateCustomerDto createCustomerDto) {
+        Customer customer = customerMaker2(createCustomerDto);
+        customerRepository.save(customer);
+        return customerDtoMaker(customer).getUsername();
     }
 
-    public void deleteCustomer(String customerName) {
+    public void delete(String customerName) {
         customerRepository.deleteById(customerName);
     }
 
-    public void updateCustomer(String customerName, CustomerDto newCustomer) {
+    public void update(String customerName, CreateCustomerDto createCustomerDto) {
         if (!customerRepository.existsById(customerName)) throw new BadRequest();
-        Customer customer = customerRepository.findById(customerName).get();
-        customer.setPassword(newCustomer.getPassword());
-        customer.setUsername(newCustomer.getUsername());
-        customerRepository.save(customer);
+        Customer currentCustomer = customerRepository.findById(customerName).get();
+        Customer updatedCustomer = customerMaker2(createCustomerDto);
+
+        updatedCustomer.setUsername(currentCustomer.getUsername());
+        customerRepository.save(updatedCustomer);
     }
 
     public Set<Authority> getAuthorities(String customerName) {
         if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
         Customer customer = customerRepository.findById(customerName).get();
-        CustomerDto CustomerDto = fromCustomer(customer);
-        return CustomerDto.getAuthorities();
+        CreatedCustomerDto CreatedCustomerDto = customerDtoMaker(customer);
+        return CreatedCustomerDto.getAuthorities();
     }
 
     public void addAuthority(String customerName, String authority) {
-
         if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
         Customer customer = customerRepository.findById(customerName).get();
         customer.addAuthority(new Authority(customerName, authority));
@@ -162,7 +142,8 @@ public class CustomerService {
     public void removeAuthority(String customerName, String authority) {
         if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
         Customer customer = customerRepository.findById(customerName).get();
-        Authority authorityToRemove = customer.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
+        Authority authorityToRemove = customer.getAuthorities().stream().filter((a)
+                -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
         customer.removeAuthority(authorityToRemove);
         customerRepository.save(customer);
     }

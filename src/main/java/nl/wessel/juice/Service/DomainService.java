@@ -1,7 +1,7 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Domain.CreateDomain;
-import nl.wessel.juice.DTO.Domain.CreatedDomain;
+import nl.wessel.juice.DTO.Domain.CreateDomainDto;
+import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Repository.DomainRepository;
@@ -20,45 +20,44 @@ public class DomainService {
         this.domainRepository = domainRepository;
     }
 
-    public static CreatedDomain domainDtoMaker(Domain domain) {
-        CreatedDomain createdDomain = new CreatedDomain();
-        createdDomain.setDomainID(domain.getDomainID());
-        createdDomain.setName(domain.getName());
-        createdDomain.setTLD(domain.getTLD());
-        createdDomain.setCategory(domain.getCategory());
-        createdDomain.setPrice(domain.getPrice());
-        return createdDomain;
+    public static CreatedDomainDto domainDtoMaker(Domain domain) {
+        CreatedDomainDto createdDomainDTO = new CreatedDomainDto();
+        createdDomainDTO.setDomainID(domain.getDomainID());
+        createdDomainDTO.setName(domain.getName());
+        createdDomainDTO.setTLD(domain.getTLD());
+        createdDomainDTO.setCategory(domain.getCategory());
+        createdDomainDTO.setPrice(domain.getPrice());
+        return createdDomainDTO;
     }
 
-    public static Domain domainMaker(CreateDomain createDomain) {
+    public static Domain domainMaker(CreateDomainDto createDomainDto) {
         Domain domain = new Domain();
-        domain.setName(createDomain.getName());
-        domain.setTLD(createDomain.getTLD());
-        domain.setCategory(createDomain.getCategory());
-        domain.setPrice(createDomain.getPrice());
+        domain.setName(createDomainDto.getName());
+        domain.setTLD(createDomainDto.getTLD());
+        domain.setCategory(createDomainDto.getCategory());
+        domain.setPrice(createDomainDto.getPrice());
         return domain;
     }
 
 
-    //    read
-    public List<CreatedDomain> getList() {
+    public List<CreatedDomainDto> getList() {
         List<Domain> domainList = domainRepository.findAll();
         if (domainList.isEmpty()) {
             Domain domain = new Domain();
             throw new RecordNotFound(domain);
         } else {
-            List<CreatedDomain> createdDomainList = new ArrayList<>();
+            List<CreatedDomainDto> createdDomainDtoList = new ArrayList<>();
 
             for (Domain domain : domainList) {
-                CreatedDomain createdDomain = domainDtoMaker(domain);
-                createdDomainList.add(createdDomain);
+                CreatedDomainDto createdDomainDTO = domainDtoMaker(domain);
+                createdDomainDtoList.add(createdDomainDTO);
             }
-            return createdDomainList;
+            return createdDomainDtoList;
         }
     }
 
 
-    public CreatedDomain getByID(Long idDomain) {
+    public CreatedDomainDto getByID(Long idDomain) {
         if (domainRepository.findById(idDomain).isPresent()) {
             Domain domain = domainRepository.findById(idDomain).get();
             return domainDtoMaker(domain);
@@ -69,13 +68,10 @@ public class DomainService {
     }
 
 
-
-
-    //    update
-    public CreatedDomain update(Long domainID, CreateDomain createDomain) {
+    public CreatedDomainDto update(Long domainID, CreateDomainDto createDomainDto) {
         if (domainRepository.findById(domainID).isPresent()) {
             Domain domain = domainRepository.findById(domainID).get();
-            Domain domain1 = domainMaker(createDomain);
+            Domain domain1 = domainMaker(createDomainDto);
 
             domain1.setDomainID(domain.getDomainID());
             domainRepository.save(domain1);
@@ -86,7 +82,7 @@ public class DomainService {
         }
     }
 
-    //    delete
+
     public void deleteById(Long domainID) {
         domainRepository.deleteById(domainID);
     }

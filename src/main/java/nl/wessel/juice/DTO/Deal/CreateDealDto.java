@@ -1,7 +1,7 @@
 package nl.wessel.juice.DTO.Deal;
 
 
-public class CreateDeal {
+public class CreateDealDto {
 
 
     private String deadline;

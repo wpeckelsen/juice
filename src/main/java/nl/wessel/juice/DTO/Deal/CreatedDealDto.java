@@ -1,11 +1,12 @@
 package nl.wessel.juice.DTO.Deal;
 
-import nl.wessel.juice.DTO.Domain.CreatedDomain;
-import nl.wessel.juice.DTO.Bid.CreatedBid;
-import nl.wessel.juice.DTO.Customer.CustomerDto;
-import nl.wessel.juice.DTO.Publisher.PublisherDto;
+import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
+import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
+import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 
-public class CreatedDeal {
+// CreatedDealDto
+public class CreatedDealDto {
 
 
     private Long dealID;
@@ -14,43 +15,43 @@ public class CreatedDeal {
     private String paymentType;
     private String terms;
 
-    private CreatedBid bid;
-    private CreatedDomain domain;
-    private CustomerDto customer;
-    private PublisherDto publisher;
+    private CreatedBidDTO bid;
+    private CreatedDomainDto domain;
+    private CreatedCustomerDto customer;
+    private CreatedPublisherDto publisher;
 
 
 
-    public PublisherDto getPublisher() {
+    public CreatedPublisherDto getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(PublisherDto publisher) {
+    public void setPublisher(CreatedPublisherDto publisher) {
         this.publisher = publisher;
     }
 
-    public CustomerDto getCustomer() {
+    public CreatedCustomerDto getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerDto customer) {
+    public void setCustomer(CreatedCustomerDto customer) {
         this.customer = customer;
     }
 
 
-    public CreatedBid getBid() {
+    public CreatedBidDTO getBid() {
         return bid;
     }
 
-    public void setBid(CreatedBid bid) {
+    public void setBid(CreatedBidDTO bid) {
         this.bid = bid;
     }
 
-    public CreatedDomain getDomain() {
+    public CreatedDomainDto getDomain() {
         return domain;
     }
 
-    public void setDomain(CreatedDomain domain) {
+    public void setDomain(CreatedDomainDto domain) {
         this.domain = domain;
     }
 

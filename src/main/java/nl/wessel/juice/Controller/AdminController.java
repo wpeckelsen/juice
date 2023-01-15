@@ -1,6 +1,6 @@
 package nl.wessel.juice.Controller;
 
-import nl.wessel.juice.DTO.Deal.CreateDeal;
+import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.Model.Photo;
 import nl.wessel.juice.Service.BidService;
 import nl.wessel.juice.Service.CustomerService;
@@ -32,21 +32,21 @@ public class AdminController {
     }
 
 
-    @PutMapping("put/{dealID}")
-    public ResponseEntity<Object> updateDeal(@PathVariable Long dealID, @RequestBody CreateDeal createDeal) {
+    @PutMapping("{dealID}")
+    public ResponseEntity<Object> update(@PathVariable Long dealID, @RequestBody CreateDealDto createDealDto) {
 
-        dealService.update(dealID, createDeal);
+        dealService.update(dealID, createDealDto);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("delete/{dealID}")
-    public ResponseEntity<Object> deleteDeal(@PathVariable Long dealID) {
+    @DeleteMapping("{dealID}")
+    public ResponseEntity<Object> delete(@PathVariable Long dealID) {
         dealService.deleteById(dealID);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("get/photos")
-    public Collection<Photo> findAllPhotos() {
+    @GetMapping("photos")
+    public Collection<Photo> photos() {
         return photoService.findAllPhotos();
     }
 
