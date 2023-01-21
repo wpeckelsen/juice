@@ -1,7 +1,7 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
-import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Repository.BidRepository;
@@ -42,8 +42,8 @@ public class BidService {
 
 
 
-    public static CreatedBidDTO bidDtoMaker(Bid bid) {
-        CreatedBidDTO createdBidDTO = new CreatedBidDTO();
+    public static CreatedBidDto bidDtoMaker(Bid bid) {
+        CreatedBidDto createdBidDTO = new CreatedBidDto();
         ZonedDateTime rightNow = ZonedDateTime.now();
 
         createdBidDTO.setCreationTime(rightNow);
@@ -57,14 +57,8 @@ public class BidService {
         return createdBidDTO;
     }
 
-
-//    this method gives an error:
-//    non-transient entity has a null id: nl.wessel.juice.B.BusinessLogic.Model.Photo
-//    corresponding method in CustomerController is commented out as well
-
-
     @Transactional
-    public CreatedBidDTO bidAndPhoto(Long bidID, String name, CreateBidDto createBidDto){
+    public CreatedBidDto bidAndPhoto(Long bidID, String name, CreateBidDto createBidDto){
         Bid foundBid = bidRepository.findById(bidID).get();
         var photo = photoRepository.findPhotoByFileName(name);
         Bid bid = bidMaker(createBidDto);
@@ -74,8 +68,7 @@ public class BidService {
         return bidDtoMaker(bid);
     }
 
-    //    READ
-    public List<CreatedBidDTO> getList() {
+    public List<CreatedBidDto> getList() {
 
         List<Bid> bidList = bidRepository.findAll();
 
@@ -83,17 +76,17 @@ public class BidService {
             Bid bid = new Bid();
             throw new RecordNotFound(bid);
         } else {
-            List<CreatedBidDTO> createdBidDTOList = new ArrayList<>();
+            List<CreatedBidDto> createdBidDtoList = new ArrayList<>();
 
             for (Bid bid : bidList) {
-                CreatedBidDTO createdBidDTO = bidDtoMaker(bid);
-                createdBidDTOList.add(createdBidDTO);
+                CreatedBidDto createdBidDTO = bidDtoMaker(bid);
+                createdBidDtoList.add(createdBidDTO);
             }
-            return createdBidDTOList;
+            return createdBidDtoList;
         }
     }
 
-    public CreatedBidDTO getByID(Long idBid) {
+    public CreatedBidDto getByID(Long idBid) {
         if (bidRepository.findById(idBid).isPresent()) {
             Bid bid = bidRepository.findById(idBid).get();
             return bidDtoMaker(bid);
@@ -104,7 +97,7 @@ public class BidService {
     }
 
 
-    public CreatedBidDTO update(Long bidID, CreateBidDto createBidDto) {
+    public CreatedBidDto update(Long bidID, CreateBidDto createBidDto) {
 
 
         if (bidRepository.findById(bidID).isPresent()) {

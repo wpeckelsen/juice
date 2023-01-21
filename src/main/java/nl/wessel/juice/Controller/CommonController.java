@@ -1,6 +1,6 @@
 package nl.wessel.juice.Controller;
 
-import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
@@ -49,10 +49,10 @@ public class CommonController {
     }
 
     @GetMapping("bids")
-    public ResponseEntity<List<CreatedBidDTO>> bids() {
-        List<CreatedBidDTO> createdBidDTOList;
-        createdBidDTOList = bidService.getList();
-        return ResponseEntity.ok().body(createdBidDTOList);
+    public ResponseEntity<List<CreatedBidDto>> bids() {
+        List<CreatedBidDto> createdBidDtoList;
+        createdBidDtoList = bidService.getList();
+        return ResponseEntity.ok().body(createdBidDtoList);
     }
 
     @GetMapping("publishers")
@@ -82,8 +82,8 @@ public class CommonController {
     }
 
     @GetMapping("bid/{bidID}")
-    public ResponseEntity<CreatedBidDTO> bid(@PathVariable(value = "bidID") Long bidID) {
-        CreatedBidDTO createdBidDTO = bidService.getByID(bidID);
+    public ResponseEntity<CreatedBidDto> bid(@PathVariable(value = "bidID") Long bidID) {
+        CreatedBidDto createdBidDTO = bidService.getByID(bidID);
         return ResponseEntity.ok().body(createdBidDTO);
     }
 

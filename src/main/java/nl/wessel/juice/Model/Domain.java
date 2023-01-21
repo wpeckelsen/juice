@@ -73,14 +73,6 @@ public class Domain {
         }
     }
 
-//    public Publisher getPublisher() {
-//        return publisher;
-//    }
-//
-//    public void setPublisher(Publisher publisher) {
-//        this.publisher = publisher;
-//    }
-
     public Deal getDeal() {
         return deal;
     }

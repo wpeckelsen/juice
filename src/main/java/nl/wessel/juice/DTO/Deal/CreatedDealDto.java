@@ -1,13 +1,6 @@
 package nl.wessel.juice.DTO.Deal;
 
-import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
-import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
-import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
-
-// CreatedDealDto
 public class CreatedDealDto {
-
 
     private Long dealID;
     private String deadline;
@@ -15,45 +8,10 @@ public class CreatedDealDto {
     private String paymentType;
     private String terms;
 
-    private CreatedBidDTO bid;
-    private CreatedDomainDto domain;
-    private CreatedCustomerDto customer;
-    private CreatedPublisherDto publisher;
-
-
-
-    public CreatedPublisherDto getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(CreatedPublisherDto publisher) {
-        this.publisher = publisher;
-    }
-
-    public CreatedCustomerDto getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(CreatedCustomerDto customer) {
-        this.customer = customer;
-    }
-
-
-    public CreatedBidDTO getBid() {
-        return bid;
-    }
-
-    public void setBid(CreatedBidDTO bid) {
-        this.bid = bid;
-    }
-
-    public CreatedDomainDto getDomain() {
-        return domain;
-    }
-
-    public void setDomain(CreatedDomainDto domain) {
-        this.domain = domain;
-    }
+    private Long bidID;
+    private Long domainID;
+    private String customerID;
+    private String publisherID;
 
     public Long getDealID() {
         return dealID;
@@ -95,4 +53,35 @@ public class CreatedDealDto {
         this.terms = terms;
     }
 
+    public Long getBidID() {
+        return bidID;
+    }
+
+    public void setBidID(Long bidID) {
+        this.bidID = bidID;
+    }
+
+    public Long getDomainID() {
+        return domainID;
+    }
+
+    public void setDomainID(Long domainID) {
+        this.domainID = domainID;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+
+    public String getPublisherID() {
+        return publisherID;
+    }
+
+    public void setPublisherID(String publisherID) {
+        this.publisherID = publisherID;
+    }
 }

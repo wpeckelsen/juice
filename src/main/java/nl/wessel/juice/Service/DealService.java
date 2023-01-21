@@ -1,6 +1,6 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
@@ -62,23 +62,21 @@ public class DealService {
                 && publisher != null
         ) {
             CreatedDomainDto createdDomainDTO = DomainService.domainDtoMaker(domain);
-            createdDealDTO.setDomain(createdDomainDTO);
+            createdDealDTO.setDomainID(createdDomainDTO.getDomainID());
 
-            CreatedBidDTO createdBidDTO = BidService.bidDtoMaker(bid);
-            createdDealDTO.setBid(createdBidDTO);
+            CreatedBidDto createdBidDTO = BidService.bidDtoMaker(bid);
+            createdDealDTO.setBidID(createdBidDTO.getBidID());
 
             CreatedCustomerDto createdCustomerDto = CustomerService.customerDtoMaker(customer);
-            createdDealDTO.setCustomer(createdCustomerDto);
+            createdDealDTO.setCustomerID(createdCustomerDto.getUsername());
 
             CreatedPublisherDto createdPublisherDto = PublisherService.publisherDtoMaker(publisher);
-            createdDealDTO.setPublisher(createdPublisherDto);
+            createdDealDTO.setPublisherID(createdPublisherDto.getPassword());
         }
-
-
         return createdDealDTO;
     }
 
-    //    CREATE
+
     public CreatedDealDto newDeal(CreateDealDto createDealDto, Long bidID, Long domainID, String publisherName, String Customername) {
         if (
                 domainRepository.findById(domainID).isPresent()
@@ -110,7 +108,7 @@ public class DealService {
     }
 
 
-    //    READ
+
     public List<CreatedDealDto> getList() {
         List<Deal> dealList = dealRepository.findAll();
 
@@ -139,8 +137,6 @@ public class DealService {
         }
     }
 
-
-    //    update
     public CreatedDealDto update(Long dealID, CreateDealDto createDealDto) {
         if (dealRepository.findById(dealID).isPresent()) {
             Deal deal = dealRepository.findById(dealID).get();
@@ -156,7 +152,6 @@ public class DealService {
         }
     }
 
-    //    delete
     public void deleteById(Long dealID) {
         dealRepository.deleteById(dealID);
     }

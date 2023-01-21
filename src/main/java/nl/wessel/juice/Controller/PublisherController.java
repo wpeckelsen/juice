@@ -1,6 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
+import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
 import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Service.*;
@@ -47,8 +48,8 @@ public class PublisherController {
 
 
     @PostMapping("post/{username}")
-    public ResponseEntity<CreatedPublisherDto> newDomain(@RequestBody CreateDomainDto createDomainDto,
-                                                         @PathVariable String username) {
+    public ResponseEntity<CreatedDomainDto> newDomain(@RequestBody CreateDomainDto createDomainDto,
+                                                      @PathVariable String username) {
         return ResponseEntity.ok().body(publisherService.newDomain(createDomainDto, username));
     }
 
@@ -80,7 +81,7 @@ public class PublisherController {
         domainService.deleteById(domainID);
         return ResponseEntity.noContent().build();
     }
-//ENDPOINTS KORTER
+
     @GetMapping("{photoName}")
     ResponseEntity<byte[]> downloadSinglePhoto(@PathVariable String photoName, HttpServletRequest httpServletRequest) {
         return photoService.DownloadSinglePhoto(photoName, httpServletRequest);

@@ -53,13 +53,8 @@ public class AuthenticationController {
         } catch (BadCredentialsException ex) {
             throw new Exception("Incorrect username or password", ex);
         }
-
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         final String jwt = jwtUtil.generateToken(userDetails);
-
-
-
-//        this returns a JSON body containing a jwt token
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 

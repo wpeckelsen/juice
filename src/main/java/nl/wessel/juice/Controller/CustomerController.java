@@ -1,7 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
-import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Photo.PhotoDto;
@@ -60,7 +60,7 @@ public class CustomerController {
     }
 
     @PostMapping("post/{username}")
-    public ResponseEntity<CreatedBidDTO> newBid(@RequestBody CreateBidDto createBidDto,
+    public ResponseEntity<CreatedBidDto> newBid(@RequestBody CreateBidDto createBidDto,
                                                 @PathVariable String username) {
         return ResponseEntity.ok().body(customerService.newBid(createBidDto, username));
 

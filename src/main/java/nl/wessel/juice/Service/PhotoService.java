@@ -1,7 +1,6 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.Model.Photo;
-import nl.wessel.juice.Repository.BidRepository;
 import nl.wessel.juice.Repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -24,14 +23,11 @@ import java.util.Objects;
 public class PhotoService {
 
     private final PhotoRepository photoRepository;
-    private final BidRepository bidRepository;
-    private final BidService bidService;
+
 
     @Autowired
-    public PhotoService(PhotoRepository photoRepository, BidRepository bidRepository, BidService bidService) {
+    public PhotoService(PhotoRepository photoRepository) {
         this.photoRepository = photoRepository;
-        this.bidRepository = bidRepository;
-        this.bidService = bidService;
     }
 
 
@@ -39,9 +35,6 @@ public class PhotoService {
         return photoRepository.findAll();
     }
 
-
-
-    //   1 single upload
     public Photo UploadSinglePhoto(MultipartFile file) throws IOException {
         String name = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         Photo photo = new Photo();
@@ -52,7 +45,6 @@ public class PhotoService {
 
     }
 
-    //  2  single download
     @Transactional
     public ResponseEntity<byte[]> DownloadSinglePhoto(String fileName, HttpServletRequest request) {
         Photo photo = photoRepository.findPhotoByFileName(fileName);
@@ -65,9 +57,6 @@ public class PhotoService {
                 .body(photo.getDocFile());
     }
 
-
-
-    // 3 full db download
     public Resource downloadDatabasePhoto(String filename) {
         String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFromDB/").path(filename).toUriString();
         Resource resource;

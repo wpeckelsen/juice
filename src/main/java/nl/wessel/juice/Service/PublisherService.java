@@ -1,6 +1,7 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
+import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
 import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,13 +28,6 @@ public class PublisherService {
     public PublisherService(DomainRepository domainRepository, PublisherRepository publisherRepository) {
         this.domainRepository = domainRepository;
         this.publisherRepository = publisherRepository;
-    }
-
-    public Publisher toPublisher(CreatedPublisherDto createdPublisherDto) {
-        Publisher publisher = new Publisher();
-        publisher.setUsername(createdPublisherDto.getUsername());
-        publisher.setPassword(createdPublisherDto.getPassword());
-        return publisher;
     }
 
     public Publisher publisherMaker(CreatePublisherDto createPublisherDto) {
@@ -68,7 +62,7 @@ public class PublisherService {
     }
 
     public CreatedPublisherDto getPublisher(String publisherName) {
-        CreatedPublisherDto dto = new CreatedPublisherDto();
+        CreatedPublisherDto dto;
         var publisher = publisherRepository.findById(publisherName);
         if (publisher.isPresent()) {
             dto = publisherDtoMaker(publisher.get());
@@ -78,9 +72,9 @@ public class PublisherService {
         return dto;
     }
 
-    public boolean publisherExists(String publisherName) {
-        return publisherRepository.existsById(publisherName);
-    }
+//    public boolean publisherExists(String publisherName) {
+//        return publisherRepository.existsById(publisherName);
+//    }
 
     public String create(CreatePublisherDto createdPublisherDto) {
         Publisher publisher = publisherMaker(createdPublisherDto);
@@ -94,60 +88,69 @@ public class PublisherService {
 
     public void update(String publisherName, CreatePublisherDto createPublisherDto) {
         if (!publisherRepository.existsById(publisherName)) throw new BadRequest();
-        Publisher currentPublisher = publisherRepository.findById(publisherName).get();
-        Publisher updatedPublisher = publisherMaker(createPublisherDto);
-        updatedPublisher.setUsername(currentPublisher.getUsername());
-        publisherRepository.save(updatedPublisher);
-    }
+        var optionalPublisher = publisherRepository.findById(publisherName);
 
-    public Set<Authority> getAuthorities(String publisherName) {
-        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
-        Publisher publisher = publisherRepository.findById(publisherName).get();
-        CreatedPublisherDto createdPublisherDto = publisherDtoMaker(publisher);
-        return createdPublisherDto.getAuthorities();
+        if (optionalPublisher.isPresent()) {
+            Publisher currentPublisher = optionalPublisher.get();
+            Publisher updatedPublisher = publisherMaker(createPublisherDto);
+            updatedPublisher.setUsername(currentPublisher.getUsername());
+            publisherRepository.save(updatedPublisher);
+        }
     }
 
     public void addAuthority(String publisherName, String authority) {
 
         if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
-        Publisher publisher = publisherRepository.findById(publisherName).get();
-        publisher.addAuthority(new Authority(publisherName, authority));
-        publisherRepository.save(publisher);
+
+        Optional<Publisher> optionalPublisher = publisherRepository.findById(publisherName);
+        if(optionalPublisher.isPresent()){
+            Publisher publisher = optionalPublisher.get();
+            publisher.addAuthority(new Authority(publisherName, authority));
+            publisherRepository.save(publisher);
+        }
     }
 
-    public void removeAuthority(String publisherName, String authority) {
-        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
-        Publisher publisher = publisherRepository.findById(publisherName).get();
-        Authority authorityToRemove = publisher.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
-        publisher.removeAuthority(authorityToRemove);
-        publisherRepository.save(publisher);
-    }
+//            if (optionalPublisher.isPresent()) {
+//            Publisher currentPublisher = optionalPublisher.get();
+//            Publisher updatedPublisher = publisherMaker(createPublisherDto);
+//            updatedPublisher.setUsername(currentPublisher.getUsername());
+//            publisherRepository.save(updatedPublisher);
+//        }
 
 
-    public CreatedPublisherDto newDomain(CreateDomainDto createDomainDto, String username) {
+    //    public Set<Authority> getAuthorities(String publisherName) {
+//        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
+//        Publisher publisher = publisherRepository.findById(publisherName).get();
+//        CreatedPublisherDto createdPublisherDto = publisherDtoMaker(publisher);
+//        return createdPublisherDto.getAuthorities();
+//    }
 
-        var foundPublisher = publisherRepository.findById(username);
+//    public void removeAuthority(String publisherName, String authority) {
+//        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
+//        Publisher publisher = publisherRepository.findById(publisherName).get();
+//        Authority authorityToRemove = publisher.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
+//        publisher.removeAuthority(authorityToRemove);
+//        publisherRepository.save(publisher);
+//    }
 
+
+    public CreatedDomainDto newDomain(CreateDomainDto createDomainDto, String username) {
+        Optional<Publisher> foundPublisher = publisherRepository.findById(username);
 
         if (foundPublisher.isPresent()) {
             Publisher publisher = foundPublisher.get();
             Domain newDomain = DomainService.domainMaker(createDomainDto);
-
             List<Domain> currentDomains = publisher.getDomains();
             currentDomains.add(newDomain);
-
 
             for (Domain domain : currentDomains) {
                 domain.setPublisher(publisher);
                 domainRepository.save(domain);
             }
-
             publisher.setDomains(currentDomains);
             publisherRepository.save(publisher);
-            return publisherDtoMaker(publisher);
-
+            return DomainService.domainDtoMaker(newDomain);
         } else {
-
             throw new BadRequest("This Publisher does not show up in the Database. Are you sure you made it?");
         }
     }

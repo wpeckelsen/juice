@@ -4,7 +4,7 @@ import nl.wessel.juice.DTO.Photo.PhotoDto;
 
 import java.time.ZonedDateTime;
 
-public class CreatedBidDTO {
+public class CreatedBidDto {
 
 
 
@@ -19,6 +19,38 @@ public class CreatedBidDTO {
     public String vernacular;
     public ZonedDateTime creationTime;
     public PhotoDto photo;
+
+    public Long getBidID() {
+        return bidID;
+    }
+
+    public int getWords() {
+        return words;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public String getTopic() {
+        return topic;
+    }
+
+    public String getAnchor() {
+        return anchor;
+    }
+
+    public String getVernacular() {
+        return vernacular;
+    }
+
+    public ZonedDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public PhotoDto getPhoto() {
+        return photo;
+    }
 
     public void setBidID(Long bidID) {
         this.bidID = bidID;

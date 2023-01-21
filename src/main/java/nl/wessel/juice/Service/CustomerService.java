@@ -1,7 +1,7 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
-import nl.wessel.juice.DTO.Bid.CreatedBidDTO;
+import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.Exception.BadRequest;
@@ -58,7 +58,7 @@ public class CustomerService {
 
 
 
-    public CreatedBidDTO newBid(CreateBidDto createBidDto, String username) {
+    public CreatedBidDto newBid(CreateBidDto createBidDto, String username) {
         Optional<Customer> foundCustomer = customerRepository.findById(username);
 
         if (foundCustomer.isPresent()) {
@@ -71,11 +71,9 @@ public class CustomerService {
                 bid.setCustomer(customer);
                 bidRepository.save(newBid);
             }
-
             customer.setBids(currentBids);
             customerRepository.save(customer);
             return BidService.bidDtoMaker(newBid);
-
         } else {
             throw new BadRequest("This Customer does not show up in the Database. Are you sure you made it?");
         }
