@@ -12,74 +12,74 @@ public class CreatedDealDto {
     private Long domainID;
     private String customerID;
     private String publisherID;
-
-    public Long getDealID() {
-        return dealID;
-    }
+//
+//    public Long getDealID() {
+//        return dealID;
+//    }
 
     public void setDealID(Long dealID) {
         this.dealID = dealID;
     }
 
-    public String getDeadline() {
-        return deadline;
-    }
+//    public String getDeadline() {
+//        return deadline;
+//    }
 
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
-    public int getPrice() {
-        return price;
-    }
+//    public int getPrice() {
+//        return price;
+//    }
 
     public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getPaymentType() {
-        return paymentType;
-    }
+//    public String getPaymentType() {
+//        return paymentType;
+//    }
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
     }
 
-    public String getTerms() {
-        return terms;
-    }
+//    public String getTerms() {
+//        return terms;
+//    }
 
     public void setTerms(String terms) {
         this.terms = terms;
     }
 
-    public Long getBidID() {
-        return bidID;
-    }
+//    public Long getBidID() {
+//        return bidID;
+//    }
 
     public void setBidID(Long bidID) {
         this.bidID = bidID;
     }
 
-    public Long getDomainID() {
-        return domainID;
-    }
+//    public Long getDomainID() {
+//        return domainID;
+//    }
 
     public void setDomainID(Long domainID) {
         this.domainID = domainID;
     }
 
-    public String getCustomerID() {
-        return customerID;
-    }
+//    public String getCustomerID() {
+//        return customerID;
+//    }
 
     public void setCustomerID(String customerID) {
         this.customerID = customerID;
     }
 
-    public String getPublisherID() {
-        return publisherID;
-    }
+//    public String getPublisherID() {
+//        return publisherID;
+//    }
 
     public void setPublisherID(String publisherID) {
         this.publisherID = publisherID;

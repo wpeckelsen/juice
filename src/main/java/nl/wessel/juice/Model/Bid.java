@@ -90,11 +90,11 @@ public class Bid {
         this.vernacular = vernacular;
     }
 
-    public Photo getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
-    }
+//    public Photo getPhoto() {
+//        return photo;
+//    }
+//
+//    public void setPhoto(Photo photo) {
+//        this.photo = photo;
+//    }
 }

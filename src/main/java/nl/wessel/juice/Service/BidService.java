@@ -5,11 +5,8 @@ import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Repository.BidRepository;
-import nl.wessel.juice.Repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +14,11 @@ import java.util.List;
 @Service
 public class BidService {
 
-
     private final BidRepository bidRepository;
-    private final PhotoRepository photoRepository;
-
 
     @Autowired
-    public BidService(BidRepository bidRepository, PhotoRepository photoRepository) {
+    public BidService(BidRepository bidRepository) {
         this.bidRepository = bidRepository;
-        this.photoRepository = photoRepository;
-
     }
 
     public static Bid bidMaker(CreateBidDto createBidDto) {
@@ -38,9 +30,6 @@ public class BidService {
         bid.setVernacular(createBidDto.getVernacular());
         return bid;
     }
-
-
-
 
     public static CreatedBidDto bidDtoMaker(Bid bid) {
         CreatedBidDto createdBidDTO = new CreatedBidDto();
@@ -57,16 +46,16 @@ public class BidService {
         return createdBidDTO;
     }
 
-    @Transactional
-    public CreatedBidDto bidAndPhoto(Long bidID, String name, CreateBidDto createBidDto){
-        Bid foundBid = bidRepository.findById(bidID).get();
-        var photo = photoRepository.findPhotoByFileName(name);
-        Bid bid = bidMaker(createBidDto);
-        bid.setBidID(foundBid.getBidID());
-        bid.setPhoto(photo);
-        bidRepository.save(bid);
-        return bidDtoMaker(bid);
-    }
+//    @Transactional
+//    public CreatedBidDto bidAndPhoto(Long bidID, String name, CreateBidDto createBidDto){
+//        Bid foundBid = bidRepository.findById(bidID).get();
+//        var photo = photoRepository.findPhotoByFileName(name);
+//        Bid bid = bidMaker(createBidDto);
+//        bid.setBidID(foundBid.getBidID());
+//        bid.setPhoto(photo);
+//        bidRepository.save(bid);
+//        return bidDtoMaker(bid);
+//    }
 
     public List<CreatedBidDto> getList() {
 

@@ -22,16 +22,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
+    @Autowired
     CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
     JwtRequestFilter jwtRequestFilter;
 
 
-    @Autowired
-    public SpringSecurityConfig(/*boolean disableDefaults,*/ CustomUserDetailsService customUserDetailsService, JwtRequestFilter jwtRequestFilter) {
-        /*super(disableDefaults);*/
-        this.customUserDetailsService = customUserDetailsService;
-        this.jwtRequestFilter = jwtRequestFilter;
-    }
+
+//    @Autowired
+//    public SpringSecurityConfig( CustomUserDetailsService customUserDetailsService, JwtRequestFilter jwtRequestFilter) {
+//        this.customUserDetailsService = customUserDetailsService;
+//        this.jwtRequestFilter = jwtRequestFilter;
+//    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -53,11 +56,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
+
                 .csrf().disable()
                 .authorizeRequests()
 
+                .antMatchers("test").permitAll()
+                .antMatchers("/authentication").permitAll()
                 .antMatchers("/authenticated").authenticated()
-                .antMatchers("/authenticate").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/juice/common/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.GET, "/juice/common/**").hasRole("CUSTOMER")
@@ -83,6 +88,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
+
 
                 .anyRequest().permitAll()
                 .and()

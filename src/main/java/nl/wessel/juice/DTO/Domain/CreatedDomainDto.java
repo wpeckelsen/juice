@@ -17,33 +17,33 @@ public class CreatedDomainDto {
         this.domainID = domainID;
     }
 
-    public String getName() {
-        return name;
-    }
+//    public String getName() {
+//        return name;
+//    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getTLD() {
-        return TLD;
-    }
+//    public String getTLD() {
+//        return TLD;
+//    }
 
     public void setTLD(String TLD) {
         this.TLD = TLD;
     }
 
-    public String getCategory() {
-        return category;
-    }
+//    public String getCategory() {
+//        return category;
+//    }
 
     public void setCategory(String category) {
         this.category = category;
     }
 
-    public int getPrice() {
-        return price;
-    }
+//    public int getPrice() {
+//        return price;
+//    }
 
     public void setPrice(int price) {
         this.price = price;

@@ -1,13 +1,16 @@
-package nl.wessel.juice.DTO.Customer;
+package nl.wessel.juice.DTO.Publisher;
+//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+//import nl.wessel.juice.DTO.Deal.CreatedDealDto;
+//import nl.wessel.juice.Model.Authority;
+//import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.Model.Authority;
 
 import java.util.List;
 import java.util.Set;
 
-public class CreatedCustomerDto {
+public class PublisherDto {
 
     private String username;
     private String password;
@@ -15,17 +18,14 @@ public class CreatedCustomerDto {
     @JsonSerialize
     private Set<Authority> authorities;
 
+
 //    private List<CreatedDealDto> deals;
-    private List<Long> bidIDs;
+    private List<Long> domainIDs;
 
+//    private List<Long> getDomainIDs() {
+//        return domainIDs;
+//    }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;
@@ -35,6 +35,15 @@ public class CreatedCustomerDto {
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+//
+
     public Set<Authority> getAuthorities() {
         return authorities;
     }
@@ -42,7 +51,7 @@ public class CreatedCustomerDto {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-
+//
 //    public List<CreatedDealDto> getDeals() {
 //        return deals;
 //    }
@@ -50,12 +59,8 @@ public class CreatedCustomerDto {
 //    public void setDeals(List<CreatedDealDto> deals) {
 //        this.deals = deals;
 //    }
-//
-//    public List<Long> getBidIDs() {
-//        return bidIDs;
-//    }
 
-    public void setBidIDs(List<Long> bidIDs) {
-        this.bidIDs = bidIDs;
+    public void setDomainIDs(List<Long> domainIDs) {
+        this.domainIDs = domainIDs;
     }
 }

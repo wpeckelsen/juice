@@ -3,7 +3,7 @@ package nl.wessel.juice.Controller;
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
-import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
+import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +54,8 @@ public class PublisherController {
     }
 
     @PutMapping("update/{username}")
-    public ResponseEntity<CreatedPublisherDto> updatePublisher(@PathVariable("username") String username,
-                                                               @RequestBody CreatePublisherDto createPublisherDto) {
+    public ResponseEntity<PublisherDto> updatePublisher(@PathVariable("username") String username,
+                                                        @RequestBody CreatePublisherDto createPublisherDto) {
         publisherService.update(username, createPublisherDto);
         return ResponseEntity.noContent().build();
     }

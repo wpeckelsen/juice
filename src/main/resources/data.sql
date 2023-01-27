@@ -2,29 +2,36 @@
 -- https://bcrypt-generator.com
 
 
-INSERT INTO publisher (username, email, enabled, password)
-VALUES ('PUBLISHER', 'PUBLISHER@MAIL.COM', true, '$2a$12$vUDT8b75EhnOGI5SJSs/0.X9TduBDgaejDwbN61AFwPt.zzDyPT0e');
+INSERT INTO publisher (username, password)
+VALUES ('PUBLISHER', '$2a$12$NAYyXIbMssrCrsMxS1Mz4.4arsyoEfQXh3PcvmyEHnm64BhQ/ZDTC');
 -- username : PUBLISHER
 -- password : PUBLISHER
 
 INSERT INTO authority (username, authority)
 VALUES ('PUBLISHER', 'ROLE_PUBLISHER');
 
+
+
 INSERT INTO customer (username, password)
-VALUES ('CUSTOMER', '$2a$12$6hcJfTwGeb7W.QQBEJUUP.NfTdLFjlqtKSA7.qLVZDMR7N0qDGRbG');
+VALUES ('CUSTOMER', '$2a$12$zfOheQ2U1alXM5HLQWFz....KZOM0YtnjHqroNN2qSNB1/TmAGWnC');
 -- username : CUSTOMER
 -- password : CUSTOMER
 
 INSERT INTO authority (username, authority)
 VALUES ('CUSTOMER', 'ROLE_CUSTOMER');
 
-INSERT INTO customer (username, password)
-VALUES ('ADMIN', '$2a$12$glWL3pyii1UmVub88XYWIOOFqeSK3UkL9uBb2xSEO7jdIKRKvEjmq');
 
-INSERT INTO publisher (username, email, enabled, password)
-VALUES ('ADMIN', 'ADMIN@MAIL.COM', true, '$2a$12$glWL3pyii1UmVub88XYWIOOFqeSK3UkL9uBb2xSEO7jdIKRKvEjmq');
+
+
+INSERT INTO customer (username, password)
+VALUES ('ADMIN', '$2a$12$WJnj6/6qWLADlGPzMs6V1endH4zO2Qzbxb/6W6yQSTBvd/gzzCl9S');
+
+INSERT INTO publisher (username, password)
+VALUES ('ADMIN', '$2a$12$WJnj6/6qWLADlGPzMs6V1endH4zO2Qzbxb/6W6yQSTBvd/gzzCl9S');
+
 -- username : ADMIN
 -- password : ADMIN
+-- $2a$12$WJnj6/6qWLADlGPzMs6V1endH4zO2Qzbxb/6W6yQSTBvd/gzzCl9S
 
 INSERT INTO authority (username, authority)
 VALUES ('ADMIN', 'ROLE_ADMIN');

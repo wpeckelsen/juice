@@ -5,7 +5,7 @@ import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
+import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.*;
@@ -43,7 +43,7 @@ public class DealService {
         return deal;
     }
 
-    public static CreatedDealDto dealDtoMaker(Deal deal) {
+    public CreatedDealDto dealDtoMaker(Deal deal) {
         CreatedDealDto createdDealDTO = new CreatedDealDto();
         createdDealDTO.setDealID(deal.getDealID());
         createdDealDTO.setDeadline(deal.getDeadline());
@@ -70,21 +70,21 @@ public class DealService {
             CreatedCustomerDto createdCustomerDto = CustomerService.customerDtoMaker(customer);
             createdDealDTO.setCustomerID(createdCustomerDto.getUsername());
 
-            CreatedPublisherDto createdPublisherDto = PublisherService.publisherDtoMaker(publisher);
-            createdDealDTO.setPublisherID(createdPublisherDto.getPassword());
+            PublisherDto publisherDto = PublisherService.publisherDtoMaker(publisher);
+            createdDealDTO.setPublisherID(publisherDto.getPassword());
         }
         return createdDealDTO;
     }
 
 
-    public CreatedDealDto newDeal(CreateDealDto createDealDto, Long bidID, Long domainID, String publisherName, String Customername) {
+    public CreatedDealDto newDeal(CreateDealDto createDealDto, Long bidID, Long domainID, String publisherName, String customerName) {
         if (
                 domainRepository.findById(domainID).isPresent()
-                        && customerRepository.findById(Customername).isPresent()
+                        && customerRepository.findById(customerName).isPresent()
                         && bidRepository.findById(bidID).isPresent()
                         && publisherRepository.findById(publisherName).isPresent()
         ) {
-            Customer customer = customerRepository.findById(Customername).get();
+            Customer customer = customerRepository.findById(customerName).get();
             Bid bid = bidRepository.findById(bidID).get();
             Publisher publisher = publisherRepository.findById(publisherName).get();
             Domain domain = domainRepository.findById(domainID).get();

@@ -23,34 +23,34 @@ public class CreatedBidDto {
     public Long getBidID() {
         return bidID;
     }
+//
+//    public int getWords() {
+//        return words;
+//    }
+//
+//    public String getDeadline() {
+//        return deadline;
+//    }
 
-    public int getWords() {
-        return words;
-    }
-
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public String getAnchor() {
-        return anchor;
-    }
-
-    public String getVernacular() {
-        return vernacular;
-    }
-
-    public ZonedDateTime getCreationTime() {
-        return creationTime;
-    }
-
-    public PhotoDto getPhoto() {
-        return photo;
-    }
+//    public String getTopic() {
+//        return topic;
+//    }
+//
+//    public String getAnchor() {
+//        return anchor;
+//    }
+//
+//    public String getVernacular() {
+//        return vernacular;
+//    }
+//
+//    public ZonedDateTime getCreationTime() {
+//        return creationTime;
+//    }
+//
+//    public PhotoDto getPhoto() {
+//        return photo;
+//    }
 
     public void setBidID(Long bidID) {
         this.bidID = bidID;
@@ -80,7 +80,7 @@ public class CreatedBidDto {
         this.creationTime = creationTime;
     }
 
-    public void setPhoto(PhotoDto photo) {
-        this.photo = photo;
-    }
+//    public void setPhoto(PhotoDto photo) {
+//        this.photo = photo;
+//    }
 }

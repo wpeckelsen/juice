@@ -12,13 +12,15 @@ import nl.wessel.juice.Model.Customer;
 import nl.wessel.juice.Repository.BidRepository;
 import nl.wessel.juice.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 
 @Service
 @Transactional
@@ -26,18 +28,24 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final BidRepository bidRepository;
-
+//    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository) {
+    public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository/*, @Lazy PasswordEncoder passwordEncoder*/) {
         this.customerRepository = customerRepository;
         this.bidRepository = bidRepository;
+//        this.passwordEncoder = passwordEncoder;
     }
 
-    public Customer customerMaker2(CreateCustomerDto createCustomerDto){
+
+
+    public Customer customerMaker(CreateCustomerDto createCustomerDto){
+//        String encodedPassword = passwordEncoder.encode(createCustomerDto.getPassword());
         Customer customer  = new Customer();
         customer.setUsername(createCustomerDto.getUsername());
+
         customer.setPassword(createCustomerDto.getPassword());
+//        customer.setPassword(encodedPassword);
         return customer;
     }
 
@@ -45,6 +53,8 @@ public class CustomerService {
         CreatedCustomerDto createdCustomerDto = new CreatedCustomerDto();
         createdCustomerDto.setUsername(customer.getUsername());
         createdCustomerDto.setPassword(customer.getPassword());
+        createdCustomerDto.setPassword(customer.getPassword());
+
         List<Bid> bids = customer.getBids();
         List<Long> bidIDs = new ArrayList<>();
         if (bids != null) {
@@ -100,12 +110,12 @@ public class CustomerService {
         return dto;
     }
 
-    public boolean customerExists(String customerName) {
-        return customerRepository.existsById(customerName);
-    }
+//    public boolean customerExists(String customerName) {
+//        return customerRepository.existsById(customerName);
+//    }
 
     public String createCustomer(CreateCustomerDto createCustomerDto) {
-        Customer customer = customerMaker2(createCustomerDto);
+        Customer customer = customerMaker(createCustomerDto);
         customerRepository.save(customer);
         return customerDtoMaker(customer).getUsername();
     }
@@ -116,11 +126,14 @@ public class CustomerService {
 
     public void update(String customerName, CreateCustomerDto createCustomerDto) {
         if (!customerRepository.existsById(customerName)) throw new BadRequest();
-        Customer currentCustomer = customerRepository.findById(customerName).get();
-        Customer updatedCustomer = customerMaker2(createCustomerDto);
 
-        updatedCustomer.setUsername(currentCustomer.getUsername());
-        customerRepository.save(updatedCustomer);
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
+        if(optionalCustomer.isPresent()){
+            Customer currentCustomer = optionalCustomer.get();
+            Customer updatedCustomer = customerMaker(createCustomerDto);
+            updatedCustomer.setUsername(currentCustomer.getUsername());
+            customerRepository.save(updatedCustomer);
+        }
     }
 
     public Set<Authority> getAuthorities(String customerName) {
@@ -132,19 +145,23 @@ public class CustomerService {
 
     public void addAuthority(String customerName, String authority) {
         if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
-        Customer customer = customerRepository.findById(customerName).get();
-        customer.addAuthority(new Authority(customerName, authority));
-        customerRepository.save(customer);
+
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
+        if(optionalCustomer.isPresent()){
+            Customer customer = optionalCustomer.get();
+            customer.addAuthority(new Authority(customerName, authority));
+            customerRepository.save(customer);
+        }
     }
 
-    public void removeAuthority(String customerName, String authority) {
-        if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
-        Customer customer = customerRepository.findById(customerName).get();
-        Authority authorityToRemove = customer.getAuthorities().stream().filter((a)
-                -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
-        customer.removeAuthority(authorityToRemove);
-        customerRepository.save(customer);
-    }
+//    public void removeAuthority(String customerName, String authority) {
+//        if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
+//        Customer customer = customerRepository.findById(customerName).get();
+//        Authority authorityToRemove = customer.getAuthorities().stream().filter((a)
+//                -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
+//        customer.removeAuthority(authorityToRemove);
+//        customerRepository.save(customer);
+//    }
 
 
 }

@@ -17,12 +17,6 @@ public class Customer implements Serializable {
     @Column(nullable = false)
     private String password;
 
-
-
-
-
-
-
     @OneToMany(
             targetEntity = Authority.class,
             mappedBy = "username",
@@ -69,13 +63,13 @@ public class Customer implements Serializable {
         this.bids = bids;
     }
 
-    public List<Deal> getDeals() {
-        return deals;
-    }
-
-    public void setDeals(List<Deal> deals) {
-        this.deals = deals;
-    }
+//    public List<Deal> getDeals() {
+//        return deals;
+//    }
+//
+//    public void setDeals(List<Deal> deals) {
+//        this.deals = deals;
+//    }
 
     public void removeAuthority(Authority authority) {
         this.authorities.remove(authority);

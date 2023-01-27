@@ -42,7 +42,8 @@ public class JwtUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        long validTime = 864000000; // ten days
+        long validTime = 864000000;
+//         ten days
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
