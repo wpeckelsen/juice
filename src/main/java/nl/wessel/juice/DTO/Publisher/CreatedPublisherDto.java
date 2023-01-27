@@ -1,16 +1,12 @@
 package nl.wessel.juice.DTO.Publisher;
-//import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-//import nl.wessel.juice.DTO.Deal.CreatedDealDto;
-//import nl.wessel.juice.Model.Authority;
-//import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.Model.Authority;
-
 import java.util.List;
 import java.util.Set;
 
-public class PublisherDto {
+public class CreatedPublisherDto {
 
     private String username;
     private String password;
@@ -19,13 +15,21 @@ public class PublisherDto {
     private Set<Authority> authorities;
 
 
-//    private List<CreatedDealDto> deals;
+    private List<CreatedDealDto> deals;
     private List<Long> domainIDs;
 
-//    private List<Long> getDomainIDs() {
-//        return domainIDs;
-//    }
+    private List<Long> getDomainIDs() {
+        return domainIDs;
+    }
 
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getPassword() {
         return password;
@@ -35,15 +39,6 @@ public class PublisherDto {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-//
-
     public Set<Authority> getAuthorities() {
         return authorities;
     }
@@ -51,14 +46,14 @@ public class PublisherDto {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-//
-//    public List<CreatedDealDto> getDeals() {
-//        return deals;
-//    }
-//
-//    public void setDeals(List<CreatedDealDto> deals) {
-//        this.deals = deals;
-//    }
+
+    public List<CreatedDealDto> getDeals() {
+        return deals;
+    }
+
+    public void setDeals(List<CreatedDealDto> deals) {
+        this.deals = deals;
+    }
 
     public void setDomainIDs(List<Long> domainIDs) {
         this.domainIDs = domainIDs;

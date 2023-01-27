@@ -3,7 +3,7 @@ package nl.wessel.juice.Service;
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
-import nl.wessel.juice.DTO.Publisher.PublisherDto;
+import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.UsernameNotFound;
 import nl.wessel.juice.Model.Authority;
@@ -32,22 +32,38 @@ public class PublisherService {
 //        this.passwordEncoder = passwordEncoder;
     }
 
+
+//    previous
+//    public Publisher publisherMaker(CreatedPublisherDto publisherDto) {
+//
+//
+//        var publisher = new Publisher();
+//        publisher.setUsername(publisherDto.getUsername());
+//        publisher.setPassword(publisherDto.getPassword());
+////        publisher.setEnabled(publisherDto.getEnabled());
+////        publisher.setApikey(publisherDto.getApikey());
+////        publisher.setEmail(publisherDto.getEmail());
+//
+//        return publisher;
+//    }
+
+
+//    current
     public Publisher publisherMaker(CreatePublisherDto createPublisherDto) {
-//        String encodedPassword = passwordEncoder.encode(createPublisherDto.getPassword());
-
-
         Publisher publisher = new Publisher();
         publisher.setUsername(createPublisherDto.getUsername());
-
         publisher.setPassword(createPublisherDto.getPassword());
+//        String encodedPassword = passwordEncoder.encode(createPublisherDto.getPassword());
 //        publisher.setPassword(encodedPassword);
         return publisher;
     }
 
-    public static PublisherDto publisherDtoMaker(Publisher publisher) {
-        PublisherDto publisherDto = new PublisherDto();
-        publisherDto.setUsername(publisher.getUsername());
-        publisherDto.setPassword(publisher.getPassword());
+//    current
+    public static CreatedPublisherDto publisherDtoMaker(Publisher publisher) {
+        CreatedPublisherDto createdPublisherDto = new CreatedPublisherDto();
+        createdPublisherDto.setUsername(publisher.getUsername());
+        createdPublisherDto.setPassword(publisher.getPassword());
+        createdPublisherDto.setAuthorities(publisher.getAuthorities());
         List<Domain> domains = publisher.getDomains();
         List<Long> domainIDs = new ArrayList<>();
         if (domains != null) {
@@ -55,12 +71,37 @@ public class PublisherService {
                 domainIDs.add(domain.getDomainID());
             }
         }
-        publisherDto.setDomainIDs(domainIDs);
-        return publisherDto;
+        createdPublisherDto.setDomainIDs(domainIDs);
+        return createdPublisherDto;
     }
 
-    public List<PublisherDto> getPublishers() {
-        List<PublisherDto> collection = new ArrayList<>();
+//   previous
+    //    public static CreatedPublisherDto fromPublisher(Publisher publisher) {
+//
+//        CreatedPublisherDto dto = new CreatedPublisherDto();
+//        dto.setUsername(publisher.getUsername());
+//        dto.setPassword(publisher.getPassword());
+//        dto.enabled = publisher.isEnabled();
+//        dto.apikey = publisher.getApikey();
+//        dto.email = publisher.getEmail();
+//        dto.authorities = publisher.getAuthorities();
+//        List<Domain> domains = publisher.getDomains();
+//        List<CreatedDomain> createdDomains = new ArrayList<>();
+//
+//        if (domains != null) {
+//            for (Domain domain : domains) {
+//                CreatedDomain createdDomain = DomainService.domainDtoMaker(domain);
+//                createdDomains.add(createdDomain);
+//            }
+//        }
+//
+//
+//        dto.setDomains(createdDomains);
+//        return dto;
+//    }
+
+    public List<CreatedPublisherDto> getPublishers() {
+        List<CreatedPublisherDto> collection = new ArrayList<>();
         List<Publisher> list = publisherRepository.findAll();
         for (Publisher publisher : list) {
             collection.add(publisherDtoMaker(publisher));
@@ -68,8 +109,8 @@ public class PublisherService {
         return collection;
     }
 
-    public PublisherDto getPublisher(String publisherName) {
-        PublisherDto dto;
+    public CreatedPublisherDto getPublisher(String publisherName) {
+        CreatedPublisherDto dto;
         var publisher = publisherRepository.findById(publisherName);
         if (publisher.isPresent()) {
             dto = publisherDtoMaker(publisher.get());
@@ -128,7 +169,7 @@ public class PublisherService {
     //    public Set<Authority> getAuthorities(String publisherName) {
 //        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
 //        Publisher publisher = publisherRepository.findById(publisherName).get();
-//        PublisherDto createdPublisherDto = publisherDtoMaker(publisher);
+//        CreatedPublisherDto createdPublisherDto = publisherDtoMaker(publisher);
 //        return createdPublisherDto.getAuthorities();
 //    }
 

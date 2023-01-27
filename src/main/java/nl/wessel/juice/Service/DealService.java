@@ -5,7 +5,7 @@ import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.DTO.Publisher.PublisherDto;
+import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.*;
@@ -70,8 +70,8 @@ public class DealService {
             CreatedCustomerDto createdCustomerDto = CustomerService.customerDtoMaker(customer);
             createdDealDTO.setCustomerID(createdCustomerDto.getUsername());
 
-            PublisherDto publisherDto = PublisherService.publisherDtoMaker(publisher);
-            createdDealDTO.setPublisherID(publisherDto.getPassword());
+            CreatedPublisherDto createdPublisherDto = PublisherService.publisherDtoMaker(publisher);
+            createdDealDTO.setPublisherID(createdPublisherDto.getPassword());
         }
         return createdDealDTO;
     }

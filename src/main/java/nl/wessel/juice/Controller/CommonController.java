@@ -5,7 +5,7 @@ import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.DTO.Publisher.PublisherDto;
+import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -56,9 +56,9 @@ public class CommonController {
     }
 
     @GetMapping("publishers")
-    public ResponseEntity<List<PublisherDto>> publishers() {
-        List<PublisherDto> publisherDtos = publisherService.getPublishers();
-        return ResponseEntity.ok().body(publisherDtos);
+    public ResponseEntity<List<CreatedPublisherDto>> publishers() {
+        List<CreatedPublisherDto> createdPublisherDtos = publisherService.getPublishers();
+        return ResponseEntity.ok().body(createdPublisherDtos);
     }
 
     @GetMapping("domains")
@@ -88,9 +88,9 @@ public class CommonController {
     }
 
     @GetMapping("{publisherName}")
-    public ResponseEntity<PublisherDto> publisher(@PathVariable(value = "publisherName") String publisherName) {
-        PublisherDto publisherDto = publisherService.getPublisher(publisherName);
-        return ResponseEntity.ok().body(publisherDto);
+    public ResponseEntity<CreatedPublisherDto> publisher(@PathVariable(value = "publisherName") String publisherName) {
+        CreatedPublisherDto createdPublisherDto = publisherService.getPublisher(publisherName);
+        return ResponseEntity.ok().body(createdPublisherDto);
     }
 
     @GetMapping("domain/{domainID}")

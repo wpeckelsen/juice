@@ -54,6 +54,7 @@ public class CustomerService {
         createdCustomerDto.setUsername(customer.getUsername());
         createdCustomerDto.setPassword(customer.getPassword());
         createdCustomerDto.setPassword(customer.getPassword());
+        createdCustomerDto.setAuthorities(customer.getAuthorities());
 
         List<Bid> bids = customer.getBids();
         List<Long> bidIDs = new ArrayList<>();
