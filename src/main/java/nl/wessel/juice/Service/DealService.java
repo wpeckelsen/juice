@@ -71,13 +71,13 @@ public class DealService {
             createdDealDTO.setCustomerID(createdCustomerDto.getUsername());
 
             CreatedPublisherDto createdPublisherDto = PublisherService.publisherDtoMaker(publisher);
-            createdDealDTO.setPublisherID(createdPublisherDto.getPassword());
+            createdDealDTO.setPublisherID(createdPublisherDto.getUsername());
         }
         return createdDealDTO;
     }
 
 
-    public CreatedDealDto newDeal(CreateDealDto createDealDto, Long bidID, Long domainID, String publisherName, String customerName) {
+    public Long newDeal(CreateDealDto createDealDto, Long bidID, Long domainID, String publisherName, String customerName) {
         if (
                 domainRepository.findById(domainID).isPresent()
                         && customerRepository.findById(customerName).isPresent()
@@ -100,7 +100,7 @@ public class DealService {
             domain.setDeal(deal);
             bid.setDeal(deal);
             dealRepository.save(deal);
-            return dealDtoMaker(deal);
+            return dealDtoMaker(deal).getDealID();
         } else {
             throw new BadRequest(" You must include an ID for an existing Customer, Bid, Publisher and Domain in your URL. " +
                     "Are you sure you are using the correct IDs? And are you sure all these entities exist already?");
@@ -109,20 +109,19 @@ public class DealService {
 
 
 
-    public List<CreatedDealDto> getList() {
+    public List<Long> getList() {
         List<Deal> dealList = dealRepository.findAll();
 
         if (dealList.isEmpty()) {
             Deal deal = new Deal();
             throw new RecordNotFound(deal);
         } else {
-            List<CreatedDealDto> createdDealDtoList = new ArrayList<>();
-
+            List<Long> dealIDs = new ArrayList<>();
             for (Deal deal : dealList) {
                 CreatedDealDto createdDealDTO = dealDtoMaker(deal);
-                createdDealDtoList.add(createdDealDTO);
+                dealIDs.add(createdDealDTO.getDealID());
             }
-            return createdDealDtoList;
+            return dealIDs;
         }
     }
 

@@ -13,7 +13,6 @@ public class PhotoDto {
         this.url = url;
     }
 
-
     public String getFileName() {
         return fileName;
     }

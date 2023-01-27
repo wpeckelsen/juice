@@ -10,6 +10,9 @@ import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -32,50 +35,44 @@ public class CommonController {
     }
 
     @PostMapping("{bidID}/{domainID}/{publisherName}/{customerName}")
-    public ResponseEntity<CreatedDealDto> newDeal(@RequestBody CreateDealDto createDealDto,
+    public ResponseEntity<Object> newDeal(@RequestBody CreateDealDto createDealDto,
                                                   @PathVariable(value = "bidID") Long bidID,
                                                   @PathVariable(value = "domainID") Long domainID,
                                                   @PathVariable(value = "publisherName") String publisherName,
                                                   @PathVariable(value = "customerName") String customerName) {
-        final CreatedDealDto createdDealDTO = dealService.newDeal(createDealDto, bidID, domainID, publisherName, customerName);
+        Long dealID = dealService.newDeal(createDealDto, bidID, domainID, publisherName, customerName);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{dealID}")
+                .buildAndExpand(dealID).toUri();
+        return ResponseEntity.created(location).build();
 
-        return ResponseEntity.ok().body(createdDealDTO);
     }
 
     @GetMapping("customers")
-    public ResponseEntity<List<CreatedCustomerDto>> customers() {
-        List<CreatedCustomerDto> createdCustomerDtos = customerService.getCustomers();
-        return ResponseEntity.ok().body(createdCustomerDtos);
+    public ResponseEntity<List<String>> customers() {
+        return ResponseEntity.ok().body(customerService.getCustomers());
     }
 
     @GetMapping("bids")
-    public ResponseEntity<List<CreatedBidDto>> bids() {
-        List<CreatedBidDto> createdBidDtoList;
-        createdBidDtoList = bidService.getList();
-        return ResponseEntity.ok().body(createdBidDtoList);
+    public ResponseEntity<List<Long>> bids() {
+        return ResponseEntity.ok().body(bidService.getList());
     }
 
     @GetMapping("publishers")
-    public ResponseEntity<List<CreatedPublisherDto>> publishers() {
-        List<CreatedPublisherDto> createdPublisherDtos = publisherService.getPublishers();
-        return ResponseEntity.ok().body(createdPublisherDtos);
+    public ResponseEntity<List<String>> publishers() {
+        return ResponseEntity.ok().body(publisherService.getPublishers());
     }
 
     @GetMapping("domains")
-    public ResponseEntity<List<CreatedDomainDto>> domains() {
-        List<CreatedDomainDto> createdDomainDtoList;
-        createdDomainDtoList = domainService.getList();
-        return ResponseEntity.ok().body(createdDomainDtoList);
+    public ResponseEntity<List<Long>> domains() {
+        return ResponseEntity.ok().body(domainService.getList());
     }
 
     @GetMapping("deals")
-    public ResponseEntity<List<CreatedDealDto>> deals() {
-        List<CreatedDealDto> createdDealDtoList;
-        createdDealDtoList = dealService.getList();
-        return ResponseEntity.ok().body(createdDealDtoList);
+    public ResponseEntity<List<Long>> deals() {
+        return ResponseEntity.ok().body(dealService.getList());
     }
 
-    @GetMapping("{customerName}")
+    @GetMapping("customer/{customerName}")
     public ResponseEntity<CreatedCustomerDto> customer(@PathVariable(value = "customerName") String customerName) {
         CreatedCustomerDto createdCustomerDto = customerService.getCustomer(customerName);
         return ResponseEntity.ok().body(createdCustomerDto);
@@ -87,7 +84,7 @@ public class CommonController {
         return ResponseEntity.ok().body(createdBidDTO);
     }
 
-    @GetMapping("{publisherName}")
+    @GetMapping("publisher/{publisherName}")
     public ResponseEntity<CreatedPublisherDto> publisher(@PathVariable(value = "publisherName") String publisherName) {
         CreatedPublisherDto createdPublisherDto = publisherService.getPublisher(publisherName);
         return ResponseEntity.ok().body(createdPublisherDto);

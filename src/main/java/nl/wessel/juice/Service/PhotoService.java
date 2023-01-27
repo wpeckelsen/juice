@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Service

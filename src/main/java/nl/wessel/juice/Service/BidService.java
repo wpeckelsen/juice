@@ -7,6 +7,7 @@ import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Repository.BidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class BidService {
 //        return bidDtoMaker(bid);
 //    }
 
-    public List<CreatedBidDto> getList() {
+    public List<Long> getList() {
 
         List<Bid> bidList = bidRepository.findAll();
 
@@ -65,13 +66,13 @@ public class BidService {
             Bid bid = new Bid();
             throw new RecordNotFound(bid);
         } else {
-            List<CreatedBidDto> createdBidDtoList = new ArrayList<>();
+            List<Long> bidIDs = new ArrayList<>();
 
             for (Bid bid : bidList) {
                 CreatedBidDto createdBidDTO = bidDtoMaker(bid);
-                createdBidDtoList.add(createdBidDTO);
+                bidIDs.add(createdBidDTO.bidID);
             }
-            return createdBidDtoList;
+            return bidIDs;
         }
     }
 

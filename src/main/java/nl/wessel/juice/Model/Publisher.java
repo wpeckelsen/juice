@@ -18,11 +18,6 @@ public class Publisher implements Serializable {
     @Column(nullable = false)
     private String password;
 
-//    @Column(nullable = false)
-//    private boolean enabled = true;
-
-//    private String apikey;
-//    private String email;
 
     @OneToMany(
             targetEntity = Authority.class,
@@ -64,30 +59,7 @@ public class Publisher implements Serializable {
         this.password = password;
     }
 
-//    public boolean isEnabled() {
-//        return enabled;
-//    }
 
-//    public void setEnabled(boolean enabled) {
-//        this.enabled = enabled;
-//    }
-
-//    public String getApikey() {
-//        return apikey;
-//    }
-//
-//    public void setApikey(String apikey) {
-//        this.apikey = apikey;
-//    }
-//
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//
     public Set<Authority> getAuthorities() {
         return authorities;
     }
@@ -95,15 +67,15 @@ public class Publisher implements Serializable {
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
-//
-//    public List<Deal> getDeals() {
-//        return deals;
-//    }
-//
-//    public void setDeals(List<Deal> deals) {
-//        this.deals = deals;
-//    }
-//
+
+    public List<Deal> getDeals() {
+        return deals;
+    }
+
+    public void setDeals(List<Deal> deals) {
+        this.deals = deals;
+    }
+
     public void removeAuthority(Authority authority) {
         this.authorities.remove(authority);
     }

@@ -40,19 +40,19 @@ public class DomainService {
     }
 
 
-    public List<CreatedDomainDto> getList() {
+    public List<Long> getList() {
         List<Domain> domainList = domainRepository.findAll();
         if (domainList.isEmpty()) {
             Domain domain = new Domain();
             throw new RecordNotFound(domain);
         } else {
-            List<CreatedDomainDto> createdDomainDtoList = new ArrayList<>();
+            List<Long> domainIDs = new ArrayList<>();
 
             for (Domain domain : domainList) {
                 CreatedDomainDto createdDomainDTO = domainDtoMaker(domain);
-                createdDomainDtoList.add(createdDomainDTO);
+                domainIDs.add(createdDomainDTO.getDomainID());
             }
-            return createdDomainDtoList;
+            return domainIDs;
         }
     }
 

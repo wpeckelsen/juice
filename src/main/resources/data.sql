@@ -31,7 +31,7 @@ VALUES ('ADMIN', '$2a$12$WJnj6/6qWLADlGPzMs6V1endH4zO2Qzbxb/6W6yQSTBvd/gzzCl9S')
 
 -- username : ADMIN
 -- password : ADMIN
--- $2a$12$WJnj6/6qWLADlGPzMs6V1endH4zO2Qzbxb/6W6yQSTBvd/gzzCl9S
+
 
 INSERT INTO authority (username, authority)
 VALUES ('ADMIN', 'ROLE_ADMIN');

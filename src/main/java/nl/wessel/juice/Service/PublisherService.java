@@ -5,12 +5,15 @@ import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
 import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
+import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Exception.UsernameNotFound;
 import nl.wessel.juice.Model.Authority;
 import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Model.Publisher;
 import nl.wessel.juice.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -23,29 +26,15 @@ public class PublisherService {
 
     private final DomainRepository domainRepository;
     private final PublisherRepository publisherRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public PublisherService(DomainRepository domainRepository, PublisherRepository publisherRepository/*, @Lazy PasswordEncoder passwordEncoder*/) {
+    public PublisherService(DomainRepository domainRepository, PublisherRepository publisherRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.domainRepository = domainRepository;
         this.publisherRepository = publisherRepository;
-//        this.passwordEncoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
-
-//    previous
-//    public Publisher publisherMaker(CreatedPublisherDto publisherDto) {
-//
-//
-//        var publisher = new Publisher();
-//        publisher.setUsername(publisherDto.getUsername());
-//        publisher.setPassword(publisherDto.getPassword());
-////        publisher.setEnabled(publisherDto.getEnabled());
-////        publisher.setApikey(publisherDto.getApikey());
-////        publisher.setEmail(publisherDto.getEmail());
-//
-//        return publisher;
-//    }
 
 
 //    current
@@ -53,16 +42,17 @@ public class PublisherService {
         Publisher publisher = new Publisher();
         publisher.setUsername(createPublisherDto.getUsername());
         publisher.setPassword(createPublisherDto.getPassword());
-//        String encodedPassword = passwordEncoder.encode(createPublisherDto.getPassword());
-//        publisher.setPassword(encodedPassword);
+        String encodedPassword = passwordEncoder.encode(createPublisherDto.getPassword());
+        publisher.setPassword(encodedPassword);
         return publisher;
     }
 
-//    current
+
     public static CreatedPublisherDto publisherDtoMaker(Publisher publisher) {
         CreatedPublisherDto createdPublisherDto = new CreatedPublisherDto();
-        createdPublisherDto.setUsername(publisher.getUsername());
-        createdPublisherDto.setPassword(publisher.getPassword());
+        createdPublisherDto.username = publisher.getUsername();
+        createdPublisherDto.password = publisher.getPassword();
+
         createdPublisherDto.setAuthorities(publisher.getAuthorities());
         List<Domain> domains = publisher.getDomains();
         List<Long> domainIDs = new ArrayList<>();
@@ -75,38 +65,19 @@ public class PublisherService {
         return createdPublisherDto;
     }
 
-//   previous
-    //    public static CreatedPublisherDto fromPublisher(Publisher publisher) {
-//
-//        CreatedPublisherDto dto = new CreatedPublisherDto();
-//        dto.setUsername(publisher.getUsername());
-//        dto.setPassword(publisher.getPassword());
-//        dto.enabled = publisher.isEnabled();
-//        dto.apikey = publisher.getApikey();
-//        dto.email = publisher.getEmail();
-//        dto.authorities = publisher.getAuthorities();
-//        List<Domain> domains = publisher.getDomains();
-//        List<CreatedDomain> createdDomains = new ArrayList<>();
-//
-//        if (domains != null) {
-//            for (Domain domain : domains) {
-//                CreatedDomain createdDomain = DomainService.domainDtoMaker(domain);
-//                createdDomains.add(createdDomain);
-//            }
-//        }
-//
-//
-//        dto.setDomains(createdDomains);
-//        return dto;
-//    }
+    public List<String> getPublishers() {
+        List<Publisher> publishersList = publisherRepository.findAll();
 
-    public List<CreatedPublisherDto> getPublishers() {
-        List<CreatedPublisherDto> collection = new ArrayList<>();
-        List<Publisher> list = publisherRepository.findAll();
-        for (Publisher publisher : list) {
-            collection.add(publisherDtoMaker(publisher));
+        if(publishersList.isEmpty()){
+            Publisher publisher = new Publisher();
+            throw new RecordNotFound(publisher);
+        } else{
+            List<String> publisherIDs = new ArrayList<>();
+            for (Publisher publisher : publishersList) {
+                publisherIDs.add(publisherDtoMaker(publisher).username);
+            }
+            return publisherIDs;
         }
-        return collection;
     }
 
     public CreatedPublisherDto getPublisher(String publisherName) {
@@ -182,8 +153,8 @@ public class PublisherService {
 //    }
 
 
-    public CreatedDomainDto newDomain(CreateDomainDto createDomainDto, String username) {
-        Optional<Publisher> foundPublisher = publisherRepository.findById(username);
+    public Long newDomain(CreateDomainDto createDomainDto, String username) {
+        var foundPublisher = publisherRepository.findById(username);
 
         if (foundPublisher.isPresent()) {
             Publisher publisher = foundPublisher.get();
@@ -197,7 +168,7 @@ public class PublisherService {
             }
             publisher.setDomains(currentDomains);
             publisherRepository.save(publisher);
-            return DomainService.domainDtoMaker(newDomain);
+            return DomainService.domainDtoMaker(newDomain).getDomainID();
         } else {
             throw new BadRequest("This Publisher does not show up in the Database. Are you sure you made it?");
         }

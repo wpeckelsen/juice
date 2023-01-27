@@ -2,8 +2,8 @@ package nl.wessel.juice.DTO.Customer;
 
 public class CreateCustomerDto {
 
-    private String username;
-    private String password;
+    public String username;
+    public String password;
 
 
 

@@ -40,14 +40,6 @@ public class AuthenticationController {
         return ResponseEntity.ok().body(principal);
     }
 
-    @GetMapping("test")
-    public String test(){
-        String test = "200 OK";
-        return test;
-    }
-
-
-
     @PostMapping(value = "authentication")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
             throws Exception {

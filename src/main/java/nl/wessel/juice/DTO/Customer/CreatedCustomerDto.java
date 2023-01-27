@@ -1,7 +1,6 @@
 package nl.wessel.juice.DTO.Customer;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.Model.Authority;
 
 import java.util.List;
@@ -9,13 +8,12 @@ import java.util.Set;
 
 public class CreatedCustomerDto {
 
-    private String username;
-    private String password;
+    public String username;
+    public String password;
 
     @JsonSerialize
     private Set<Authority> authorities;
 
-//    private List<CreatedDealDto> deals;
     private List<Long> bidIDs;
 
 
@@ -43,17 +41,9 @@ public class CreatedCustomerDto {
         this.authorities = authorities;
     }
 
-//    public List<CreatedDealDto> getDeals() {
-//        return deals;
-//    }
-//
-//    public void setDeals(List<CreatedDealDto> deals) {
-//        this.deals = deals;
-//    }
-//
-//    public List<Long> getBidIDs() {
-//        return bidIDs;
-//    }
+    public List<Long> getBidIDs() {
+        return bidIDs;
+    }
 
     public void setBidIDs(List<Long> bidIDs) {
         this.bidIDs = bidIDs;

@@ -1,7 +1,6 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
-import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Photo.PhotoDto;
@@ -46,7 +45,7 @@ public class CustomerController {
         return ResponseEntity.created(location).build();
     }
 
-    @PostMapping("post/photo")
+    @PostMapping("photo")
     public PhotoDto newPhoto(@RequestParam("file") MultipartFile file) throws IOException {
         Photo photo = photoService.UploadSinglePhoto(file);
         String url = ServletUriComponentsBuilder
@@ -59,33 +58,35 @@ public class CustomerController {
         return new PhotoDto(photo.getFileName(), url, contentType);
     }
 
-    @PostMapping("post/{username}")
-    public ResponseEntity<CreatedBidDto> newBid(@RequestBody CreateBidDto createBidDto,
+    @PostMapping("{username}")
+    public ResponseEntity<Object> newBid(@RequestBody CreateBidDto createBidDto,
                                                 @PathVariable String username) {
-        return ResponseEntity.ok().body(customerService.newBid(createBidDto, username));
-
+        Long bidID = customerService.newBid(createBidDto, username);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{bidID}")
+                .buildAndExpand(bidID).toUri();
+        return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("put/{bidID}")
+    @PutMapping("bid/{bidID}")
     public ResponseEntity<Object> updateBid(@PathVariable Long bidID, @RequestBody CreateBidDto createBidDto) {
         bidService.update(bidID, createBidDto);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("put/{username}")
+    @PutMapping("customer/{username}")
     public ResponseEntity<CreatedCustomerDto> updateCustomer(@PathVariable("username") String username,
                                                              @RequestBody CreateCustomerDto createCustomerDto) {
         customerService.update(username, createCustomerDto);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("delete/{bidID}")
+    @DeleteMapping("bid/{bidID}")
     public ResponseEntity<Object> deleteBid(@PathVariable Long bidID) {
         bidService.delete(bidID);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("delete/{username}")
+    @DeleteMapping("customer/{username}")
     public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
         customerService.delete(username);
         return ResponseEntity.noContent().build();

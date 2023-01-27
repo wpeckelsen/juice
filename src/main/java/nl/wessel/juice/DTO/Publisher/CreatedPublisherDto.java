@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class CreatedPublisherDto {
 
-    private String username;
-    private String password;
+    public String username;
+    public String password;
 
     @JsonSerialize
     private Set<Authority> authorities;
@@ -21,7 +21,6 @@ public class CreatedPublisherDto {
     private List<Long> getDomainIDs() {
         return domainIDs;
     }
-
 
     public String getUsername() {
         return username;

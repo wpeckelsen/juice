@@ -35,7 +35,13 @@ public class PublisherController {
         this.photoService = photoService;
     }
 
-    @PostMapping("post/publisher")
+    @GetMapping("{photoName}")
+    ResponseEntity<byte[]> downloadSinglePhoto(@PathVariable String photoName, HttpServletRequest httpServletRequest) {
+        return photoService.DownloadSinglePhoto(photoName, httpServletRequest);
+    }
+
+
+    @PostMapping("publisher")
     public ResponseEntity<Object> newPublisher(@RequestBody CreatePublisherDto createPublisherDto) {
         String newPublisherName = publisherService.create(createPublisherDto);
         publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
@@ -47,20 +53,39 @@ public class PublisherController {
     }
 
 
-    @PostMapping("post/{username}")
-    public ResponseEntity<CreatedDomainDto> newDomain(@RequestBody CreateDomainDto createDomainDto,
-                                                      @PathVariable String username) {
-        return ResponseEntity.ok().body(publisherService.newDomain(createDomainDto, username));
+    @PostMapping("{publisherName}")
+    public ResponseEntity<Object> newDomain(@RequestBody CreateDomainDto createDomainDto,
+                                                      @PathVariable String publisherName) {
+        Long domainID = publisherService.newDomain(createDomainDto, publisherName);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{domainID}")
+                .buildAndExpand(domainID).toUri();
+        return ResponseEntity.created(location).build();
     }
 
-    @PutMapping("update/{username}")
+//
+//@PostMapping("{username}")
+//public ResponseEntity<CreatedDomainDto> newDomain(@RequestBody CreateDomainDto createDomainDto,
+//                                                  @PathVariable String username) {
+//    return ResponseEntity.ok().body(publisherService.newDomain(createDomainDto, username));
+//}
+
+//        @PostMapping("{username}")
+//    public ResponseEntity<Object> newBid(@RequestBody CreateBidDto createBidDto,
+//                                                @PathVariable String username) {
+//        CreatedBidDto newBid = customerService.newBid(createBidDto, username);
+//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newBid}")
+//                .buildAndExpand(newBid).toUri();
+//        return ResponseEntity.created(location).build();
+//    }
+
+    @PutMapping("publisher/{username}")
     public ResponseEntity<CreatedPublisherDto> updatePublisher(@PathVariable("username") String username,
                                                                @RequestBody CreatePublisherDto createPublisherDto) {
         publisherService.update(username, createPublisherDto);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("update/{domainID}")
+    @PutMapping("domain/{domainID}")
     public ResponseEntity<Object> updateDomain(@PathVariable Long domainID, @RequestBody CreateDomainDto createDomainDto) {
         domainService.update(domainID, createDomainDto);
         return ResponseEntity.noContent().build();
@@ -73,19 +98,10 @@ public class PublisherController {
         return ResponseEntity.noContent().build();
     }
 
-
-
-
     @DeleteMapping("domain/{domainID}")
     public ResponseEntity<Object> deleteDomain(@PathVariable Long domainID) {
         domainService.deleteById(domainID);
         return ResponseEntity.noContent().build();
     }
-
-    @GetMapping("{photoName}")
-    ResponseEntity<byte[]> downloadSinglePhoto(@PathVariable String photoName, HttpServletRequest httpServletRequest) {
-        return photoService.DownloadSinglePhoto(photoName, httpServletRequest);
-    }
-
 
 }

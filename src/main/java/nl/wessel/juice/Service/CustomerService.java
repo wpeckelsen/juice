@@ -5,6 +5,7 @@ import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.Exception.BadRequest;
+import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Exception.UsernameNotFound;
 import nl.wessel.juice.Model.Authority;
 import nl.wessel.juice.Model.Bid;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,30 +30,19 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final BidRepository bidRepository;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository/*, @Lazy PasswordEncoder passwordEncoder*/) {
+    public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.bidRepository = bidRepository;
-//        this.passwordEncoder = passwordEncoder;
-    }
-
-
-
-    public Customer customerMaker(CreateCustomerDto createCustomerDto){
-//        String encodedPassword = passwordEncoder.encode(createCustomerDto.getPassword());
-        Customer customer  = new Customer();
-        customer.setUsername(createCustomerDto.getUsername());
-
-        customer.setPassword(createCustomerDto.getPassword());
-//        customer.setPassword(encodedPassword);
-        return customer;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public static CreatedCustomerDto customerDtoMaker(Customer customer) {
         CreatedCustomerDto createdCustomerDto = new CreatedCustomerDto();
-        createdCustomerDto.setUsername(customer.getUsername());
+        createdCustomerDto.username = customer.getUsername();
+        createdCustomerDto.password = customer.getPassword();
         createdCustomerDto.setPassword(customer.getPassword());
         createdCustomerDto.setPassword(customer.getPassword());
         createdCustomerDto.setAuthorities(customer.getAuthorities());
@@ -67,9 +58,15 @@ public class CustomerService {
         return createdCustomerDto;
     }
 
+    public Customer customerMaker(CreateCustomerDto createCustomerDto) {
+        Customer customer = new Customer();
+        customer.setUsername(createCustomerDto.getUsername());
+        String encodedPassword = passwordEncoder.encode(createCustomerDto.getPassword());
+        customer.setPassword(encodedPassword);
+        return customer;
+    }
 
-
-    public CreatedBidDto newBid(CreateBidDto createBidDto, String username) {
+    public Long newBid(CreateBidDto createBidDto, String username) {
         Optional<Customer> foundCustomer = customerRepository.findById(username);
 
         if (foundCustomer.isPresent()) {
@@ -84,20 +81,29 @@ public class CustomerService {
             }
             customer.setBids(currentBids);
             customerRepository.save(customer);
-            return BidService.bidDtoMaker(newBid);
+            return BidService.bidDtoMaker(newBid).bidID;
         } else {
             throw new BadRequest("This Customer does not show up in the Database. Are you sure you made it?");
         }
     }
 
 
-    public List<CreatedCustomerDto> getCustomers() {
-        List<CreatedCustomerDto> collection = new ArrayList<>();
-        List<Customer> list = customerRepository.findAll();
-        for (Customer customer : list) {
-            collection.add(customerDtoMaker(customer));
+    public List<String> getCustomers() {
+        List<Customer> customerList = customerRepository.findAll();
+
+        if (customerList.isEmpty()) {
+            Customer customer = new Customer();
+            throw new RecordNotFound(customer);
+        } else {
+            List<String> customerIDs = new ArrayList<>();
+
+            for (Customer customer : customerList) {
+                CreatedCustomerDto createdCustomerDto = customerDtoMaker(customer);
+                customerIDs.add(createdCustomerDto.username);
+            }
+
+            return customerIDs;
         }
-        return collection;
     }
 
     public CreatedCustomerDto getCustomer(String customerName) {
@@ -129,7 +135,7 @@ public class CustomerService {
         if (!customerRepository.existsById(customerName)) throw new BadRequest();
 
         Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
-        if(optionalCustomer.isPresent()){
+        if (optionalCustomer.isPresent()) {
             Customer currentCustomer = optionalCustomer.get();
             Customer updatedCustomer = customerMaker(createCustomerDto);
             updatedCustomer.setUsername(currentCustomer.getUsername());
@@ -148,7 +154,7 @@ public class CustomerService {
         if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
 
         Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
-        if(optionalCustomer.isPresent()){
+        if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
             customer.addAuthority(new Authority(customerName, authority));
             customerRepository.save(customer);
