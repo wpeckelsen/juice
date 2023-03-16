@@ -35,11 +35,6 @@ public class CustomerService {
         this.bidRepository = bidRepository;
     }
 
-//    fromCustomer
-//       public static CustomerDto fromCustomer(Customer customer) {
-//
-//        var dto = new CustomerDto();
-//        dto.username = customer.getUsername();
     public static CreatedCustomerDto fromCustomer(Customer customer) {
         CreatedCustomerDto createdCustomerDto = new CreatedCustomerDto();
         createdCustomerDto.setUsername(customer.getUsername());
@@ -67,44 +62,12 @@ public class CustomerService {
         return createdCustomerDto;
     }
 
-//    tocustomer
-//    public Customer customerMaker(CreateCustomerDto createCustomerDto) {
-//        Customer customer = new Customer();
-//        customer.setUsername(createCustomerDto.getUsername());
-//        String encodedPassword = passwordEncoder.encode(createCustomerDto.getPassword());
-//        customer.setPassword(encodedPassword);
-//        return customer;
-//    }
-
     public Customer toCustomer(CreatedCustomerDto createdCustomerDto){
         Customer customer = new Customer();
         customer.setUsername(createdCustomerDto.getUsername());
         customer.setPassword(createdCustomerDto.getPassword());
-//        customer.setAuthorities(createdCustomerDto.getAuthorities());
         return customer;
     }
-
-    public Long newBid(CreateBidDto createBidDto, String username) {
-        Optional<Customer> foundCustomer = customerRepository.findById(username);
-
-        if (foundCustomer.isPresent()) {
-            Customer customer = foundCustomer.get();
-            Bid newBid = BidService.bidMaker(createBidDto);
-            List<Bid> currentBids = customer.getBids();
-            currentBids.add(newBid);
-
-            for (Bid bid : currentBids) {
-                bid.setCustomer(customer);
-                bidRepository.save(newBid);
-            }
-            customer.setBids(currentBids);
-            customerRepository.save(customer);
-            return BidService.bidDtoMaker(newBid).bidID;
-        } else {
-            throw new BadRequest("This Customer does not show up in the Database. Are you sure you made it?");
-        }
-    }
-
 
     public List<String> getCustomers() {
         List<Customer> customerList = customerRepository.findAll();
@@ -154,44 +117,36 @@ public class CustomerService {
         }
     }
 
-//create
-//    public String createCustomer(CreateCustomerDto createCustomerDto) {
-//        Customer customer = toCustomer(createCustomerDto);
-//        customerRepository.save(customer);
-//        return fromCustomer(customer).getUsername();
-//    }
-
-//    createdcustomer
-public String newCustomer(CreatedCustomerDto createdCustomerDto) {
-    Customer customer = toCustomer(createdCustomerDto);
-    customerRepository.save(customer);
-    return customer.getUsername();
+    public String newCustomer(CreatedCustomerDto createdCustomerDto) {
+        Customer customer = toCustomer(createdCustomerDto);
+        customerRepository.save(customer);
+        return customer.getUsername();
     }
 
+    public Long newBid(CreateBidDto createBidDto, String username) {
+        Optional<Customer> foundCustomer = customerRepository.findById(username);
 
-//        public String createCustomer(CustomerDto customerDto) {
-//        Customer newCustomer = customerRepository.save(toCustomer(customerDto));
-//        return newCustomer.getUsername();
-//    }
+        if (foundCustomer.isPresent()) {
+            Customer customer = foundCustomer.get();
+            Bid newBid = BidService.bidMaker(createBidDto);
+            List<Bid> currentBids = customer.getBids();
+            currentBids.add(newBid);
 
+            for (Bid bid : currentBids) {
+                bid.setCustomer(customer);
+                bidRepository.save(newBid);
+            }
+            customer.setBids(currentBids);
+            customerRepository.save(customer);
+            return BidService.bidDtoMaker(newBid).bidID;
+        } else {
+            throw new BadRequest("This Customer does not show up in the Database. Are you sure you made it?");
+        }
+    }
 
     public void delete(String customerName) {
         customerRepository.deleteById(customerName);
     }
-
-//    old
-//    public void update(String customerName, CreateCustomerDto createCustomerDto) {
-//        if (!customerRepository.existsById(customerName)) throw new BadRequest();
-//        Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
-//        if (optionalCustomer.isPresent()) {
-//            Customer currentCustomer = optionalCustomer.get();
-//
-//            Customer updatedCustomer = toCustomer(createCustomerDto);
-//            updatedCustomer.setUsername(currentCustomer.getUsername());
-//            updatedCustomer.setPassword(currentCustomer.getPassword());
-//            customerRepository.save(updatedCustomer);
-//        }
-//    }
 
     public void update(String customerName, CreatedCustomerDto createdCustomerDto) {
         if (!customerRepository.existsById(customerName)) throw new BadRequest();
@@ -204,7 +159,6 @@ public String newCustomer(CreatedCustomerDto createdCustomerDto) {
             customerRepository.save(customer);
         }
     }
-
 
     public void addAuthority(String customerName, String authority) {
         if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);

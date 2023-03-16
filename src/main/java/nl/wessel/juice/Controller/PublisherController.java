@@ -1,7 +1,6 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
-import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
 import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Service.*;
@@ -42,8 +41,8 @@ public class PublisherController {
 
 
     @PostMapping("publisher")
-    public ResponseEntity<Object> newPublisher(@RequestBody CreatePublisherDto createPublisherDto) {
-        String newPublisherName = publisherService.create(createPublisherDto);
+    public ResponseEntity<Object> newPublisher(@RequestBody CreatedPublisherDto createdPublisherDto) {
+        String newPublisherName = publisherService.newPublisher(createdPublisherDto);
         publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newPublisherName}")
@@ -62,26 +61,10 @@ public class PublisherController {
         return ResponseEntity.created(location).build();
     }
 
-//
-//@PostMapping("{username}")
-//public ResponseEntity<CreatedDomainDto> newDomain(@RequestBody CreateDomainDto createDomainDto,
-//                                                  @PathVariable String username) {
-//    return ResponseEntity.ok().body(publisherService.newDomain(createDomainDto, username));
-//}
-
-//        @PostMapping("{username}")
-//    public ResponseEntity<Object> newBid(@RequestBody CreateBidDto createBidDto,
-//                                                @PathVariable String username) {
-//        CreatedBidDto newBid = customerService.newBid(createBidDto, username);
-//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newBid}")
-//                .buildAndExpand(newBid).toUri();
-//        return ResponseEntity.created(location).build();
-//    }
-
     @PutMapping("publisher/{username}")
     public ResponseEntity<CreatedPublisherDto> updatePublisher(@PathVariable("username") String username,
-                                                               @RequestBody CreatePublisherDto createPublisherDto) {
-        publisherService.update(username, createPublisherDto);
+                                                               @RequestBody CreatedPublisherDto createdPublisherDto) {
+        publisherService.update(username, createdPublisherDto);
         return ResponseEntity.noContent().build();
     }
 

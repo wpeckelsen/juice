@@ -70,7 +70,7 @@ public class DealService {
             CreatedCustomerDto createdCustomerDto = CustomerService.fromCustomer(customer);
             createdDealDTO.setCustomerID(createdCustomerDto.getUsername());
 
-            CreatedPublisherDto createdPublisherDto = PublisherService.publisherDtoMaker(publisher);
+            CreatedPublisherDto createdPublisherDto = PublisherService.fromPublisher(publisher);
             createdDealDTO.setPublisherID(createdPublisherDto.getUsername());
         }
         return createdDealDTO;
