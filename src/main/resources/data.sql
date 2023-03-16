@@ -61,4 +61,4 @@ VALUES (40, '10-11-2022', 'Cavia gehaktballen', 'lees hier meer over cavia vlees
 --     private String terms;
 
 INSERT INTO deal (dealID, price, deadline, payment, terms)
-VALUES (40, 577, '12-03-2034', 'USD', 'deliver ASAP');
+VALUES (40, 577, '12-03-2034', 'USD', 'deliver A$AP');

@@ -29,13 +29,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     JwtRequestFilter jwtRequestFilter;
 
 
-
-//    @Autowired
-//    public SpringSecurityConfig( CustomUserDetailsService customUserDetailsService, JwtRequestFilter jwtRequestFilter) {
-//        this.customUserDetailsService = customUserDetailsService;
-//        this.jwtRequestFilter = jwtRequestFilter;
-//    }
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService);

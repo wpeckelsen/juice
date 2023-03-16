@@ -42,7 +42,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         return new User(username, password, grantedAuthorities);
-//        return new User(username, grantedAuthorities);
     }
 
 }

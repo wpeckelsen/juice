@@ -22,10 +22,6 @@ public class Bid {
     @OneToOne
     private Deal deal;
 
-//    @OneToOne(mappedBy = "bid", cascade = CascadeType.ALL)
-//    private Photo photo;
-
-
     public Long getBidID() {
         return bidID;
     }
@@ -89,12 +85,4 @@ public class Bid {
     public void setDeal(Deal deal) {
         this.deal = deal;
     }
-
-//    public Photo getPhoto() {
-//        return photo;
-//    }
-//
-//    public void setPhoto(Photo photo) {
-//        this.photo = photo;
-//    }
 }

@@ -1,8 +1,6 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
-import nl.wessel.juice.DTO.Bid.CreatedBidDto;
-import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Photo.PhotoDto;
 import nl.wessel.juice.Model.Photo;
@@ -12,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.Objects;
@@ -59,17 +58,9 @@ public class CustomerController {
         return new PhotoDto(photo.getFileName(), url, contentType);
     }
 
-//    @PutMapping("bid/{bidID}/{filename}")
-//    public ResponseEntity<Object> bidAndPhoto(@PathVariable Long bidID,
-//                                              @PathVariable String fileName){
-//        bidService.bidAndPhoto(bidID, fileName);
-//        return ResponseEntity.noContent().build();
-//    }
-
-
     @PostMapping("bid/{username}")
     public ResponseEntity<Object> newBid(@RequestBody CreateBidDto createBidDto,
-                                                @PathVariable String username) {
+                                         @PathVariable String username) {
         Long bidID = customerService.newBid(createBidDto, username);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{bidID}")
                 .buildAndExpand(bidID).toUri();

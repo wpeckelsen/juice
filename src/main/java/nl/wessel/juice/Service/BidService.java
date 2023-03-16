@@ -50,32 +50,8 @@ public class BidService {
         createdBidDTO.setTopic(bid.getTopic());
         createdBidDTO.setAnchor(bid.getAnchor());
         createdBidDTO.setVernacular(bid.getVernacular());
-//        createdBidDTO.setPhotoName(bid.getPhoto().getFileName());
-
-
         return createdBidDTO;
     }
-
-//    @Transactional
-//    public CreatedBidDto bidAndPhoto(Long bidID, String fileName) {
-////        var foundBid = bidRepository.findById(bidID).get();
-////        Bid bid1 = bidMaker(createBidDto);
-////
-////        bid1.setBidID(foundBid.getBidID());
-////
-////
-////        bidRepository.save(bid1);
-//
-////        CreatedDomainDto createdDomainDTO = DomainService.domainDtoMaker(domain);
-////        createdDealDTO.setDomainID(createdDomainDTO.getDomainID());
-////
-////
-////        var photo = photoRepository.findPhotoByFileName(fileName);
-////        photo.getFileName();
-////
-////        return bidDtoMaker(bid1);
-//
-//    }
 
     public List<Long> getList() {
 

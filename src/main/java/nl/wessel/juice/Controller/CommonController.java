@@ -6,6 +6,7 @@ import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
+import nl.wessel.juice.DTO.Publisher.PublicPublisherDto;
 import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -85,31 +86,13 @@ public class CommonController {
     }
 
     @GetMapping("publisher/{publisherName}")
-    public ResponseEntity<CreatedPublisherDto> publisher(@PathVariable(value = "publisherName") String publisherName) {
-        CreatedPublisherDto createdPublisherDto = publisherService.getPublisher(publisherName);
-        return ResponseEntity.ok().body(createdPublisherDto);
+    public ResponseEntity<PublicPublisherDto> publisher(@PathVariable(value = "publisherName") String publisherName) {
+        PublicPublisherDto publicPublisherDto = publisherService.getPublicPublisher(publisherName);
+        return ResponseEntity.ok().body(publicPublisherDto);
     }
 
     @GetMapping("domain/{domainID}")
     public ResponseEntity<CreatedDomainDto> domain(@PathVariable(value = "domainID") Long domainID) {
-
-//        String u = "localhost8080://domain/{domainID}";
-//        int u2 = domain(domainID).getStatusCodeValue();
-//        try{
-//            URL url = new URL(u);
-//        } catch (MalformedURLException e){
-//            throw new PathNotFound();
-//        }
-//
-//        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-//        huc.setRequestMethod("HEAD");
-//        int response = huc.getResponseCode();
-//        if(response == 500){
-//            throw new PathNotFound();
-//        } else{
-//            CreatedDomainDto createdDomainDTO = domainService.getByID(domainID);
-//            return ResponseEntity.ok().body(createdDomainDTO);
-//        }
         CreatedDomainDto createdDomainDTO = domainService.getByID(domainID);
         return ResponseEntity.ok().body(createdDomainDTO);
     }

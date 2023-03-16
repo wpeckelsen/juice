@@ -1,7 +1,6 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
-import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
 import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.DTO.Publisher.PublicPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
