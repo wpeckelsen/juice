@@ -12,7 +12,7 @@ public class Deal {
 
     private int price;
     private String deadline;
-    private String paymentType;
+    private String payment;
     private String terms;
 
     @ManyToOne
@@ -63,12 +63,12 @@ public class Deal {
         this.deadline = deadline;
     }
 
-    public String getPaymentType() {
-        return paymentType;
+    public String getPayment() {
+        return payment;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public String getTerms() {

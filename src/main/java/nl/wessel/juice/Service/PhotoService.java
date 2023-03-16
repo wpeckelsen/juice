@@ -43,7 +43,6 @@ public class PhotoService {
         photo.setDocFile(file.getBytes());
         photoRepository.save(photo);
         return photo;
-
     }
 
     @Transactional

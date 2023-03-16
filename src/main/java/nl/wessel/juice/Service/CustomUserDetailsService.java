@@ -30,18 +30,19 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
 
 
-        CreatedCustomerDto dto = customerService.getCustomer(username);
+        CreatedCustomerDto createdCustomerDto = customerService.getCustomer(username);
 
 
-        String password = dto.getPassword();
+        String password = createdCustomerDto.getPassword();
 
-        Set<Authority> authorities = dto.getAuthorities();
+        Set<Authority> authorities = createdCustomerDto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority : authorities) {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
         }
 
         return new User(username, password, grantedAuthorities);
+//        return new User(username, grantedAuthorities);
     }
 
 }

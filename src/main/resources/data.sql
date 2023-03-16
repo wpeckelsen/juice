@@ -55,8 +55,10 @@ VALUES (40, 'Cavia-Fanpage', 'NL', 'Cavias', 200);
 INSERT INTO bid (bidID, deadline, topic, anchor, vernacular, words)
 VALUES (40, '10-11-2022', 'Cavia gehaktballen', 'lees hier meer over cavia vleesvervangers', 'Dutch', 550);
 
+--   private int price;
+--     private String deadline;
+--     private String paymentType;
+--     private String terms;
 
-
-
-
-
+INSERT INTO deal (dealID, price, deadline, payment, terms)
+VALUES (40, 577, '12-03-2034', 'USD', 'deliver ASAP');

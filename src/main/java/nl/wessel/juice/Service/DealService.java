@@ -37,7 +37,7 @@ public class DealService {
     public static Deal dealMaker(CreateDealDto createDealDto) {
         Deal deal = new Deal();
         deal.setDeadline(createDealDto.getDeadline());
-        deal.setPaymentType(createDealDto.getPaymentType());
+        deal.setPayment(createDealDto.getPayment());
         deal.setTerms(createDealDto.getTerms());
         deal.setPrice(createDealDto.getPrice());
         return deal;
@@ -48,7 +48,7 @@ public class DealService {
         createdDealDTO.setDealID(deal.getDealID());
         createdDealDTO.setDeadline(deal.getDeadline());
         createdDealDTO.setPrice(deal.getPrice());
-        createdDealDTO.setPaymentType(deal.getPaymentType());
+        createdDealDTO.setPayment(deal.getPayment());
         createdDealDTO.setTerms(deal.getTerms());
 
         var domain = deal.getDomain();
@@ -67,7 +67,7 @@ public class DealService {
             CreatedBidDto createdBidDTO = BidService.bidDtoMaker(bid);
             createdDealDTO.setBidID(createdBidDTO.getBidID());
 
-            CreatedCustomerDto createdCustomerDto = CustomerService.customerDtoMaker(customer);
+            CreatedCustomerDto createdCustomerDto = CustomerService.fromCustomer(customer);
             createdDealDTO.setCustomerID(createdCustomerDto.getUsername());
 
             CreatedPublisherDto createdPublisherDto = PublisherService.publisherDtoMaker(publisher);

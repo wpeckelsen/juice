@@ -2,11 +2,14 @@ package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
 import nl.wessel.juice.DTO.Bid.CreatedBidDto;
+import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Repository.BidRepository;
+import nl.wessel.juice.Repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -16,11 +19,15 @@ import java.util.List;
 public class BidService {
 
     private final BidRepository bidRepository;
+    private final PhotoRepository photoRepository;
+
 
     @Autowired
-    public BidService(BidRepository bidRepository) {
+    public BidService(BidRepository bidRepository, PhotoRepository photoRepository) {
         this.bidRepository = bidRepository;
+        this.photoRepository = photoRepository;
     }
+
 
     public static Bid bidMaker(CreateBidDto createBidDto) {
         Bid bid = new Bid();
@@ -43,19 +50,31 @@ public class BidService {
         createdBidDTO.setTopic(bid.getTopic());
         createdBidDTO.setAnchor(bid.getAnchor());
         createdBidDTO.setVernacular(bid.getVernacular());
+//        createdBidDTO.setPhotoName(bid.getPhoto().getFileName());
+
 
         return createdBidDTO;
     }
 
 //    @Transactional
-//    public CreatedBidDto bidAndPhoto(Long bidID, String name, CreateBidDto createBidDto){
-//        Bid foundBid = bidRepository.findById(bidID).get();
-//        var photo = photoRepository.findPhotoByFileName(name);
-//        Bid bid = bidMaker(createBidDto);
-//        bid.setBidID(foundBid.getBidID());
-//        bid.setPhoto(photo);
-//        bidRepository.save(bid);
-//        return bidDtoMaker(bid);
+//    public CreatedBidDto bidAndPhoto(Long bidID, String fileName) {
+////        var foundBid = bidRepository.findById(bidID).get();
+////        Bid bid1 = bidMaker(createBidDto);
+////
+////        bid1.setBidID(foundBid.getBidID());
+////
+////
+////        bidRepository.save(bid1);
+//
+////        CreatedDomainDto createdDomainDTO = DomainService.domainDtoMaker(domain);
+////        createdDealDTO.setDomainID(createdDomainDTO.getDomainID());
+////
+////
+////        var photo = photoRepository.findPhotoByFileName(fileName);
+////        photo.getFileName();
+////
+////        return bidDtoMaker(bid1);
+//
 //    }
 
     public List<Long> getList() {

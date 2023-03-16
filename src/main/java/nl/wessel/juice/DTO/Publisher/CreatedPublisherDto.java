@@ -15,12 +15,9 @@ public class CreatedPublisherDto {
     private Set<Authority> authorities;
 
 
-    private List<CreatedDealDto> deals;
+    private List<Long> dealIDs;
     private List<Long> domainIDs;
 
-    private List<Long> getDomainIDs() {
-        return domainIDs;
-    }
 
     public String getUsername() {
         return username;
@@ -46,12 +43,16 @@ public class CreatedPublisherDto {
         this.authorities = authorities;
     }
 
-    public List<CreatedDealDto> getDeals() {
-        return deals;
+    public List<Long> getDealIDs() {
+        return dealIDs;
     }
 
-    public void setDeals(List<CreatedDealDto> deals) {
-        this.deals = deals;
+    public void setDealIDs(List<Long> dealIDs) {
+        this.dealIDs = dealIDs;
+    }
+
+    public List<Long> getDomainIDs() {
+        return domainIDs;
     }
 
     public void setDomainIDs(List<Long> domainIDs) {

@@ -14,7 +14,7 @@ public class CreatedBidDto {
     public String anchor;
     public String vernacular;
     public ZonedDateTime creationTime;
-    public PhotoDto photo;
+//    public String photoName;
 
     public Long getBidID() {
         return bidID;
@@ -48,4 +48,11 @@ public class CreatedBidDto {
         this.creationTime = creationTime;
     }
 
+//    public String getPhotoName() {
+//        return photoName;
+//    }
+//
+//    public void setPhotoName(String photoName) {
+//        this.photoName = photoName;
+//    }
 }

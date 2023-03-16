@@ -1,6 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
+import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CreateCustomerDto;
 import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
 import nl.wessel.juice.DTO.Photo.PhotoDto;
@@ -37,8 +38,8 @@ public class CustomerController {
     }
 
     @PostMapping("customer")
-    public ResponseEntity<Object> newCustomer(@RequestBody CreateCustomerDto createCustomerDto) {
-        String newCustomerName = customerService.createCustomer(createCustomerDto);
+    public ResponseEntity<Object> newCustomer(@RequestBody CreatedCustomerDto createdCustomerDto) {
+        String newCustomerName = customerService.newCustomer(createdCustomerDto);
         customerService.addAuthority(newCustomerName, "ROLE_CUSTOMER");
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newCustomerName}")
                 .buildAndExpand(newCustomerName).toUri();
@@ -58,7 +59,15 @@ public class CustomerController {
         return new PhotoDto(photo.getFileName(), url, contentType);
     }
 
-    @PostMapping("{username}")
+//    @PutMapping("bid/{bidID}/{filename}")
+//    public ResponseEntity<Object> bidAndPhoto(@PathVariable Long bidID,
+//                                              @PathVariable String fileName){
+//        bidService.bidAndPhoto(bidID, fileName);
+//        return ResponseEntity.noContent().build();
+//    }
+
+
+    @PostMapping("bid/{username}")
     public ResponseEntity<Object> newBid(@RequestBody CreateBidDto createBidDto,
                                                 @PathVariable String username) {
         Long bidID = customerService.newBid(createBidDto, username);
@@ -75,8 +84,8 @@ public class CustomerController {
 
     @PutMapping("customer/{username}")
     public ResponseEntity<CreatedCustomerDto> updateCustomer(@PathVariable("username") String username,
-                                                             @RequestBody CreateCustomerDto createCustomerDto) {
-        customerService.update(username, createCustomerDto);
+                                                             @RequestBody CreatedCustomerDto createdCustomerDto) {
+        customerService.update(username, createdCustomerDto);
         return ResponseEntity.noContent().build();
     }
 

@@ -5,7 +5,7 @@ public class CreatedDealDto {
     private Long dealID;
     private String deadline;
     private int price;
-    private String paymentType;
+    private String payment;
     private String terms;
 
     private Long bidID;
@@ -37,12 +37,12 @@ public class CreatedDealDto {
         this.price = price;
     }
 
-    public String getPaymentType() {
-        return paymentType;
+    public String getPayment() {
+        return payment;
     }
 
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public String getTerms() {

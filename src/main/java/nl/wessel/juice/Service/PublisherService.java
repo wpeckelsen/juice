@@ -1,13 +1,13 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
-import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.CreatePublisherDto;
 import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Exception.UsernameNotFound;
 import nl.wessel.juice.Model.Authority;
+import nl.wessel.juice.Model.Deal;
 import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Model.Publisher;
 import nl.wessel.juice.Repository.*;
@@ -52,8 +52,8 @@ public class PublisherService {
         CreatedPublisherDto createdPublisherDto = new CreatedPublisherDto();
         createdPublisherDto.username = publisher.getUsername();
         createdPublisherDto.password = publisher.getPassword();
-
         createdPublisherDto.setAuthorities(publisher.getAuthorities());
+
         List<Domain> domains = publisher.getDomains();
         List<Long> domainIDs = new ArrayList<>();
         if (domains != null) {
@@ -62,8 +62,20 @@ public class PublisherService {
             }
         }
         createdPublisherDto.setDomainIDs(domainIDs);
+
+        List<Deal> deals = publisher.getDeals();
+        List<Long> dealIDs = new ArrayList<>();
+        if(deals != null){
+            for (Deal deal : deals){
+                dealIDs.add(deal.getDealID());
+            }
+        }
+        createdPublisherDto.setDealIDs(dealIDs);
+
+
         return createdPublisherDto;
     }
+
 
     public List<String> getPublishers() {
         List<Publisher> publishersList = publisherRepository.findAll();
@@ -90,10 +102,6 @@ public class PublisherService {
         }
         return dto;
     }
-
-//    public boolean publisherExists(String publisherName) {
-//        return publisherRepository.existsById(publisherName);
-//    }
 
     public String create(CreatePublisherDto createdPublisherDto) {
         Publisher publisher = publisherMaker(createdPublisherDto);
@@ -128,30 +136,6 @@ public class PublisherService {
             publisherRepository.save(publisher);
         }
     }
-
-//            if (optionalPublisher.isPresent()) {
-//            Publisher currentPublisher = optionalPublisher.get();
-//            Publisher updatedPublisher = publisherMaker(createPublisherDto);
-//            updatedPublisher.setUsername(currentPublisher.getUsername());
-//            publisherRepository.save(updatedPublisher);
-//        }
-
-
-    //    public Set<Authority> getAuthorities(String publisherName) {
-//        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
-//        Publisher publisher = publisherRepository.findById(publisherName).get();
-//        CreatedPublisherDto createdPublisherDto = publisherDtoMaker(publisher);
-//        return createdPublisherDto.getAuthorities();
-//    }
-
-//    public void removeAuthority(String publisherName, String authority) {
-//        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
-//        Publisher publisher = publisherRepository.findById(publisherName).get();
-//        Authority authorityToRemove = publisher.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
-//        publisher.removeAuthority(authorityToRemove);
-//        publisherRepository.save(publisher);
-//    }
-
 
     public Long newDomain(CreateDomainDto createDomainDto, String username) {
         var foundPublisher = publisherRepository.findById(username);

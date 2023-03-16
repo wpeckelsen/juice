@@ -32,14 +32,13 @@ public class AdminController {
     }
 
 
-    @PutMapping("{dealID}")
+    @PutMapping("deal/{dealID}")
     public ResponseEntity<Object> update(@PathVariable Long dealID, @RequestBody CreateDealDto createDealDto) {
-
         dealService.update(dealID, createDealDto);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("{dealID}")
+    @DeleteMapping("deal/{dealID}")
     public ResponseEntity<Object> delete(@PathVariable Long dealID) {
         dealService.deleteById(dealID);
         return ResponseEntity.noContent().build();

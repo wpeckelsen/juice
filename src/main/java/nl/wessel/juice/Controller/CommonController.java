@@ -1,7 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Bid.CreatedBidDto;
-import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
+import nl.wessel.juice.DTO.Customer.PublicCustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
@@ -44,7 +44,6 @@ public class CommonController {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{dealID}")
                 .buildAndExpand(dealID).toUri();
         return ResponseEntity.created(location).build();
-
     }
 
     @GetMapping("customers")
@@ -73,9 +72,10 @@ public class CommonController {
     }
 
     @GetMapping("customer/{customerName}")
-    public ResponseEntity<CreatedCustomerDto> customer(@PathVariable(value = "customerName") String customerName) {
-        CreatedCustomerDto createdCustomerDto = customerService.getCustomer(customerName);
-        return ResponseEntity.ok().body(createdCustomerDto);
+    public ResponseEntity<PublicCustomerDto> customer(@PathVariable(value = "customerName") String customerName) {
+        var publicCustomerDto = customerService.getPublicCustomer(customerName);
+        return ResponseEntity.ok().body(publicCustomerDto);
+
     }
 
     @GetMapping("bid/{bidID}")
@@ -92,6 +92,24 @@ public class CommonController {
 
     @GetMapping("domain/{domainID}")
     public ResponseEntity<CreatedDomainDto> domain(@PathVariable(value = "domainID") Long domainID) {
+
+//        String u = "localhost8080://domain/{domainID}";
+//        int u2 = domain(domainID).getStatusCodeValue();
+//        try{
+//            URL url = new URL(u);
+//        } catch (MalformedURLException e){
+//            throw new PathNotFound();
+//        }
+//
+//        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+//        huc.setRequestMethod("HEAD");
+//        int response = huc.getResponseCode();
+//        if(response == 500){
+//            throw new PathNotFound();
+//        } else{
+//            CreatedDomainDto createdDomainDTO = domainService.getByID(domainID);
+//            return ResponseEntity.ok().body(createdDomainDTO);
+//        }
         CreatedDomainDto createdDomainDTO = domainService.getByID(domainID);
         return ResponseEntity.ok().body(createdDomainDTO);
     }
