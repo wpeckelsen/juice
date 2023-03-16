@@ -42,17 +42,6 @@
         </dependency>
 
 
-<!--       &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-test &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-test</artifactId>-->
-<!--            <version>5.3.9</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-
-
-
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>

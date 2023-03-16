@@ -1,4 +1,5 @@
 package nl.wessel.juice.DTO.Publisher;
+
 import nl.wessel.juice.Model.Authority;
 
 import java.util.List;

@@ -15,6 +15,7 @@ import nl.wessel.juice.Repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,6 @@ public class PublisherService {
 
     private final DomainRepository domainRepository;
     private final PublisherRepository publisherRepository;
-
 
     @Autowired
     public PublisherService(DomainRepository domainRepository, PublisherRepository publisherRepository) {
@@ -92,9 +92,9 @@ public class PublisherService {
         }
     }
 
-    public PublicPublisherDto getPublicPublisher(String publisherName){
+    public PublicPublisherDto getPublicPublisher(String publisherName) {
         Optional<Publisher> publisher = publisherRepository.findById(publisherName);
-        if(publisher.isPresent()){
+        if (publisher.isPresent()) {
             CreatedPublisherDto dto = fromPublisher(publisher.get());
 
             PublicPublisherDto publicPublisherDto = new PublicPublisherDto();
@@ -103,8 +103,7 @@ public class PublisherService {
             publicPublisherDto.setAuthorities(dto.getAuthorities());
             publicPublisherDto.setDealIDs(dto.getDealIDs());
             return publicPublisherDto;
-        } else
-        {
+        } else {
             throw new UsernameNotFound(publisherName);
         }
     }

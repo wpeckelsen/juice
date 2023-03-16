@@ -5,7 +5,6 @@ import nl.wessel.juice.DTO.Customer.PublicCustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.DTO.Publisher.PublicPublisherDto;
 import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +36,10 @@ public class CommonController {
 
     @PostMapping("{bidID}/{domainID}/{publisherName}/{customerName}")
     public ResponseEntity<Object> newDeal(@RequestBody CreateDealDto createDealDto,
-                                                  @PathVariable(value = "bidID") Long bidID,
-                                                  @PathVariable(value = "domainID") Long domainID,
-                                                  @PathVariable(value = "publisherName") String publisherName,
-                                                  @PathVariable(value = "customerName") String customerName) {
+                                          @PathVariable(value = "bidID") Long bidID,
+                                          @PathVariable(value = "domainID") Long domainID,
+                                          @PathVariable(value = "publisherName") String publisherName,
+                                          @PathVariable(value = "customerName") String customerName) {
         Long dealID = dealService.newDeal(createDealDto, bidID, domainID, publisherName, customerName);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{dealID}")
                 .buildAndExpand(dealID).toUri();

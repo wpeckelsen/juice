@@ -1,8 +1,8 @@
 package nl.wessel.juice.DTO.Publisher;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.Model.Authority;
+
 import java.util.List;
 import java.util.Set;
 

@@ -15,7 +15,6 @@ import nl.wessel.juice.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +61,7 @@ public class CustomerService {
         return createdCustomerDto;
     }
 
-    public Customer toCustomer(CreatedCustomerDto createdCustomerDto){
+    public Customer toCustomer(CreatedCustomerDto createdCustomerDto) {
         Customer customer = new Customer();
         customer.setUsername(createdCustomerDto.getUsername());
         customer.setPassword(createdCustomerDto.getPassword());

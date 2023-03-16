@@ -2,14 +2,11 @@ package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
 import nl.wessel.juice.DTO.Bid.CreatedBidDto;
-import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Repository.BidRepository;
-import nl.wessel.juice.Repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -19,13 +16,10 @@ import java.util.List;
 public class BidService {
 
     private final BidRepository bidRepository;
-    private final PhotoRepository photoRepository;
-
 
     @Autowired
-    public BidService(BidRepository bidRepository, PhotoRepository photoRepository) {
+    public BidService(BidRepository bidRepository) {
         this.bidRepository = bidRepository;
-        this.photoRepository = photoRepository;
     }
 
 

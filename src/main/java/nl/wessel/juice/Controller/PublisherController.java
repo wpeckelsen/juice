@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
@@ -53,7 +54,7 @@ public class PublisherController {
 
     @PostMapping("{publisherName}")
     public ResponseEntity<Object> newDomain(@RequestBody CreateDomainDto createDomainDto,
-                                                      @PathVariable String publisherName) {
+                                            @PathVariable String publisherName) {
         Long domainID = publisherService.newDomain(createDomainDto, publisherName);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{domainID}")
                 .buildAndExpand(domainID).toUri();

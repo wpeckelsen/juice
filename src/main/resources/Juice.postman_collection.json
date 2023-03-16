@@ -27,7 +27,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/admin/updatedeal/1",
+									"raw": "localhost:8080/juice/admin/deal/40",
 									"host": [
 										"localhost"
 									],
@@ -35,8 +35,8 @@
 									"path": [
 										"juice",
 										"admin",
-										"updatedeal",
-										"1"
+										"deal",
+										"40"
 									]
 								}
 							},
@@ -48,7 +48,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/admin/deletedeal/1",
+									"raw": "localhost:8080/juice/admin/deal/41",
 									"host": [
 										"localhost"
 									],
@@ -56,32 +56,20 @@
 									"path": [
 										"juice",
 										"admin",
-										"deletedeal",
-										"1"
+										"deal",
+										"41"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "ABCXYZ",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "List of Photos",
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "7",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
-									"raw": "localhost:8080/juice/admin/abcxyz",
+									"raw": "localhost:8080/juice/admin/photos",
 									"host": [
 										"localhost"
 									],
@@ -89,7 +77,7 @@
 									"path": [
 										"juice",
 										"admin",
-										"abcxyz"
+										"photos"
 									]
 								}
 							},
@@ -135,7 +123,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/common/newdeal/2/2/jan/wim",
+									"raw": "localhost:8080/juice/common/40/40/PUBLISHER/CUSTOMER",
 									"host": [
 										"localhost"
 									],
@@ -143,11 +131,10 @@
 									"path": [
 										"juice",
 										"common",
-										"newdeal",
-										"2",
-										"2",
-										"jan",
-										"wim"
+										"40",
+										"40",
+										"PUBLISHER",
+										"CUSTOMER"
 									]
 								}
 							},
@@ -159,7 +146,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/customerlist",
+									"raw": "localhost:8080/juice/common/customers",
 									"host": [
 										"localhost"
 									],
@@ -167,7 +154,7 @@
 									"path": [
 										"juice",
 										"common",
-										"customerlist"
+										"customers"
 									]
 								}
 							},
@@ -179,7 +166,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/bidlist",
+									"raw": "localhost:8080/juice/common/bids",
 									"host": [
 										"localhost"
 									],
@@ -187,7 +174,7 @@
 									"path": [
 										"juice",
 										"common",
-										"bidlist"
+										"bids"
 									]
 								}
 							},
@@ -199,7 +186,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/publisherlist",
+									"raw": "localhost:8080/juice/common/publishers",
 									"host": [
 										"localhost"
 									],
@@ -207,7 +194,7 @@
 									"path": [
 										"juice",
 										"common",
-										"publisherlist"
+										"publishers"
 									]
 								}
 							},
@@ -219,7 +206,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/domainlist",
+									"raw": "localhost:8080/juice/common/domains",
 									"host": [
 										"localhost"
 									],
@@ -227,7 +214,7 @@
 									"path": [
 										"juice",
 										"common",
-										"domainlist"
+										"domains"
 									]
 								}
 							},
@@ -239,7 +226,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/deallist",
+									"raw": "localhost:8080/juice/common/deals",
 									"host": [
 										"localhost"
 									],
@@ -247,7 +234,7 @@
 									"path": [
 										"juice",
 										"common",
-										"deallist"
+										"deals"
 									]
 								}
 							},
@@ -259,7 +246,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/customerbyid/wim",
+									"raw": "localhost:8080/juice/common/customer/CUSTOMER",
 									"host": [
 										"localhost"
 									],
@@ -267,8 +254,8 @@
 									"path": [
 										"juice",
 										"common",
-										"customerbyid",
-										"wim"
+										"customer",
+										"CUSTOMER"
 									]
 								}
 							},
@@ -280,7 +267,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/bidbyid/1",
+									"raw": "localhost:8080/juice/common/bid/40",
 									"host": [
 										"localhost"
 									],
@@ -288,28 +275,7 @@
 									"path": [
 										"juice",
 										"common",
-										"bidbyid",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Bid By ID 40",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "localhost:8080/juice/common/bidbyid/40",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"juice",
-										"common",
-										"bidbyid",
+										"bid",
 										"40"
 									]
 								}
@@ -322,7 +288,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/publisherbyid/jan",
+									"raw": "localhost:8080/juice/common/publisher/PUBLISHER",
 									"host": [
 										"localhost"
 									],
@@ -330,8 +296,8 @@
 									"path": [
 										"juice",
 										"common",
-										"publisherbyid",
-										"jan"
+										"publisher",
+										"PUBLISHER"
 									]
 								}
 							},
@@ -343,7 +309,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/domainbyid/1",
+									"raw": "localhost:8080/juice/common/domain/40",
 									"host": [
 										"localhost"
 									],
@@ -351,8 +317,8 @@
 									"path": [
 										"juice",
 										"common",
-										"domainbyid",
-										"1"
+										"domain",
+										"40"
 									]
 								}
 							},
@@ -364,7 +330,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/common/dealbyid/1",
+									"raw": "localhost:8080/juice/common/deal/40",
 									"host": [
 										"localhost"
 									],
@@ -372,8 +338,8 @@
 									"path": [
 										"juice",
 										"common",
-										"dealbyid",
-										"1"
+										"deal",
+										"40"
 									]
 								}
 							},
@@ -391,7 +357,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\" : \"wim\",\n    \"password\" : \"123\",\n    \"enabled\" : true\n}",
+									"raw": "{\n    \"username\" : \"wim\",\n    \"password\" : \"123\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -399,7 +365,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/customer/newcustomer",
+									"raw": "localhost:8080/juice/customer/customer",
 									"host": [
 										"localhost"
 									],
@@ -407,7 +373,7 @@
 									"path": [
 										"juice",
 										"customer",
-										"newcustomer"
+										"customer"
 									]
 								}
 							},
@@ -428,7 +394,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/customer/newbid/wim",
+									"raw": "localhost:8080/juice/customer/bid/CUSTOMER",
 									"host": [
 										"localhost"
 									],
@@ -436,38 +402,8 @@
 									"path": [
 										"juice",
 										"customer",
-										"newbid",
-										"wim"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Update Customer",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"username\" : \"wim\",\n    \"password\" : \"12311111xxxxx12311111xxxxx\",\n    \"enabled\" : true\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/juice/customer/updatecustomer/wim",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"juice",
-										"customer",
-										"updatecustomer",
-										"wim"
+										"bid",
+										"CUSTOMER"
 									]
 								}
 							},
@@ -488,7 +424,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/customer/updatebid/1",
+									"raw": "localhost:8080/juice/customer/bid/40",
 									"host": [
 										"localhost"
 									],
@@ -496,8 +432,38 @@
 									"path": [
 										"juice",
 										"customer",
-										"updatebid",
-										"1"
+										"bid",
+										"40"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Customer",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"CUSTOMER\",\n    \"password\" : \"12311111xxxxx12311111xxxxx\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/juice/customer/customer/CUSTOMER",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"juice",
+										"customer",
+										"customer",
+										"CUSTOMER"
 									]
 								}
 							},
@@ -509,7 +475,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/customer/deletecustomer/wim",
+									"raw": "localhost:8080/juice/customer/customer/DELETETHISCUSTOMER",
 									"host": [
 										"localhost"
 									],
@@ -517,8 +483,8 @@
 									"path": [
 										"juice",
 										"customer",
-										"deletecustomer",
-										"wim"
+										"customer",
+										"DELETETHISCUSTOMER"
 									]
 								}
 							},
@@ -530,7 +496,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/customer/deletebid/1",
+									"raw": "localhost:8080/juice/customer/bid/41",
 									"host": [
 										"localhost"
 									],
@@ -538,8 +504,38 @@
 									"path": [
 										"juice",
 										"customer",
-										"deletebid",
-										"1"
+										"bid",
+										"41"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Upload Deng",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "deng-cool-hat.jpeg"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:8080/juice/customer/photo",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"juice",
+										"customer",
+										"photo"
 									]
 								}
 							},
@@ -577,7 +573,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"jan\",\n    \"password\": \"123\",\n    \"enabled\": true\n}",
+									"raw": "{\n    \"username\": \"jan\",\n    \"password\": \"123\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -585,7 +581,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/publisher/newpublisher",
+									"raw": "localhost:8080/juice/publisher/publisher",
 									"host": [
 										"localhost"
 									],
@@ -593,7 +589,7 @@
 									"path": [
 										"juice",
 										"publisher",
-										"newpublisher"
+										"publisher"
 									]
 								}
 							},
@@ -614,7 +610,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/publisher/newdomain/jan",
+									"raw": "localhost:8080/juice/publisher/PUBLISHER",
 									"host": [
 										"localhost"
 									],
@@ -622,8 +618,7 @@
 									"path": [
 										"juice",
 										"publisher",
-										"newdomain",
-										"jan"
+										"PUBLISHER"
 									]
 								}
 							},
@@ -636,7 +631,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"username\": \"jan\",\n    \"password\": \"jandeworstenmanxxxxxx213klmfsfjf1312\",\n    \"enabled\": true\n}",
+									"raw": "{\n    \"username\": \"PUBLISHER\",\n    \"password\": \"jandewoDDrstenmanxxxxxx213klmfsfjf1312\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -644,7 +639,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/publisher/updatepublisher/jan",
+									"raw": "localhost:8080/juice/publisher/publisher/PUBLISHER",
 									"host": [
 										"localhost"
 									],
@@ -652,8 +647,8 @@
 									"path": [
 										"juice",
 										"publisher",
-										"updatepublisher",
-										"jan"
+										"publisher",
+										"PUBLISHER"
 									]
 								}
 							},
@@ -674,7 +669,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/publisher/updatedomain/1",
+									"raw": "localhost:8080/juice/publisher/domain/40",
 									"host": [
 										"localhost"
 									],
@@ -682,8 +677,8 @@
 									"path": [
 										"juice",
 										"publisher",
-										"updatedomain",
-										"1"
+										"domain",
+										"40"
 									]
 								}
 							},
@@ -695,7 +690,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/publisher/deletepublisher/jan",
+									"raw": "localhost:8080/juice/publisher/publisher/DELETETHISPUBLISHER",
 									"host": [
 										"localhost"
 									],
@@ -703,8 +698,8 @@
 									"path": [
 										"juice",
 										"publisher",
-										"deletepublisher",
-										"jan"
+										"publisher",
+										"DELETETHISPUBLISHER"
 									]
 								}
 							},
@@ -716,7 +711,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/juice/publisher/deletedomain/1",
+									"raw": "localhost:8080/juice/publisher/domain/41",
 									"host": [
 										"localhost"
 									],
@@ -724,8 +719,28 @@
 									"path": [
 										"juice",
 										"publisher",
-										"deletedomain",
-										"1"
+										"domain",
+										"41"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Download Deng",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/juice/publisher/deng-cool-hat.jpeg",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"juice",
+										"publisher",
+										"deng-cool-hat.jpeg"
 									]
 								}
 							},
@@ -749,35 +764,6 @@
 									"port": "8080",
 									"path": [
 										"authenticated"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Collatz",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "7",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/juice/admin/collatz",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"juice",
-										"admin",
-										"collatz"
 									]
 								}
 							},
@@ -818,7 +804,7 @@
 			]
 		},
 		{
-			"name": "authenticate Admin",
+			"name": "authentication Admin",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -835,20 +821,20 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/authenticate",
+					"raw": "localhost:8080/authentication",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"authenticate"
+						"authentication"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "authenticate Customer",
+			"name": "authentication Customer",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -865,13 +851,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/authenticate",
+					"raw": "localhost:8080/authentication",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"authenticate"
+						"authentication"
 					]
 				}
 			},

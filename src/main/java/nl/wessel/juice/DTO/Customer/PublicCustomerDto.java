@@ -1,6 +1,5 @@
 package nl.wessel.juice.DTO.Customer;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import nl.wessel.juice.Model.Authority;
 
 import java.util.List;

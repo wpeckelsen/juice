@@ -12,6 +12,7 @@ import nl.wessel.juice.Model.*;
 import nl.wessel.juice.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +107,6 @@ public class DealService {
                     "Are you sure you are using the correct IDs? And are you sure all these entities exist already?");
         }
     }
-
 
 
     public List<Long> getList() {

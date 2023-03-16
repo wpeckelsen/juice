@@ -1,7 +1,5 @@
 package nl.wessel.juice.DTO.Bid;
 
-import nl.wessel.juice.DTO.Photo.PhotoDto;
-
 import java.time.ZonedDateTime;
 
 public class CreatedBidDto {

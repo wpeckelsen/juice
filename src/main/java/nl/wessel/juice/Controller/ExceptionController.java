@@ -19,12 +19,12 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(value = BadRequest.class)
-    public ResponseEntity<Object> badRequest(BadRequest bad){
+    public ResponseEntity<Object> badRequest(BadRequest bad) {
         return new ResponseEntity<>(bad.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = UsernameNotFound.class)
-    public ResponseEntity<Object> username(UsernameNotFound user){
+    public ResponseEntity<Object> username(UsernameNotFound user) {
         return new ResponseEntity<>(user.getMessage(), HttpStatus.NOT_FOUND);
     }
 
