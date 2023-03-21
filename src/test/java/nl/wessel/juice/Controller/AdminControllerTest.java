@@ -2,7 +2,7 @@ package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.Security.Utils.JwtUtil;
 import nl.wessel.juice.Service.BidService;
-import nl.wessel.juice.Service.CustomUserDetailsService;
+import nl.wessel.juice.Service.CustomCustomerDetailsService;
 import nl.wessel.juice.Service.CustomerService;
 import nl.wessel.juice.Service.DealService;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ class AdminControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    CustomUserDetailsService customUserDetailsService;
+    CustomCustomerDetailsService customCustomerDetailsService;
 
     @MockBean
     JwtUtil jwtUtil;

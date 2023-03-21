@@ -16,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/juice/common")
+@RequestMapping("juice/common")
 public class CommonController {
 
     CustomerService customerService;

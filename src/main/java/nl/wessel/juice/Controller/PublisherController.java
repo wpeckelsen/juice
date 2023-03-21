@@ -44,7 +44,6 @@ public class PublisherController {
     public ResponseEntity<Object> newPublisher(@RequestBody CreatedPublisherDto createdPublisherDto) {
         String newPublisherName = publisherService.newPublisher(createdPublisherDto);
         publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
-
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newPublisherName}")
                 .buildAndExpand(newPublisherName).toUri();
 

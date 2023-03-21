@@ -152,7 +152,6 @@ public class PublisherService {
     }
 
     public void addAuthority(String publisherName, String authority) {
-
         if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
 
         Optional<Publisher> optionalPublisher = publisherRepository.findById(publisherName);

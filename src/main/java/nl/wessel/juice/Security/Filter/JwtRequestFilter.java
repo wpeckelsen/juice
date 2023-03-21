@@ -1,7 +1,7 @@
 package nl.wessel.juice.Security.Filter;
 
 import nl.wessel.juice.Security.Utils.JwtUtil;
-import nl.wessel.juice.Service.CustomUserDetailsService;
+import nl.wessel.juice.Service.CustomCustomerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,12 +21,12 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 
-    CustomUserDetailsService customUserDetailsService;
+    CustomCustomerDetailsService customCustomerDetailsService;
     JwtUtil jwtUtil;
 
     @Autowired
-    public JwtRequestFilter(CustomUserDetailsService customUserDetailsService, JwtUtil jwtUtil) {
-        this.customUserDetailsService = customUserDetailsService;
+    public JwtRequestFilter(CustomCustomerDetailsService customCustomerDetailsService, JwtUtil jwtUtil) {
+        this.customCustomerDetailsService = customCustomerDetailsService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -45,7 +45,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = this.customCustomerDetailsService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
 

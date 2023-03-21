@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CustomerControllerTest {
 
     @MockBean
-    CustomUserDetailsService customUserDetailsService;
+    CustomCustomerDetailsService customCustomerDetailsService;
     @MockBean
     JwtUtil jwtUtil;
     @MockBean

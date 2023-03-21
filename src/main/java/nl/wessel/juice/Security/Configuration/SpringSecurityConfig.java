@@ -1,7 +1,7 @@
 package nl.wessel.juice.Security.Configuration;
 
 import nl.wessel.juice.Security.Filter.JwtRequestFilter;
-import nl.wessel.juice.Service.CustomUserDetailsService;
+import nl.wessel.juice.Service.CustomCustomerDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    CustomCustomerDetailsService customCustomerDetailsService;
 
     @Autowired
     JwtRequestFilter jwtRequestFilter;
@@ -30,8 +30,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService);
+        auth.userDetailsService(customCustomerDetailsService);
     }
+
+
 
     @Override
     @Bean
@@ -61,7 +63,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/juice/common/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.PUT, "/juice/common/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.DELETE, "/juice/common/**").hasRole("PUBLISHER")
-
+//
                 .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")
@@ -76,7 +78,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
-
 
                 .antMatchers("/authentication").permitAll()
                 .antMatchers("/authenticated").authenticated()

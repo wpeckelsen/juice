@@ -13,6 +13,7 @@ import nl.wessel.juice.Model.Deal;
 import nl.wessel.juice.Repository.BidRepository;
 import nl.wessel.juice.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,19 +28,24 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final BidRepository bidRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository) {
+    public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.bidRepository = bidRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
+
+
     public static CreatedCustomerDto fromCustomer(Customer customer) {
+
         CreatedCustomerDto createdCustomerDto = new CreatedCustomerDto();
         createdCustomerDto.setUsername(customer.getUsername());
         createdCustomerDto.setPassword(customer.getPassword());
         createdCustomerDto.setAuthorities(customer.getAuthorities());
-
         List<Bid> bids = customer.getBids();
         List<Long> bidIDs = new ArrayList<>();
         if (bids != null) {
@@ -48,7 +54,6 @@ public class CustomerService {
             }
         }
         createdCustomerDto.setBidIDs(bidIDs);
-
         List<Deal> deals = customer.getDeals();
         List<Long> dealIDs = new ArrayList<>();
         if (deals != null) {
@@ -57,16 +62,25 @@ public class CustomerService {
             }
         }
         createdCustomerDto.setDealIDs(bidIDs);
-
         return createdCustomerDto;
     }
 
+
+
+
     public Customer toCustomer(CreatedCustomerDto createdCustomerDto) {
         Customer customer = new Customer();
+//        String encodedPassword = passwordEncoder.encode(createdCustomerDto.getPassword());
+//        customer.setPassword(encodedPassword);
         customer.setUsername(createdCustomerDto.getUsername());
         customer.setPassword(createdCustomerDto.getPassword());
+
         return customer;
+
     }
+
+
+
 
     public List<String> getCustomers() {
         List<Customer> customerList = customerRepository.findAll();
@@ -161,7 +175,6 @@ public class CustomerService {
 
     public void addAuthority(String customerName, String authority) {
         if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
-
         Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();

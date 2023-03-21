@@ -1,6 +1,6 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
+import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
 import nl.wessel.juice.Model.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,27 +16,25 @@ import java.util.Set;
 
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomPublisherDetailsService implements UserDetailsService {
 
 
-    private final CustomerService customerService;
+
+
+    private final PublisherService publisherService;
+
 
     @Autowired
-    public CustomUserDetailsService(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomPublisherDetailsService(PublisherService publisherService) {
+        this.publisherService = publisherService;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) {
+        CreatedPublisherDto createdPublisherDto = publisherService.getPublisher(username);
+        String password = createdPublisherDto.getPassword();
 
-
-        CreatedCustomerDto createdCustomerDto = customerService.getCustomer(username);
-
-
-        String password = createdCustomerDto.getPassword();
-
-        Set<Authority> authorities = createdCustomerDto.getAuthorities();
+        Set<Authority> authorities = createdPublisherDto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority : authorities) {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));

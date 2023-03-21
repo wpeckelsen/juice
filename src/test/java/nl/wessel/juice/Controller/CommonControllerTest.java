@@ -29,7 +29,7 @@ class CommonControllerTest {
     MockMvc mvc;
 
     @MockBean
-    CustomUserDetailsService customUserDetailsService;
+    CustomCustomerDetailsService customCustomerDetailsService;
 
     @MockBean
     JwtUtil jwtUtil;

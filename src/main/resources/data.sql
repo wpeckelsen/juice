@@ -2,63 +2,66 @@
 -- https://bcrypt-generator.com
 
 
+-- PUBLISHER
 INSERT INTO publisher (username, password)
 VALUES ('PUBLISHER', '$2a$12$NAYyXIbMssrCrsMxS1Mz4.4arsyoEfQXh3PcvmyEHnm64BhQ/ZDTC');
-
-INSERT INTO publisher (username, password)
-VALUES ('DELETETHISPUBLISHER', '$2a$12$NAYyXIbMssrCrsMxS1Mz4.4arsyoEfQXh3PcvmyEHnm64BhQ/ZDTC');
+INSERT INTO authority (username, authority)
+VALUES ('PUBLISHER', 'ROLE_PUBLISHER');
 -- username : PUBLISHER
 -- password : PUBLISHER
 
-INSERT INTO authority (username, authority)
-VALUES ('PUBLISHER', 'ROLE_PUBLISHER');
-
+-- DELETETHISPUBLISHER
+INSERT INTO publisher (username, password)
+VALUES ('DELETETHISPUBLISHER', '$2a$12$NAYyXIbMssrCrsMxS1Mz4.4arsyoEfQXh3PcvmyEHnm64BhQ/ZDTC');
 INSERT INTO authority (username, authority)
 VALUES ('DELETETHISPUBLISHER', 'ROLE_PUBLISHER');
+-- username : DELETETHISPUBLISHER
+-- password : PUBLISHER
 
-
-
+-- CUSTOMER
 INSERT INTO customer (username, password)
 VALUES ('CUSTOMER', '$2a$12$zfOheQ2U1alXM5HLQWFz....KZOM0YtnjHqroNN2qSNB1/TmAGWnC');
-
-INSERT INTO customer (username, password)
-VALUES ('DELETETHISCUSTOMER', '$2a$12$zfOheQ2U1alXM5HLQWFz....KZOM0YtnjHqroNN2qSNB1/TmAGWnC');
+INSERT INTO authority (username, authority)
+VALUES ('CUSTOMER', 'ROLE_CUSTOMER');
 -- username : CUSTOMER
 -- password : CUSTOMER
 
-INSERT INTO authority (username, authority)
-VALUES ('CUSTOMER', 'ROLE_CUSTOMER');
-
+-- DELETETHISCUSTOMER
+INSERT INTO customer (username, password)
+VALUES ('DELETETHISCUSTOMER', '$2a$12$zfOheQ2U1alXM5HLQWFz....KZOM0YtnjHqroNN2qSNB1/TmAGWnC');
 INSERT INTO authority (username, authority)
 VALUES ('DELETETHISCUSTOMER', 'ROLE_CUSTOMER');
+-- username : DELETETHISCUSTOMER
+-- password : CUSTOMER
 
-
-
-
+-- ADMIN
 INSERT INTO customer (username, password)
 VALUES ('ADMIN', '$2a$12$WJnj6/6qWLADlGPzMs6V1endH4zO2Qzbxb/6W6yQSTBvd/gzzCl9S');
-
 INSERT INTO publisher (username, password)
 VALUES ('ADMIN', '$2a$12$WJnj6/6qWLADlGPzMs6V1endH4zO2Qzbxb/6W6yQSTBvd/gzzCl9S');
-
+INSERT INTO authority (username, authority)
+VALUES ('ADMIN', 'ROLE_CUSTOMER');
+INSERT INTO authority (username, authority)
+VALUES ('ADMIN', 'ROLE_PUBLISHER');
+INSERT INTO authority (username, authority)
+VALUES ('ADMIN', 'ROLE_ADMIN');
 -- username : ADMIN
 -- password : ADMIN
 
 
-INSERT INTO authority (username, authority)
-VALUES ('ADMIN', 'ROLE_ADMIN');
-
-INSERT INTO authority (username, authority)
-VALUES ('ADMIN', 'ROLE_CUSTOMER');
-
-INSERT INTO authority (username, authority)
-VALUES ('ADMIN', 'ROLE_PUBLISHER');
-
-
-
-
-
-
+-- -- POOPIE
+-- -- INSERT INTO customer (username, password)
+-- -- VALUES ('POOPIE', '$2a$12$aInDBo2upMBsbpS79a77Ducb3oefjQm0SCGKxOE69T9URx/dcrhH2');
+-- INSERT INTO publisher (username, password)
+-- VALUES ('POOPIE', '$2a$12$aInDBo2upMBsbpS79a77Ducb3oefjQm0SCGKxOE69T9URx/dcrhH2');
+-- -- INSERT INTO authority (username, authority)
+-- -- VALUES ('POOPIE', 'ROLE_CUSTOMER');
+-- INSERT INTO authority (username, authority)
+-- VALUES ('POOPIE', 'ROLE_PUBLISHER');
+-- -- INSERT INTO authority (username, authority)
+-- -- VALUES ('POOPIE', 'ROLE_ADMIN');
+-- -- username : POOPIE
+-- -- password : POOPIE
 
 -- orphan domain & bid for test purposes
 INSERT INTO domain (domainID, name, TLD, category, price)
