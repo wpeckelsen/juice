@@ -30,15 +30,12 @@ public class CustomerService {
     private final BidRepository bidRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     @Autowired
     public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.bidRepository = bidRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-
 
     public static CreatedCustomerDto fromCustomer(Customer customer) {
 
@@ -100,16 +97,17 @@ public class CustomerService {
         }
     }
 
-    public CreatedCustomerDto getCustomer(String customerName) {
-
-        Optional<Customer> customer = customerRepository.findById(customerName);
+    public CreatedCustomerDto getCustomer(String userName) {
+        Optional<Customer> customer = customerRepository.findById(userName);
         if (customer.isPresent()) {
             CreatedCustomerDto dto;
             dto = fromCustomer(customer.get());
             return dto;
         } else {
-            throw new UsernameNotFound(customerName);
+            throw new UsernameNotFound(userName);
         }
+
+
     }
 
     public PublicCustomerDto getPublicCustomer(String customerName) {

@@ -74,7 +74,10 @@ public class CommonController {
     @GetMapping("customer/{customerName}")
     public ResponseEntity<PublicCustomerDto> customer(@PathVariable(value = "customerName") String customerName) {
         var publicCustomerDto = customerService.getPublicCustomer(customerName);
+//        var p = customerService.getPublicCustomer(customerName).getClass().getSimpleName();
+//        PublicCustomerDto
         return ResponseEntity.ok().body(publicCustomerDto);
+//        return ResponseEntity.ok().body(p);
 
     }
 

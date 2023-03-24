@@ -5,13 +5,23 @@ public class AuthenticationRequest {
 
     private String username;
     private String password;
+    private String type;
 
     public AuthenticationRequest() {
     }
 
-    public AuthenticationRequest(String username, String password) {
+    public AuthenticationRequest(String username, String password, String type) {
         this.username = username;
         this.password = password;
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUsername() {
