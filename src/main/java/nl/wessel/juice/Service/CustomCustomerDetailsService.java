@@ -31,7 +31,6 @@ public class CustomCustomerDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-
         CreatedCustomerDto createdCustomerDto = customerService.getCustomer(username);
         String password = createdCustomerDto.getPassword();
         Set<Authority> authorities = createdCustomerDto.getAuthorities();

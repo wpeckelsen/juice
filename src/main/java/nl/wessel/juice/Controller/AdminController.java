@@ -49,11 +49,4 @@ public class AdminController {
         return photoService.findAllPhotos();
     }
 
-
-    @GetMapping("abcxyz")
-    public ResponseEntity<String> abcxyz() {
-        String string = "abcxyz";
-        return ResponseEntity.ok().body(string);
-    }
-
 }

@@ -63,6 +63,8 @@ public class AuthenticationController {
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
         }
 
+//        seems as if authenticationRequest is automatically a Customer, so even if application goes into this block below, it does so as Customer.
+//        when the application tries to find the user in the Publisher Repository, it cannot find it since Customers are not stored in a Publisher Repository
         if (type.matches("Publisher")) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             final UserDetails userDetails = customPublisherDetailsService.loadUserByUsername(username);

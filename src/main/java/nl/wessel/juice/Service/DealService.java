@@ -62,6 +62,7 @@ public class DealService {
                 && customer != null
                 && publisher != null
         ) {
+//            sets IDs of all relations of a deal to a created deal
             CreatedDomainDto createdDomainDTO = DomainService.domainDtoMaker(domain);
             createdDealDTO.setDomainID(createdDomainDTO.getDomainID());
 
@@ -85,6 +86,7 @@ public class DealService {
                         && bidRepository.findById(bidID).isPresent()
                         && publisherRepository.findById(publisherName).isPresent()
         ) {
+//            all relations are set for a deal here
             Customer customer = customerRepository.findById(customerName).get();
             Bid bid = bidRepository.findById(bidID).get();
             Publisher publisher = publisherRepository.findById(publisherName).get();

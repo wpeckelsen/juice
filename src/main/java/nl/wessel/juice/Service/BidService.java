@@ -35,7 +35,7 @@ public class BidService {
 
     public static CreatedBidDto bidDtoMaker(Bid bid) {
         CreatedBidDto createdBidDTO = new CreatedBidDto();
-        ZonedDateTime rightNow = ZonedDateTime.now();
+        ZonedDateTime rightNow = ZonedDateTime.now(); // gets the current time stamp
 
         createdBidDTO.setCreationTime(rightNow);
         createdBidDTO.setBidID(bid.getBidID());
@@ -77,15 +77,11 @@ public class BidService {
 
 
     public CreatedBidDto update(Long bidID, CreateBidDto createBidDto) {
-
-
         if (bidRepository.findById(bidID).isPresent()) {
             Bid bid = bidRepository.findById(bidID).get();
             Bid bid1 = bidMaker(createBidDto);
-
             bid1.setBidID(bid.getBidID());
             bidRepository.save(bid1);
-
             return bidDtoMaker(bid1);
         } else {
             Bid bid = new Bid();
