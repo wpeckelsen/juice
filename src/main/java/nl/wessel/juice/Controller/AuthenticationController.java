@@ -50,8 +50,8 @@ public class AuthenticationController {
         String type = authenticationRequest.getType();
 
         if (type.matches("Customer")) {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             final UserDetails userDetails = customCustomerDetailsService.loadUserByUsername(username);
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             final String jwt = jwtUtil.generateToken(userDetails);
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
         }

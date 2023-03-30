@@ -9,3 +9,4 @@ public class JuiceApplication {
         SpringApplication.run(JuiceApplication.class, args);
     }
 }
+

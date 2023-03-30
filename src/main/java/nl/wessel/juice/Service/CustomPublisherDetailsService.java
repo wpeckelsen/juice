@@ -30,7 +30,7 @@ public class CustomPublisherDetailsService implements UserDetailsService {
     }
 
 
-//    this method gives
+//    this method returns a new User as Publisher if in controller layer a Publisher is picked over customer
     @Override
     public UserDetails loadUserByUsername(String username) {
         CreatedPublisherDto createdPublisherDto = publisherService.getPublisher(username);

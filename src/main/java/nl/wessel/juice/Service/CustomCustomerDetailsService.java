@@ -29,6 +29,7 @@ public class CustomCustomerDetailsService implements UserDetailsService {
         this.customerService = customerService;
     }
 
+    //    this method returns a new User as Customer if in controller layer a Customer is picked over a Publisher
     @Override
     public UserDetails loadUserByUsername(String username) {
         CreatedCustomerDto createdCustomerDto = customerService.getCustomer(username);

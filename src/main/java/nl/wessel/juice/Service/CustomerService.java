@@ -67,10 +67,10 @@ public class CustomerService {
 
     public Customer toCustomer(CreatedCustomerDto createdCustomerDto) {
         Customer customer = new Customer();
-//        String encodedPassword = passwordEncoder.encode(createdCustomerDto.getPassword());
-//        customer.setPassword(encodedPassword);
+        String encodedPassword = passwordEncoder.encode(createdCustomerDto.getPassword());
+        customer.setPassword(encodedPassword);
         customer.setUsername(createdCustomerDto.getUsername());
-        customer.setPassword(createdCustomerDto.getPassword());
+//        customer.setPassword(createdCustomerDto.getPassword());
 
         return customer;
 

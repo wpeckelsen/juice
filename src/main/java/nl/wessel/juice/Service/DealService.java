@@ -62,7 +62,7 @@ public class DealService {
                 && customer != null
                 && publisher != null
         ) {
-//            sets IDs of all relations of a deal to a created deal
+//            Sets the IDs of all relations of a deal to a created deal
             CreatedDomainDto createdDomainDTO = DomainService.domainDtoMaker(domain);
             createdDealDTO.setDomainID(createdDomainDTO.getDomainID());
 
