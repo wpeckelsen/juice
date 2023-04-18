@@ -1,4 +1,4 @@
-package nl.wessel.juice.DTO.Customer;
+package nl.wessel.juice.DTO.Publisher;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import nl.wessel.juice.Model.Authority;
@@ -6,25 +6,18 @@ import nl.wessel.juice.Model.Authority;
 import java.util.List;
 import java.util.Set;
 
-public class CreatedCustomerDto {
+public class PublisherDto {
 
-    private String username;
-    private String password;
+    public String username;
+    public String password;
 
     @JsonSerialize
     private Set<Authority> authorities;
 
-    private List<Long> bidIDs;
 
     private List<Long> dealIDs;
+    private List<Long> domainIDs;
 
-    public List<Long> getDealIDs() {
-        return dealIDs;
-    }
-
-    public void setDealIDs(List<Long> dealIDs) {
-        this.dealIDs = dealIDs;
-    }
 
     public String getUsername() {
         return username;
@@ -50,11 +43,19 @@ public class CreatedCustomerDto {
         this.authorities = authorities;
     }
 
-    public List<Long> getBidIDs() {
-        return bidIDs;
+    public List<Long> getDealIDs() {
+        return dealIDs;
     }
 
-    public void setBidIDs(List<Long> bidIDs) {
-        this.bidIDs = bidIDs;
+    public void setDealIDs(List<Long> dealIDs) {
+        this.dealIDs = dealIDs;
+    }
+
+    public List<Long> getDomainIDs() {
+        return domainIDs;
+    }
+
+    public void setDomainIDs(List<Long> domainIDs) {
+        this.domainIDs = domainIDs;
     }
 }

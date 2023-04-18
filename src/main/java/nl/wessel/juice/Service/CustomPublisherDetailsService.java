@@ -1,6 +1,6 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
+import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.Model.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,10 +33,10 @@ public class CustomPublisherDetailsService implements UserDetailsService {
 //    this method returns a new User as Publisher if in controller layer a Publisher is picked over customer
     @Override
     public UserDetails loadUserByUsername(String username) {
-        CreatedPublisherDto createdPublisherDto = publisherService.getPublisher(username);
-        String password = createdPublisherDto.getPassword();
+        PublisherDto publisherDto = publisherService.getPublisher(username);
+        String password = publisherDto.getPassword();
 
-        Set<Authority> authorities = createdPublisherDto.getAuthorities();
+        Set<Authority> authorities = publisherDto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority : authorities) {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));

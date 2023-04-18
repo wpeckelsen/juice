@@ -22,6 +22,7 @@ public class Bid {
     @OneToOne
     private Deal deal;
 
+
     public Long getBidID() {
         return bidID;
     }

@@ -63,7 +63,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/juice/common/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.PUT, "/juice/common/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.DELETE, "/juice/common/**").hasRole("PUBLISHER")
-//
+
                 .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")

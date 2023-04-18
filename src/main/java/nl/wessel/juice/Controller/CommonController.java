@@ -6,6 +6,7 @@ import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.PublicPublisherDto;
+import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +70,12 @@ public class CommonController {
     @GetMapping("deals")
     public ResponseEntity<List<Long>> deals() {
         return ResponseEntity.ok().body(dealService.getList());
+    }
+
+    @GetMapping("domains/{TLD}")
+    public ResponseEntity<List<Domain>> domainTLDs(@PathVariable(value = "TLD") String TLD){
+        var domains = domainService.getSimilarTLDs(TLD);
+        return ResponseEntity.ok().body(domains);
     }
 
     @GetMapping("customer/{customerName}")

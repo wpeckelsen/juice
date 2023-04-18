@@ -2,6 +2,7 @@ package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
+import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Repository.DomainRepository;
@@ -54,6 +55,30 @@ public class DomainService {
                 domainIDs.add(createdDomainDTO.getDomainID());
             }
             return domainIDs;
+        }
+    }
+
+    public List<Domain> getSimilarTLDs(String TLD) {
+        List<Domain> domains = domainRepository.findAll();
+
+        if (domains.isEmpty()) {
+            Domain domain = new Domain();
+            throw new RecordNotFound(domain);
+        } else {
+            List<Domain> TLDs = new ArrayList<>();
+
+            for (Domain domain : domains) {
+                CreatedDomainDto createdDomainDTO = domainDtoMaker(domain);
+                if (createdDomainDTO.getTLD().matches(TLD)) {
+                    TLDs.add(domain);
+                }
+            }
+            if (TLDs.isEmpty()) {
+                throw new BadRequest("There are no Domains with this TLD");
+            } else {
+                return TLDs;
+            }
+
         }
     }
 

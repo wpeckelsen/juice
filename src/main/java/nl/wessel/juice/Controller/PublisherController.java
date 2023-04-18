@@ -1,7 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
-import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
+import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +41,8 @@ public class PublisherController {
 
 
     @PostMapping("publisher")
-    public ResponseEntity<Object> newPublisher(@RequestBody CreatedPublisherDto createdPublisherDto) {
-        String newPublisherName = publisherService.newPublisher(createdPublisherDto);
+    public ResponseEntity<Object> newPublisher(@RequestBody PublisherDto publisherDto) {
+        String newPublisherName = publisherService.newPublisher(publisherDto);
         publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newPublisherName}")
                 .buildAndExpand(newPublisherName).toUri();
@@ -61,9 +61,9 @@ public class PublisherController {
     }
 
     @PutMapping("publisher/{username}")
-    public ResponseEntity<CreatedPublisherDto> updatePublisher(@PathVariable("username") String username,
-                                                               @RequestBody CreatedPublisherDto createdPublisherDto) {
-        publisherService.update(username, createdPublisherDto);
+    public ResponseEntity<PublisherDto> updatePublisher(@PathVariable("username") String username,
+                                                        @RequestBody PublisherDto publisherDto) {
+        publisherService.update(username, publisherDto);
         return ResponseEntity.noContent().build();
     }
 
