@@ -57,6 +57,25 @@ public class DomainService {
         }
     }
 
+    public List<Domain> getSimilarTLDs(String TLD) {
+        List<Domain> domains = domainRepository.findAll();
+
+        if (domains.isEmpty()) {
+            Domain domain = new Domain();
+            throw new RecordNotFound(domain);
+        } else {
+            List<Domain> TLDs = new ArrayList<>();
+
+            for (Domain domain : domains) {
+                CreatedDomainDto createdDomainDTO = domainDtoMaker(domain);
+                if (createdDomainDTO.getTLD().matches(TLD)) {
+                    TLDs.add(domain);
+                }
+            }
+            return TLDs;
+        }
+    }
+
 
     public CreatedDomainDto getByID(Long idDomain) {
         if (domainRepository.findById(idDomain).isPresent()) {

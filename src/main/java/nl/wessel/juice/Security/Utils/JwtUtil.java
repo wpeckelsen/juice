@@ -46,7 +46,7 @@ public class JwtUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        long validTime = 40000; // 10 days
+        long validTime = 864000000; // 10 days in milliseconds 864000000
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -66,7 +66,7 @@ public class JwtUtil {
         }
         else {
             final String username = extractUsername(token);
-            return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+            return username.equals(userDetails.getUsername()) /*&& !isTokenExpired(token)*/;
         }
     }
 

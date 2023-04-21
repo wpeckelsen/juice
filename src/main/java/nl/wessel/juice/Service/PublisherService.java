@@ -1,7 +1,7 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
-import nl.wessel.juice.DTO.Publisher.CreatedPublisherDto;
+import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.DTO.Publisher.PublicPublisherDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
@@ -33,11 +33,11 @@ public class PublisherService {
         this.publisherRepository = publisherRepository;
     }
 
-    public static CreatedPublisherDto fromPublisher(Publisher publisher) {
-        CreatedPublisherDto createdPublisherDto = new CreatedPublisherDto();
-        createdPublisherDto.username = publisher.getUsername();
-        createdPublisherDto.password = publisher.getPassword();
-        createdPublisherDto.setAuthorities(publisher.getAuthorities());
+    public static PublisherDto fromPublisher(Publisher publisher) {
+        PublisherDto publisherDto = new PublisherDto();
+        publisherDto.username = publisher.getUsername();
+        publisherDto.password = publisher.getPassword();
+        publisherDto.setAuthorities(publisher.getAuthorities());
 
         List<Domain> domains = publisher.getDomains();
         List<Long> domainIDs = new ArrayList<>();
@@ -46,7 +46,7 @@ public class PublisherService {
                 domainIDs.add(domain.getDomainID());
             }
         }
-        createdPublisherDto.setDomainIDs(domainIDs);
+        publisherDto.setDomainIDs(domainIDs);
 
         List<Deal> deals = publisher.getDeals();
         List<Long> dealIDs = new ArrayList<>();
@@ -55,19 +55,19 @@ public class PublisherService {
                 dealIDs.add(deal.getDealID());
             }
         }
-        createdPublisherDto.setDealIDs(dealIDs);
-        return createdPublisherDto;
+        publisherDto.setDealIDs(dealIDs);
+        return publisherDto;
     }
 
-    public Publisher toPublisher(CreatedPublisherDto createdPublisherDto) {
+    public Publisher toPublisher(PublisherDto publisherDto) {
         Publisher publisher = new Publisher();
-        publisher.setUsername(createdPublisherDto.getUsername());
-        publisher.setPassword(createdPublisherDto.getPassword());
+        publisher.setUsername(publisherDto.getUsername());
+        publisher.setPassword(publisherDto.getPassword());
         return publisher;
     }
 
-    public CreatedPublisherDto getPublisher(String publisherName) {
-        CreatedPublisherDto dto;
+    public PublisherDto getPublisher(String publisherName) {
+        PublisherDto dto;
         var publisher = publisherRepository.findById(publisherName);
         if (publisher.isPresent()) {
             dto = fromPublisher(publisher.get());
@@ -95,7 +95,7 @@ public class PublisherService {
     public PublicPublisherDto getPublicPublisher(String publisherName) {
         Optional<Publisher> publisher = publisherRepository.findById(publisherName);
         if (publisher.isPresent()) {
-            CreatedPublisherDto dto = fromPublisher(publisher.get());
+            PublisherDto dto = fromPublisher(publisher.get());
 
             PublicPublisherDto publicPublisherDto = new PublicPublisherDto();
             publicPublisherDto.setDomainIDs(dto.getDomainIDs());
@@ -108,8 +108,8 @@ public class PublisherService {
         }
     }
 
-    public String newPublisher(CreatedPublisherDto createdPublisherDto) {
-        Publisher publisher = toPublisher(createdPublisherDto);
+    public String newPublisher(PublisherDto publisherDto) {
+        Publisher publisher = toPublisher(publisherDto);
         publisherRepository.save(publisher);
         return publisher.getUsername();
     }
@@ -139,14 +139,14 @@ public class PublisherService {
         publisherRepository.deleteById(publisherName);
     }
 
-    public void update(String publisherName, CreatedPublisherDto createdPublisherDto) {
+    public void update(String publisherName, PublisherDto publisherDto) {
         if (!publisherRepository.existsById(publisherName)) throw new BadRequest();
         var optionalPublisher = publisherRepository.findById(publisherName);
 
         if (optionalPublisher.isPresent()) {
             Publisher publisher = optionalPublisher.get();
-            publisher.setUsername(createdPublisherDto.getUsername());
-            publisher.setUsername(createdPublisherDto.getUsername());
+            publisher.setUsername(publisherDto.getUsername());
+            publisher.setUsername(publisherDto.getUsername());
             publisherRepository.save(publisher);
         }
     }

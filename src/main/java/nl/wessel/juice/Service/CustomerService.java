@@ -1,7 +1,7 @@
 package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
-import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
+import nl.wessel.juice.DTO.Customer.CustomerDto;
 import nl.wessel.juice.DTO.Customer.PublicCustomerDto;
 import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
@@ -37,12 +37,12 @@ public class CustomerService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public static CreatedCustomerDto fromCustomer(Customer customer) {
+    public static CustomerDto fromCustomer(Customer customer) {
 
-        CreatedCustomerDto createdCustomerDto = new CreatedCustomerDto();
-        createdCustomerDto.setUsername(customer.getUsername());
-        createdCustomerDto.setPassword(customer.getPassword());
-        createdCustomerDto.setAuthorities(customer.getAuthorities());
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setUsername(customer.getUsername());
+        customerDto.setPassword(customer.getPassword());
+        customerDto.setAuthorities(customer.getAuthorities());
         List<Bid> bids = customer.getBids();
         List<Long> bidIDs = new ArrayList<>();
         if (bids != null) {
@@ -50,7 +50,7 @@ public class CustomerService {
                 bidIDs.add(bid.getBidID());
             }
         }
-        createdCustomerDto.setBidIDs(bidIDs);
+        customerDto.setBidIDs(bidIDs);
         List<Deal> deals = customer.getDeals();
         List<Long> dealIDs = new ArrayList<>();
         if (deals != null) {
@@ -58,25 +58,21 @@ public class CustomerService {
                 dealIDs.add(deal.getDealID());
             }
         }
-        createdCustomerDto.setDealIDs(bidIDs);
-        return createdCustomerDto;
+        customerDto.setDealIDs(bidIDs);
+        return customerDto;
     }
 
 
-
-
-    public Customer toCustomer(CreatedCustomerDto createdCustomerDto) {
+    public Customer toCustomer(CustomerDto customerDto) {
         Customer customer = new Customer();
-        String encodedPassword = passwordEncoder.encode(createdCustomerDto.getPassword());
+        String encodedPassword = passwordEncoder.encode(customerDto.getPassword());
         customer.setPassword(encodedPassword);
-        customer.setUsername(createdCustomerDto.getUsername());
-//        customer.setPassword(createdCustomerDto.getPassword());
+        customer.setUsername(customerDto.getUsername());
+//        customer.setPassword(customerDto.getPassword());
 
         return customer;
 
     }
-
-
 
 
     public List<String> getCustomers() {
@@ -89,32 +85,30 @@ public class CustomerService {
             List<String> customerIDs = new ArrayList<>();
 
             for (Customer customer : customerList) {
-                CreatedCustomerDto createdCustomerDto = fromCustomer(customer);
-                customerIDs.add(createdCustomerDto.getUsername());
+                CustomerDto customerDto = fromCustomer(customer);
+                customerIDs.add(customerDto.getUsername());
             }
 
             return customerIDs;
         }
     }
 
-    public CreatedCustomerDto getCustomer(String userName) {
+    public CustomerDto getCustomer(String userName) {
         Optional<Customer> customer = customerRepository.findById(userName);
         if (customer.isPresent()) {
-            CreatedCustomerDto dto;
+            CustomerDto dto;
             dto = fromCustomer(customer.get());
             return dto;
         } else {
             throw new UsernameNotFound(userName);
         }
-
-
     }
 
     public PublicCustomerDto getPublicCustomer(String customerName) {
 
         Optional<Customer> customer = customerRepository.findById(customerName);
         if (customer.isPresent()) {
-            CreatedCustomerDto dto;
+            CustomerDto dto;
             dto = fromCustomer(customer.get());
 
             PublicCustomerDto publicCustomerDto = new PublicCustomerDto();
@@ -128,8 +122,8 @@ public class CustomerService {
         }
     }
 
-    public String newCustomer(CreatedCustomerDto createdCustomerDto) {
-        Customer customer = toCustomer(createdCustomerDto);
+    public String newCustomer(CustomerDto customerDto) {
+        Customer customer = toCustomer(customerDto);
         customerRepository.save(customer);
         return customer.getUsername();
     }
@@ -159,14 +153,14 @@ public class CustomerService {
         customerRepository.deleteById(customerName);
     }
 
-    public void update(String customerName, CreatedCustomerDto createdCustomerDto) {
+    public void update(String customerName, CustomerDto customerDto) {
         if (!customerRepository.existsById(customerName)) throw new BadRequest();
 
         Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
-            customer.setUsername(createdCustomerDto.getUsername());
-            customer.setPassword(createdCustomerDto.getPassword());
+            customer.setUsername(customerDto.getUsername());
+            customer.setPassword(customerDto.getPassword());
             customerRepository.save(customer);
         }
     }

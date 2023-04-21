@@ -49,19 +49,7 @@ VALUES ('ADMIN', 'ROLE_ADMIN');
 -- password : ADMIN
 
 
--- -- POOPIE
--- -- INSERT INTO customer (username, password)
--- -- VALUES ('POOPIE', '$2a$12$aInDBo2upMBsbpS79a77Ducb3oefjQm0SCGKxOE69T9URx/dcrhH2');
--- INSERT INTO publisher (username, password)
--- VALUES ('POOPIE', '$2a$12$aInDBo2upMBsbpS79a77Ducb3oefjQm0SCGKxOE69T9URx/dcrhH2');
--- -- INSERT INTO authority (username, authority)
--- -- VALUES ('POOPIE', 'ROLE_CUSTOMER');
--- INSERT INTO authority (username, authority)
--- VALUES ('POOPIE', 'ROLE_PUBLISHER');
--- -- INSERT INTO authority (username, authority)
--- -- VALUES ('POOPIE', 'ROLE_ADMIN');
--- -- username : POOPIE
--- -- password : POOPIE
+
 
 -- orphan domain & bid for test purposes
 INSERT INTO domain (domainID, name, TLD, category, price)

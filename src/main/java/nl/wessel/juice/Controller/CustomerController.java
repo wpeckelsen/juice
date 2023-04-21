@@ -1,7 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
-import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
+import nl.wessel.juice.DTO.Customer.CustomerDto;
 import nl.wessel.juice.DTO.Photo.PhotoDto;
 import nl.wessel.juice.Model.Photo;
 import nl.wessel.juice.Service.*;
@@ -37,8 +37,8 @@ public class CustomerController {
     }
 
     @PostMapping("customer")
-    public ResponseEntity<Object> newCustomer(@RequestBody CreatedCustomerDto createdCustomerDto) {
-        String newCustomerName = customerService.newCustomer(createdCustomerDto);
+    public ResponseEntity<Object> newCustomer(@RequestBody CustomerDto customerDto) {
+        String newCustomerName = customerService.newCustomer(customerDto);
         customerService.addAuthority(newCustomerName, "ROLE_CUSTOMER");
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newCustomerName}")
                 .buildAndExpand(newCustomerName).toUri();
@@ -74,9 +74,9 @@ public class CustomerController {
     }
 
     @PutMapping("customer/{username}")
-    public ResponseEntity<CreatedCustomerDto> updateCustomer(@PathVariable("username") String username,
-                                                             @RequestBody CreatedCustomerDto createdCustomerDto) {
-        customerService.update(username, createdCustomerDto);
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable("username") String username,
+                                                      @RequestBody CustomerDto customerDto) {
+        customerService.update(username, customerDto);
         return ResponseEntity.noContent().build();
     }
 

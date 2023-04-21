@@ -65,9 +65,11 @@ public class BidService {
         }
     }
 
-    public CreatedBidDto getByID(Long idBid) {
-        if (bidRepository.findById(idBid).isPresent()) {
-            Bid bid = bidRepository.findById(idBid).get();
+
+
+    public CreatedBidDto getByID(Long bidID) {
+        if (bidRepository.findById(bidID).isPresent()) {
+            Bid bid = bidRepository.findById(bidID).get();
             return bidDtoMaker(bid);
         } else {
             Bid bid = new Bid();

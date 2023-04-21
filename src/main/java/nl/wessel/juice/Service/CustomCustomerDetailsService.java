@@ -1,6 +1,6 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Customer.CreatedCustomerDto;
+import nl.wessel.juice.DTO.Customer.CustomerDto;
 import nl.wessel.juice.Model.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -32,9 +32,9 @@ public class CustomCustomerDetailsService implements UserDetailsService {
     //    this method returns a new User as Customer if in controller layer a Customer is picked over a Publisher
     @Override
     public UserDetails loadUserByUsername(String username) {
-        CreatedCustomerDto createdCustomerDto = customerService.getCustomer(username);
-        String password = createdCustomerDto.getPassword();
-        Set<Authority> authorities = createdCustomerDto.getAuthorities();
+        CustomerDto customerDto = customerService.getCustomer(username);
+        String password = customerDto.getPassword();
+        Set<Authority> authorities = customerDto.getAuthorities();
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Authority authority : authorities) {
             grantedAuthorities.add(new SimpleGrantedAuthority(authority.getAuthority()));
