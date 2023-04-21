@@ -2,7 +2,6 @@ package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.Exception.BadRequest;
 import nl.wessel.juice.Exception.RecordNotFound;
 import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Repository.DomainRepository;
@@ -73,12 +72,7 @@ public class DomainService {
                     TLDs.add(domain);
                 }
             }
-            if (TLDs.isEmpty()) {
-                throw new BadRequest("There are no Domains with this TLD");
-            } else {
-                return TLDs;
-            }
-
+            return TLDs;
         }
     }
 
