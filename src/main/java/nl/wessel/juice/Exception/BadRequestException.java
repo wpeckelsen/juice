@@ -1,13 +1,13 @@
 package nl.wessel.juice.Exception;
 
-public class BadRequest extends RuntimeException {
+public class BadRequestException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public BadRequest() {
+    public BadRequestException() {
         super();
     }
 
-    public BadRequest(String message) {
+    public BadRequestException(String message) {
         super(message);
     }
 }

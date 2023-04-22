@@ -1,6 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
+import nl.wessel.juice.DTO.Bid.CreatedBidDto;
 import nl.wessel.juice.DTO.Customer.CustomerDto;
 import nl.wessel.juice.DTO.Photo.PhotoDto;
 import nl.wessel.juice.Model.Photo;
@@ -36,15 +37,6 @@ public class CustomerController {
         this.photoService = photoService;
     }
 
-    @PostMapping("customer")
-    public ResponseEntity<Object> newCustomer(@RequestBody CustomerDto customerDto) {
-        String newCustomerName = customerService.newCustomer(customerDto);
-        customerService.addAuthority(newCustomerName, "ROLE_CUSTOMER");
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newCustomerName}")
-                .buildAndExpand(newCustomerName).toUri();
-        return ResponseEntity.created(location).build();
-    }
-
     @PostMapping("photo")
     public PhotoDto newPhoto(@RequestParam("file") MultipartFile file) throws IOException {
         Photo photo = photoService.UploadSinglePhoto(file);
@@ -58,12 +50,11 @@ public class CustomerController {
         return new PhotoDto(photo.getFileName(), url, contentType);
     }
 
-    @PostMapping("bid/{username}")
-    public ResponseEntity<Object> newBid(@RequestBody CreateBidDto createBidDto,
-                                         @PathVariable String username) {
-        Long bidID = customerService.newBid(createBidDto, username);
+    @PostMapping("bid")
+    public ResponseEntity<Object> newBid(@RequestBody CreateBidDto createBidDto) {
+        CreatedBidDto bid = bidService.newBid(createBidDto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{bidID}")
-                .buildAndExpand(bidID).toUri();
+                .buildAndExpand(bid).toUri();
         return ResponseEntity.created(location).build();
     }
 
@@ -90,5 +81,15 @@ public class CustomerController {
     public ResponseEntity<Object> deleteCustomer(@PathVariable("username") String username) {
         customerService.delete(username);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("principal")
+    public ResponseEntity<String> principal() {
+        return ResponseEntity.ok().body(customerService.principal());
+    }
+
+    @GetMapping("principal/{bidID}")
+    public ResponseEntity<String> bidPrincipal (@PathVariable("bidID")Long bidID){
+        return ResponseEntity.ok().body(bidService.bidPrincipal(bidID));
     }
 }

@@ -1,11 +1,10 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Bid.CreateBidDto;
 import nl.wessel.juice.DTO.Customer.CustomerDto;
 import nl.wessel.juice.DTO.Customer.PublicCustomerDto;
-import nl.wessel.juice.Exception.BadRequest;
-import nl.wessel.juice.Exception.RecordNotFound;
-import nl.wessel.juice.Exception.UsernameNotFound;
+import nl.wessel.juice.Exception.BadRequestException;
+import nl.wessel.juice.Exception.RecordNotFoundException;
+import nl.wessel.juice.Exception.UsernameNotFoundException;
 import nl.wessel.juice.Model.Authority;
 import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Model.Customer;
@@ -13,6 +12,7 @@ import nl.wessel.juice.Model.Deal;
 import nl.wessel.juice.Repository.BidRepository;
 import nl.wessel.juice.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,7 +80,7 @@ public class CustomerService {
 
         if (customerList.isEmpty()) {
             Customer customer = new Customer();
-            throw new RecordNotFound(customer);
+            throw new RecordNotFoundException(customer);
         } else {
             List<String> customerIDs = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class CustomerService {
             dto = fromCustomer(customer.get());
             return dto;
         } else {
-            throw new UsernameNotFound(userName);
+            throw new UsernameNotFoundException(userName);
         }
     }
 
@@ -118,7 +118,7 @@ public class CustomerService {
             publicCustomerDto.setDealIDs(dto.getDealIDs());
             return publicCustomerDto;
         } else {
-            throw new UsernameNotFound(customerName);
+            throw new UsernameNotFoundException(customerName);
         }
     }
 
@@ -128,33 +128,16 @@ public class CustomerService {
         return customer.getUsername();
     }
 
-    public Long newBid(CreateBidDto createBidDto, String username) {
-        Optional<Customer> foundCustomer = customerRepository.findById(username);
-
-        if (foundCustomer.isPresent()) {
-            Customer customer = foundCustomer.get();
-            Bid newBid = BidService.bidMaker(createBidDto);
-            List<Bid> currentBids = customer.getBids();
-            currentBids.add(newBid);
-
-            for (Bid bid : currentBids) {
-                bid.setCustomer(customer);
-                bidRepository.save(newBid);
-            }
-            customer.setBids(currentBids);
-            customerRepository.save(customer);
-            return BidService.bidDtoMaker(newBid).bidID;
-        } else {
-            throw new BadRequest("This Customer does not show up in the Database. Are you sure you made it?");
-        }
+    public String principal(){
+        String principal = SecurityContextHolder.getContext().getAuthentication().getName();
+        return principal;
     }
-
     public void delete(String customerName) {
         customerRepository.deleteById(customerName);
     }
 
     public void update(String customerName, CustomerDto customerDto) {
-        if (!customerRepository.existsById(customerName)) throw new BadRequest();
+        if (!customerRepository.existsById(customerName)) throw new BadRequestException();
 
         Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
         if (optionalCustomer.isPresent()) {
@@ -166,7 +149,7 @@ public class CustomerService {
     }
 
     public void addAuthority(String customerName, String authority) {
-        if (!customerRepository.existsById(customerName)) throw new UsernameNotFound(customerName);
+        if (!customerRepository.existsById(customerName)) throw new UsernameNotFoundException(customerName);
         Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();

@@ -2,26 +2,36 @@ package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Bid.CreateBidDto;
 import nl.wessel.juice.DTO.Bid.CreatedBidDto;
-import nl.wessel.juice.Exception.RecordNotFound;
+import nl.wessel.juice.Exception.BadRequestException;
+import nl.wessel.juice.Exception.ForbiddenException;
+import nl.wessel.juice.Exception.RecordNotFoundException;
 import nl.wessel.juice.Model.Bid;
+import nl.wessel.juice.Model.Customer;
 import nl.wessel.juice.Repository.BidRepository;
+import nl.wessel.juice.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BidService {
 
     private final BidRepository bidRepository;
+    private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
+
 
     @Autowired
-    public BidService(BidRepository bidRepository) {
+    public BidService(BidRepository bidRepository, CustomerService customerService, CustomerRepository customerRepository) {
         this.bidRepository = bidRepository;
+        this.customerService = customerService;
+        this.customerRepository = customerRepository;
     }
-
 
     public static Bid bidMaker(CreateBidDto createBidDto) {
         Bid bid = new Bid();
@@ -35,7 +45,10 @@ public class BidService {
 
     public static CreatedBidDto bidDtoMaker(Bid bid) {
         CreatedBidDto createdBidDTO = new CreatedBidDto();
-        ZonedDateTime rightNow = ZonedDateTime.now(); // gets the current time stamp
+
+        // gets the current time stamp
+        ZonedDateTime rightNow = ZonedDateTime.now();
+
 
         createdBidDTO.setCreationTime(rightNow);
         createdBidDTO.setBidID(bid.getBidID());
@@ -44,7 +57,34 @@ public class BidService {
         createdBidDTO.setTopic(bid.getTopic());
         createdBidDTO.setAnchor(bid.getAnchor());
         createdBidDTO.setVernacular(bid.getVernacular());
+        createdBidDTO.setPrincipal(bid.getPrincipal());
         return createdBidDTO;
+    }
+
+
+    public CreatedBidDto newBid(CreateBidDto createBidDto) {
+        // gets the current User's username
+        String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<Customer> foundCustomer = customerRepository.findById(currentPrincipalName);
+
+        if (foundCustomer.isPresent()) {
+            Customer customer = foundCustomer.get();
+            Bid newBid = bidMaker(createBidDto);
+            List<Bid> currentBids = customer.getBids();
+            currentBids.add(newBid);
+
+
+            for (Bid bid : currentBids) {
+                bid.setCustomer(customer);
+                bid.setPrincipal(currentPrincipalName );
+                bidRepository.save(newBid);
+            }
+            customer.setBids(currentBids);
+            customerRepository.save(customer);
+            return bidDtoMaker(newBid);
+        } else {
+            throw new BadRequestException("This Customer does not show up in the Database. Are you sure you made it?");
+        }
     }
 
     public List<Long> getList() {
@@ -53,7 +93,7 @@ public class BidService {
 
         if (bidList.isEmpty()) {
             Bid bid = new Bid();
-            throw new RecordNotFound(bid);
+            throw new RecordNotFoundException(bid);
         } else {
             List<Long> bidIDs = new ArrayList<>();
 
@@ -66,30 +106,49 @@ public class BidService {
     }
 
 
-
     public CreatedBidDto getByID(Long bidID) {
         if (bidRepository.findById(bidID).isPresent()) {
             Bid bid = bidRepository.findById(bidID).get();
             return bidDtoMaker(bid);
         } else {
             Bid bid = new Bid();
-            throw new RecordNotFound(bid);
+            throw new RecordNotFoundException(bid);
         }
+    }
+
+    public String bidPrincipal(Long bidID){
+        Bid bid = bidRepository.findById(bidID).get();
+        CreatedBidDto createdBidDto = bidDtoMaker(bid);
+        return createdBidDto.getPrincipal();
     }
 
 
     public CreatedBidDto update(Long bidID, CreateBidDto createBidDto) {
+        Bid bid = bidRepository.findById(bidID).get();
+
+//        this string gets the name of the principal. Meaning: it gets the username of the
+//        current user (the principal) that's logged in.
+        String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        String bidPrincipal = bidPrincipal(bidID);
+
         if (bidRepository.findById(bidID).isPresent()) {
-            Bid bid = bidRepository.findById(bidID).get();
-            Bid bid1 = bidMaker(createBidDto);
-            bid1.setBidID(bid.getBidID());
-            bidRepository.save(bid1);
-            return bidDtoMaker(bid1);
+
+            if(currentPrincipalName.equalsIgnoreCase(bidPrincipal)) {
+                Bid bid1 = bidMaker(createBidDto);
+                bid1.setBidID(bid.getBidID());
+                bidRepository.save(bid1);
+                return bidDtoMaker(bid1);
+            }
+            else {
+//                if another user tries to update, it will return a 403: the user does not have the correct rights
+                throw new ForbiddenException();
+            }
+
         } else {
-            Bid bid = new Bid();
-            throw new RecordNotFound(bid);
+            throw new RecordNotFoundException(bid);
         }
     }
+
 
     public void delete(Long bidID) {
         bidRepository.deleteById(bidID);

@@ -3,9 +3,9 @@ package nl.wessel.juice.Service;
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
 import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.DTO.Publisher.PublicPublisherDto;
-import nl.wessel.juice.Exception.BadRequest;
-import nl.wessel.juice.Exception.RecordNotFound;
-import nl.wessel.juice.Exception.UsernameNotFound;
+import nl.wessel.juice.Exception.BadRequestException;
+import nl.wessel.juice.Exception.RecordNotFoundException;
+import nl.wessel.juice.Exception.UsernameNotFoundException;
 import nl.wessel.juice.Model.Authority;
 import nl.wessel.juice.Model.Deal;
 import nl.wessel.juice.Model.Domain;
@@ -72,7 +72,7 @@ public class PublisherService {
         if (publisher.isPresent()) {
             dto = fromPublisher(publisher.get());
         } else {
-            throw new UsernameNotFound(publisherName);
+            throw new UsernameNotFoundException(publisherName);
         }
         return dto;
     }
@@ -82,7 +82,7 @@ public class PublisherService {
 
         if (publishersList.isEmpty()) {
             Publisher publisher = new Publisher();
-            throw new RecordNotFound(publisher);
+            throw new RecordNotFoundException(publisher);
         } else {
             List<String> publisherIDs = new ArrayList<>();
             for (Publisher publisher : publishersList) {
@@ -104,7 +104,7 @@ public class PublisherService {
             publicPublisherDto.setDealIDs(dto.getDealIDs());
             return publicPublisherDto;
         } else {
-            throw new UsernameNotFound(publisherName);
+            throw new UsernameNotFoundException(publisherName);
         }
     }
 
@@ -131,7 +131,7 @@ public class PublisherService {
             publisherRepository.save(publisher);
             return DomainService.domainDtoMaker(newDomain).getDomainID();
         } else {
-            throw new BadRequest("This Publisher does not show up in the Database. Are you sure you made it?");
+            throw new BadRequestException("This Publisher does not show up in the Database. Are you sure you made it?");
         }
     }
 
@@ -140,7 +140,7 @@ public class PublisherService {
     }
 
     public void update(String publisherName, PublisherDto publisherDto) {
-        if (!publisherRepository.existsById(publisherName)) throw new BadRequest();
+        if (!publisherRepository.existsById(publisherName)) throw new BadRequestException();
         var optionalPublisher = publisherRepository.findById(publisherName);
 
         if (optionalPublisher.isPresent()) {
@@ -152,7 +152,7 @@ public class PublisherService {
     }
 
     public void addAuthority(String publisherName, String authority) {
-        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFound(publisherName);
+        if (!publisherRepository.existsById(publisherName)) throw new UsernameNotFoundException(publisherName);
 
         Optional<Publisher> optionalPublisher = publisherRepository.findById(publisherName);
         if (optionalPublisher.isPresent()) {

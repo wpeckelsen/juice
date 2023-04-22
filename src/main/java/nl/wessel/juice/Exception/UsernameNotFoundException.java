@@ -1,9 +1,9 @@
 package nl.wessel.juice.Exception;
 
-public class UsernameNotFound extends RuntimeException {
+public class UsernameNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public UsernameNotFound(String username) {
+    public UsernameNotFoundException(String username) {
         super("Could not find this username: " + username);
     }
 

@@ -2,7 +2,7 @@ package nl.wessel.juice.Service;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.Exception.RecordNotFound;
+import nl.wessel.juice.Exception.RecordNotFoundException;
 import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Repository.DomainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class DomainService {
         List<Domain> domainList = domainRepository.findAll();
         if (domainList.isEmpty()) {
             Domain domain = new Domain();
-            throw new RecordNotFound(domain);
+            throw new RecordNotFoundException(domain);
         } else {
             List<Long> domainIDs = new ArrayList<>();
 
@@ -62,7 +62,7 @@ public class DomainService {
 
         if (domains.isEmpty()) {
             Domain domain = new Domain();
-            throw new RecordNotFound(domain);
+            throw new RecordNotFoundException(domain);
         } else {
             List<Domain> TLDs = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class DomainService {
             return domainDtoMaker(domain);
         } else {
             Domain domain = new Domain();
-            throw new RecordNotFound(domain);
+            throw new RecordNotFoundException(domain);
         }
     }
 
@@ -98,7 +98,7 @@ public class DomainService {
             return domainDtoMaker(domain1);
         } else {
             Domain domain = new Domain();
-            throw new RecordNotFound(domain);
+            throw new RecordNotFoundException(domain);
         }
     }
 

@@ -40,15 +40,15 @@ public class PublisherController {
     }
 
 
-    @PostMapping("publisher")
-    public ResponseEntity<Object> newPublisher(@RequestBody PublisherDto publisherDto) {
-        String newPublisherName = publisherService.newPublisher(publisherDto);
-        publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newPublisherName}")
-                .buildAndExpand(newPublisherName).toUri();
-
-        return ResponseEntity.created(location).build();
-    }
+//    @PostMapping("publisher")
+//    public ResponseEntity<Object> newPublisher(@RequestBody PublisherDto publisherDto) {
+//        String newPublisherName = publisherService.newPublisher(publisherDto);
+//        publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
+//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newPublisherName}")
+//                .buildAndExpand(newPublisherName).toUri();
+//
+//        return ResponseEntity.created(location).build();
+//    }
 
 
     @PostMapping("{publisherName}")

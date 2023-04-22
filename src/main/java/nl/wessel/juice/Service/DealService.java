@@ -6,8 +6,8 @@ import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
 import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.PublisherDto;
-import nl.wessel.juice.Exception.BadRequest;
-import nl.wessel.juice.Exception.RecordNotFound;
+import nl.wessel.juice.Exception.BadRequestException;
+import nl.wessel.juice.Exception.RecordNotFoundException;
 import nl.wessel.juice.Model.*;
 import nl.wessel.juice.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +105,7 @@ public class DealService {
             dealRepository.save(deal);
             return dealDtoMaker(deal).getDealID();
         } else {
-            throw new BadRequest(" You must include an ID for an existing Customer, Bid, Publisher and Domain in your URL. " +
+            throw new BadRequestException(" You must include an ID for an existing Customer, Bid, Publisher and Domain in your URL. " +
                     "Are you sure you are using the correct IDs? And are you sure all these entities exist already?");
         }
     }
@@ -116,7 +116,7 @@ public class DealService {
 
         if (dealList.isEmpty()) {
             Deal deal = new Deal();
-            throw new RecordNotFound(deal);
+            throw new RecordNotFoundException(deal);
         } else {
             List<Long> dealIDs = new ArrayList<>();
             for (Deal deal : dealList) {
@@ -134,7 +134,7 @@ public class DealService {
             return dealDtoMaker(deal);
         } else {
             Deal deal = new Deal();
-            throw new RecordNotFound(deal);
+            throw new RecordNotFoundException(deal);
         }
     }
 
@@ -149,7 +149,7 @@ public class DealService {
             return dealDtoMaker(deal1);
         } else {
             Deal deal = new Deal();
-            throw new RecordNotFound(deal);
+            throw new RecordNotFoundException(deal);
         }
     }
 

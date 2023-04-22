@@ -1,8 +1,8 @@
 package nl.wessel.juice.Exception;
 
-public class RecordNotFound extends RuntimeException {
+public class RecordNotFoundException extends RuntimeException {
 
-    public RecordNotFound(Object object) {
+    public RecordNotFoundException(Object object) {
         super("Could not find that object of type: " + "' " + object.getClass().getSimpleName() + " '");
     }
 }

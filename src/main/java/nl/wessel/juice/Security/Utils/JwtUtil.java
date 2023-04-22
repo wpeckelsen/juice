@@ -3,7 +3,7 @@ package nl.wessel.juice.Security.Utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import nl.wessel.juice.Exception.ExpiredJWT;
+import nl.wessel.juice.Exception.ExpiredJWTException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,7 @@ public class JwtUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        long validTime = 864000000; // 10 days in milliseconds 864000000
+        long validTime = 864000000; // 10 days in milliseconds
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -62,7 +62,7 @@ public class JwtUtil {
 //     JWT token gets validated here.
 
         if(isTokenExpired(token)){
-            throw new ExpiredJWT();
+            throw new ExpiredJWTException();
         }
         else {
             final String username = extractUsername(token);

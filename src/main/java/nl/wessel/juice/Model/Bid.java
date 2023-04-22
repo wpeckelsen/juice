@@ -14,6 +14,7 @@ public class Bid {
     private String topic;
     private String anchor;
     private String vernacular;
+    private String principal;
 
     @ManyToOne
     @JoinColumn(name = "customer_username")
@@ -22,6 +23,14 @@ public class Bid {
     @OneToOne
     private Deal deal;
 
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
 
     public Long getBidID() {
         return bidID;
