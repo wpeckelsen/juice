@@ -104,7 +104,7 @@ public class DomainService {
     }
 
 
-    public CreatedDomainDto update(Long domainID, CreateDomainDto createDomainDto) {
+    public CreatedDomainDto updateDomain(Long domainID, CreateDomainDto createDomainDto) {
 //        this string gets the name of the principal. Meaning: it gets the username of the
 //        current user (the principal) that's logged in.
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();

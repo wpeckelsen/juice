@@ -58,7 +58,7 @@ public class PublisherController {
 
     @PutMapping("domain/{domainID}")
     public ResponseEntity<Object> updateDomain(@PathVariable Long domainID, @RequestBody CreateDomainDto createDomainDto) {
-        domainService.update(domainID, createDomainDto);
+        domainService.updateDomain(domainID, createDomainDto);
         return ResponseEntity.noContent().build();
     }
 
