@@ -76,7 +76,7 @@ public class BidService {
 
             for (Bid bid : currentBids) {
                 bid.setCustomer(customer);
-                bid.setPrincipal(currentPrincipalName );
+                bid.setPrincipal(currentPrincipalName);
                 bidRepository.save(newBid);
             }
             customer.setBids(currentBids);
@@ -116,7 +116,7 @@ public class BidService {
         }
     }
 
-    public String bidPrincipal(Long bidID){
+    public String bidPrincipal(Long bidID) {
         Bid bid = bidRepository.findById(bidID).get();
         CreatedBidDto createdBidDto = bidDtoMaker(bid);
         return createdBidDto.getPrincipal();
@@ -124,28 +124,26 @@ public class BidService {
 
 
     public CreatedBidDto update(Long bidID, CreateBidDto createBidDto) {
-        Bid bid = bidRepository.findById(bidID).get();
-
 //        this string gets the name of the principal. Meaning: it gets the username of the
 //        current user (the principal) that's logged in.
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
         String bidPrincipal = bidPrincipal(bidID);
 
         if (bidRepository.findById(bidID).isPresent()) {
+            Bid bid = bidRepository.findById(bidID).get();
 
-            if(currentPrincipalName.equalsIgnoreCase(bidPrincipal)) {
+            if (currentPrincipalName.equalsIgnoreCase(bidPrincipal)) {
                 Bid bid1 = bidMaker(createBidDto);
                 bid1.setBidID(bid.getBidID());
                 bidRepository.save(bid1);
                 return bidDtoMaker(bid1);
-            }
-            else {
-//                if another user tries to update, it will return a 403: the user does not have the correct rights
+            } else {
+//                if another user tries to update, it will return an exception because the principal name doesn't match
                 throw new ForbiddenException();
             }
 
         } else {
-            throw new RecordNotFoundException(bid);
+            throw new RecordNotFoundException(new Bid());
         }
     }
 

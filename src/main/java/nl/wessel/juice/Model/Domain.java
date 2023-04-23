@@ -13,6 +13,7 @@ public class Domain {
     private String TLD;
     private String category;
     private int price;
+    private String principal;
 
     @ManyToOne
     @JoinColumn(name = "publisher_username")
@@ -20,6 +21,14 @@ public class Domain {
 
     @OneToOne
     private Deal deal;
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
 
     public Publisher getPublisher() {
         return publisher;

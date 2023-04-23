@@ -114,26 +114,6 @@ public class PublisherService {
         return publisher.getUsername();
     }
 
-    public Long newDomain(CreateDomainDto createDomainDto, String username) {
-        var foundPublisher = publisherRepository.findById(username);
-
-        if (foundPublisher.isPresent()) {
-            Publisher publisher = foundPublisher.get();
-            Domain newDomain = DomainService.domainMaker(createDomainDto);
-            List<Domain> currentDomains = publisher.getDomains();
-            currentDomains.add(newDomain);
-
-            for (Domain domain : currentDomains) {
-                domain.setPublisher(publisher);
-                domainRepository.save(domain);
-            }
-            publisher.setDomains(currentDomains);
-            publisherRepository.save(publisher);
-            return DomainService.domainDtoMaker(newDomain).getDomainID();
-        } else {
-            throw new BadRequestException("This Publisher does not show up in the Database. Are you sure you made it?");
-        }
-    }
 
     public void delete(String publisherName) {
         publisherRepository.deleteById(publisherName);

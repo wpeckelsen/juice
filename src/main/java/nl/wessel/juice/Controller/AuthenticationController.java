@@ -84,14 +84,14 @@ public class AuthenticationController {
         String password = authenticationRequest.getPassword();
         String type = authenticationRequest.getType();
 
-        if (type.matches("Customer")) {
+        if (type.equalsIgnoreCase("Customer")) {
             final UserDetails userDetails = customCustomerDetailsService.loadUserByUsername(username);
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             final String jwt = jwtUtil.generateToken(userDetails);
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
         }
 
-        if (type.matches("Admin")) {
+        if (type.equalsIgnoreCase("Admin")) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             final UserDetails userDetails = customCustomerDetailsService.loadUserByUsername(username);
             final String jwt = jwtUtil.generateToken(userDetails);
@@ -100,7 +100,7 @@ public class AuthenticationController {
 
 //        seems as if authenticationRequest is automatically a Customer, so even if application goes into this block below, it does so as Customer.
 //        when the application tries to find the user in the Publisher Repository, it cannot find it since Customers are not stored in a Publisher Repository
-        if (type.matches("Publisher")) {
+        if (type.equalsIgnoreCase("Publisher")) {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             final UserDetails userDetails = customPublisherDetailsService.loadUserByUsername(username);
             final String jwt = jwtUtil.generateToken(userDetails);

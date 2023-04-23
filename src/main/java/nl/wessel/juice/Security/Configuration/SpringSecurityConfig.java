@@ -59,25 +59,26 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/juice/common/**").hasRole("CUSTOMER")
                 .antMatchers(HttpMethod.DELETE, "/juice/common/**").hasRole("CUSTOMER")
 
+                .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/juice/customer/**").hasRole("CUSTOMER")
+
                 .antMatchers(HttpMethod.POST, "/juice/common/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.GET, "/juice/common/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.PUT, "/juice/common/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.DELETE, "/juice/common/**").hasRole("PUBLISHER")
 
-                .antMatchers(HttpMethod.POST, "/juice/customer/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.GET, "/juice/customer/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.PUT, "/juice/customer/**").hasRole("CUSTOMER")
-                .antMatchers(HttpMethod.DELETE, "/juice/customer/**").hasRole("CUSTOMER")
 
                 .antMatchers(HttpMethod.POST, "/juice/publisher/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.GET, "/juice/publisher/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.PUT, "/juice/publisher/**").hasRole("PUBLISHER")
                 .antMatchers(HttpMethod.DELETE, "/juice/publisher/**").hasRole("PUBLISHER")
 
-                .antMatchers(HttpMethod.POST, "/juice/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/juice/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/juice/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/juice/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/juice/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/juice/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/juice/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/juice/admin/**").hasRole("ADMIN")
 
                 .antMatchers("/authentication").permitAll()
                 .antMatchers("/authenticated").authenticated()

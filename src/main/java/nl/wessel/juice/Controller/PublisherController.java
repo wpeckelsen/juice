@@ -1,6 +1,7 @@
 package nl.wessel.juice.Controller;
 
 import nl.wessel.juice.DTO.Domain.CreateDomainDto;
+import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
 import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,23 +41,11 @@ public class PublisherController {
     }
 
 
-//    @PostMapping("publisher")
-//    public ResponseEntity<Object> newPublisher(@RequestBody PublisherDto publisherDto) {
-//        String newPublisherName = publisherService.newPublisher(publisherDto);
-//        publisherService.addAuthority(newPublisherName, "ROLE_PUBLISHER");
-//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{newPublisherName}")
-//                .buildAndExpand(newPublisherName).toUri();
-//
-//        return ResponseEntity.created(location).build();
-//    }
-
-
-    @PostMapping("{publisherName}")
-    public ResponseEntity<Object> newDomain(@RequestBody CreateDomainDto createDomainDto,
-                                            @PathVariable String publisherName) {
-        Long domainID = publisherService.newDomain(createDomainDto, publisherName);
+    @PostMapping("domain")
+    public ResponseEntity<Object> newDomain(@RequestBody CreateDomainDto createDomainDto) {
+        CreatedDomainDto domain = domainService.newDomain(createDomainDto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{domainID}")
-                .buildAndExpand(domainID).toUri();
+                .buildAndExpand(domain).toUri();
         return ResponseEntity.created(location).build();
     }
 

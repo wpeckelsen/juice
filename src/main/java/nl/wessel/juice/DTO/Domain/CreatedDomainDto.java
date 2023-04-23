@@ -8,6 +8,15 @@ public class CreatedDomainDto {
     private String TLD;
     private String category;
     private int price;
+    private String principal;
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
 
     public Long getDomainID() {
         return domainID;
