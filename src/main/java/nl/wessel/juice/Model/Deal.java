@@ -19,10 +19,8 @@ public class Deal {
     @JoinColumn(name = "customer_username")
     private Customer customer;
 
-
     @OneToOne(mappedBy = "deal")
     private Bid bid;
-
 
     @ManyToOne
     @JoinColumn(name = "publisher_username")
@@ -30,6 +28,27 @@ public class Deal {
 
     @OneToOne(mappedBy = "deal")
     private Domain domain;
+
+    private boolean done;
+
+    private String principal;
+
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
 
     public Publisher getPublisher() {
         return publisher;

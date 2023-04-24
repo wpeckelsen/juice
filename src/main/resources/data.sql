@@ -66,8 +66,8 @@ INSERT INTO bid (bidID, deadline, topic, anchor, vernacular, words)
 VALUES (41, '10-11-2022', 'Cavia gehaktballen', 'lees hier meer over cavia vleesvervangers', 'Dutch', 550);
 
 
-INSERT INTO deal (dealID, price, deadline, payment, terms)
-VALUES (40, 577, '12-03-2034', 'USD', 'deliver A$AP');
+INSERT INTO deal (dealID, price, deadline, payment, terms, done)
+VALUES (40, 577, '12-03-2034', 'USD', 'deliver A$AP', false);
 
-INSERT INTO deal (dealID, price, deadline, payment, terms)
-VALUES (41, 577, '12-03-2034', 'USD', 'deliver A$AP');
+INSERT INTO deal (dealID, price, deadline, payment, terms, done)
+VALUES (41, 577, '12-03-2034', 'USD', 'deliver A$AP', false);

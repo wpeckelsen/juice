@@ -27,7 +27,11 @@ public class CommonController {
     PublisherService publisherService;
 
     @Autowired
-    public CommonController(CustomerService customerService, DealService dealService, BidService bidService, DomainService domainService, PublisherService publisherService) {
+    public CommonController(CustomerService customerService,
+                            DealService dealService,
+                            BidService bidService,
+                            DomainService domainService,
+                            PublisherService publisherService) {
         this.customerService = customerService;
         this.dealService = dealService;
         this.bidService = bidService;
@@ -35,15 +39,16 @@ public class CommonController {
         this.publisherService = publisherService;
     }
 
-    @PostMapping("{bidID}/{domainID}/{publisherName}/{customerName}")
+    @PostMapping("{bidID}/{domainID}/{publisherName}")
     public ResponseEntity<Object> newDeal(@RequestBody CreateDealDto createDealDto,
                                           @PathVariable(value = "bidID") Long bidID,
                                           @PathVariable(value = "domainID") Long domainID,
-                                          @PathVariable(value = "publisherName") String publisherName,
-                                          @PathVariable(value = "customerName") String customerName) {
-        Long dealID = dealService.newDeal(createDealDto, bidID, domainID, publisherName, customerName);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{dealID}")
-                .buildAndExpand(dealID).toUri();
+                                          @PathVariable(value = "publisherName") String publisherName) {
+        CreatedDealDto createdDealDto = dealService.newDeal(createDealDto, bidID, domainID, publisherName);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{dealID}")
+                .buildAndExpand(createdDealDto).toUri();
         return ResponseEntity.created(location).build();
     }
 
@@ -73,7 +78,7 @@ public class CommonController {
     }
 
     @GetMapping("domains/{TLD}")
-    public ResponseEntity<List<Domain>> domainTLDs(@PathVariable(value = "TLD") String TLD){
+    public ResponseEntity<List<Domain>> domainTLDs(@PathVariable(value = "TLD") String TLD) {
         var domains = domainService.getSimilarTLDs(TLD);
         return ResponseEntity.ok().body(domains);
     }
@@ -104,9 +109,15 @@ public class CommonController {
     }
 
     @GetMapping("deal/{dealID}")
-    public ResponseEntity<CreatedDealDto> deal(@PathVariable(value = "dealID") Long dealID) {
+    public ResponseEntity<CreatedDealDto> deal(@PathVariable Long dealID) {
         CreatedDealDto createdDealDTO = dealService.getByID(dealID);
         return ResponseEntity.ok().body(createdDealDTO);
+    }
+
+    @PatchMapping(value = "deal/done/{dealID}", consumes = {})
+    public ResponseEntity<Object> doneDeal(@PathVariable Long dealID) {
+        dealService.doneDeal(dealID);
+        return ResponseEntity.noContent().build();
     }
 
 }

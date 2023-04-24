@@ -137,7 +137,16 @@ public class DomainService {
             Publisher publisher = foundPublisher.get();
             Domain newDomain = domainMaker(createDomainDto);
             List<Domain> currentDomains = publisher.getDomains();
-            currentDomains.add(newDomain);
+            int size = currentDomains.size();
+
+            if(size >= 501){
+                throw new BadRequestException("You have reached your limit of 500 Domains.");
+            } else{
+                currentDomains.add(newDomain);
+            }
+
+
+
 
             for (Domain domain : currentDomains) {
                 domain.setPublisher(publisher);

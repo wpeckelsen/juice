@@ -71,8 +71,14 @@ public class BidService {
             Customer customer = foundCustomer.get();
             Bid newBid = bidMaker(createBidDto);
             List<Bid> currentBids = customer.getBids();
-            currentBids.add(newBid);
 
+            int size = currentBids.size();
+
+            if (size >= 501) {
+                throw new BadRequestException("You have reached your limit of 500 Domains.");
+            } else {
+                currentBids.add(newBid);
+            }
 
             for (Bid bid : currentBids) {
                 bid.setCustomer(customer);

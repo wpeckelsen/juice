@@ -12,6 +12,24 @@ public class CreatedDealDto {
     private Long domainID;
     private String customerID;
     private String publisherID;
+    private boolean done;
+    private String principal;
+
+    public String getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
 
     public Long getDealID() {
         return dealID;

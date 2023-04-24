@@ -1,16 +1,14 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Bid.CreatedBidDto;
-import nl.wessel.juice.DTO.Customer.CustomerDto;
 import nl.wessel.juice.DTO.Deal.CreateDealDto;
 import nl.wessel.juice.DTO.Deal.CreatedDealDto;
-import nl.wessel.juice.DTO.Domain.CreatedDomainDto;
-import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.Exception.BadRequestException;
+import nl.wessel.juice.Exception.ForbiddenException;
 import nl.wessel.juice.Exception.RecordNotFoundException;
 import nl.wessel.juice.Model.*;
 import nl.wessel.juice.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -51,11 +49,12 @@ public class DealService {
         createdDealDTO.setPrice(deal.getPrice());
         createdDealDTO.setPayment(deal.getPayment());
         createdDealDTO.setTerms(deal.getTerms());
-
-        var domain = deal.getDomain();
-        var bid = deal.getBid();
-        var customer = deal.getCustomer();
-        var publisher = deal.getPublisher();
+        createdDealDTO.setDone(deal.isDone());
+        createdDealDTO.setPrincipal(deal.getPrincipal());
+        Domain domain = deal.getDomain();
+        Bid bid = deal.getBid();
+        Customer customer = deal.getCustomer();
+        Publisher publisher = deal.getPublisher();
 
         if (domain != null
                 && bid != null
@@ -63,53 +62,73 @@ public class DealService {
                 && publisher != null
         ) {
 //            Sets the IDs of all relations of a deal to a created deal
-            CreatedDomainDto createdDomainDTO = DomainService.domainDtoMaker(domain);
-            createdDealDTO.setDomainID(createdDomainDTO.getDomainID());
-
-            CreatedBidDto createdBidDTO = BidService.bidDtoMaker(bid);
-            createdDealDTO.setBidID(createdBidDTO.getBidID());
-
-            CustomerDto customerDto = CustomerService.fromCustomer(customer);
-            createdDealDTO.setCustomerID(customerDto.getUsername());
-
-            PublisherDto publisherDto = PublisherService.fromPublisher(publisher);
-            createdDealDTO.setPublisherID(publisherDto.getUsername());
+            Long domainID = DomainService.domainDtoMaker(domain).getDomainID();
+            Long createdBidDTO = BidService.bidDtoMaker(bid).getBidID();
+            String customerDto = CustomerService.fromCustomer(customer).getUsername();
+            String publisherDto = PublisherService.fromPublisher(publisher).getUsername();
+            createdDealDTO.setDomainID(domainID);
+            createdDealDTO.setBidID(createdBidDTO);
+            createdDealDTO.setCustomerID(customerDto);
+            createdDealDTO.setPublisherID(publisherDto);
         }
         return createdDealDTO;
     }
 
 
-    public Long newDeal(CreateDealDto createDealDto, Long bidID, Long domainID, String publisherName, String customerName) {
-        if (
-                domainRepository.findById(domainID).isPresent()
-                        && customerRepository.findById(customerName).isPresent()
-                        && bidRepository.findById(bidID).isPresent()
-                        && publisherRepository.findById(publisherName).isPresent()
+    public CreatedDealDto newDeal(CreateDealDto createDealDto,
+                        Long bidID,
+                        Long domainID,
+                        String publisherName) {
+        String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (domainRepository.findById(domainID).isPresent()
+                && customerRepository.findById(currentPrincipalName).isPresent()
+                && bidRepository.findById(bidID).isPresent()
+                && publisherRepository.findById(publisherName).isPresent()
         ) {
 //            all relations are set for a deal here
-            Customer customer = customerRepository.findById(customerName).get();
+            Customer customer = customerRepository.findById(currentPrincipalName).get();
             Bid bid = bidRepository.findById(bidID).get();
             Publisher publisher = publisherRepository.findById(publisherName).get();
             Domain domain = domainRepository.findById(domainID).get();
-
             Deal deal = dealMaker(createDealDto);
 
             deal.setCustomer(customer);
             deal.setBid(bid);
-
             deal.setPublisher(publisher);
             deal.setDomain(domain);
-
+            deal.setPrincipal(currentPrincipalName);
             domain.setDeal(deal);
             bid.setDeal(deal);
             dealRepository.save(deal);
-            return dealDtoMaker(deal).getDealID();
+            return dealDtoMaker(deal);
         } else {
             throw new BadRequestException(" You must include an ID for an existing Customer, Bid, Publisher and Domain in your URL. " +
                     "Are you sure you are using the correct IDs? And are you sure all these entities exist already?");
         }
     }
 
+    public String dealPrincipal(Long dealID) {
+        Deal deal = dealRepository.findById(dealID).get();
+        CreatedDealDto createdDealDto = dealDtoMaker(deal);
+        return createdDealDto.getPrincipal();
+    }
+
+
+    public void doneDeal(Long dealID) {
+        String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
+        String dealPrincipal = dealPrincipal(dealID);
+
+        if (currentPrincipalName.equalsIgnoreCase(dealPrincipal)) {
+            Deal deal = dealRepository.findById(dealID).get();
+//            Deal updatedDeal = dealMaker(createDealDto);
+//            deal.setDealID(deal.getDealID());
+            deal.setDone(true);
+            dealRepository.save(deal);
+            dealDtoMaker(deal);
+        } else{
+            throw new ForbiddenException();
+        }
+    }
 
     public List<Long> getList() {
         List<Deal> dealList = dealRepository.findAll();
