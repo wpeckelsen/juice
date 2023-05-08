@@ -13,7 +13,7 @@
 					"name": "Admin",
 					"item": [
 						{
-							"name": "Update Deal",
+							"name": "Deal",
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -43,7 +43,7 @@
 							"response": []
 						},
 						{
-							"name": "Delete Deal",
+							"name": "Deal",
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -64,7 +64,7 @@
 							"response": []
 						},
 						{
-							"name": "List of Photos",
+							"name": "Photos",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -84,6 +84,16 @@
 							"response": []
 						}
 					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{JWT}}",
+								"type": "string"
+							}
+						]
+					},
 					"event": [
 						{
 							"listen": "prerequest",
@@ -109,7 +119,7 @@
 					"name": "Common",
 					"item": [
 						{
-							"name": "New Deal",
+							"name": "Deal",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -123,7 +133,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/common/40/40/PUBLISHER/CUSTOMER",
+									"raw": "localhost:8080/juice/common/40/40/PUBLISHER",
 									"host": [
 										"localhost"
 									],
@@ -133,15 +143,36 @@
 										"common",
 										"40",
 										"40",
-										"PUBLISHER",
-										"CUSTOMER"
+										"PUBLISHER"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "List of Customers",
+							"name": "Done Deal 1",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/juice/common/deal/done/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"juice",
+										"common",
+										"deal",
+										"done",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Customers",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -161,7 +192,7 @@
 							"response": []
 						},
 						{
-							"name": "List of Bids",
+							"name": "Bids",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -181,7 +212,7 @@
 							"response": []
 						},
 						{
-							"name": "List of Publishers",
+							"name": "Publishers",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -201,7 +232,7 @@
 							"response": []
 						},
 						{
-							"name": "List of Domains",
+							"name": "Domains",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -221,7 +252,49 @@
 							"response": []
 						},
 						{
-							"name": "List of Deals",
+							"name": "Domains TLD NL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/juice/common/domains/NL",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"juice",
+										"common",
+										"domains",
+										"NL"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Domains TLD DE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/juice/common/domains/DE",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"juice",
+										"common",
+										"domains",
+										"DE"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deals",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -241,7 +314,7 @@
 							"response": []
 						},
 						{
-							"name": "Customer by ID",
+							"name": "Customer",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -262,7 +335,7 @@
 							"response": []
 						},
 						{
-							"name": "Bid By ID",
+							"name": "Bid",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -283,7 +356,7 @@
 							"response": []
 						},
 						{
-							"name": "Publisher by ID",
+							"name": "Publisher",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -304,7 +377,7 @@
 							"response": []
 						},
 						{
-							"name": "Domain By ID",
+							"name": "Domain",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -325,7 +398,7 @@
 							"response": []
 						},
 						{
-							"name": "Deal by ID",
+							"name": "Deal",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -351,36 +424,7 @@
 					"name": "Customer",
 					"item": [
 						{
-							"name": "New Customer",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"username\" : \"wim\",\n    \"password\" : \"123\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/juice/customer/customer",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"juice",
-										"customer",
-										"customer"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "New Bid",
+							"name": "Bid",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -394,7 +438,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/customer/bid/CUSTOMER",
+									"raw": "localhost:8080/juice/customer/bid",
 									"host": [
 										"localhost"
 									],
@@ -402,21 +446,20 @@
 									"path": [
 										"juice",
 										"customer",
-										"bid",
-										"CUSTOMER"
+										"bid"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Update Bid",
+							"name": "Bid 1",
 							"request": {
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"deadline\": \"13-12-2022\",\n    \"topic\": \"kroketten en de verkeerde saus\",\n    \"anchor\": \"klik hier voor minder kroketten\",\n    \"vernacular\": \"Dutch\"\n}",
+									"raw": "{\n    \"deadline\": \"NU!!\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -424,7 +467,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/customer/bid/40",
+									"raw": "localhost:8080/juice/customer/bid/1",
 									"host": [
 										"localhost"
 									],
@@ -433,14 +476,14 @@
 										"juice",
 										"customer",
 										"bid",
-										"40"
+										"1"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Update Customer",
+							"name": "Customer",
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -470,7 +513,7 @@
 							"response": []
 						},
 						{
-							"name": "Delete Customer",
+							"name": "Customer",
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -491,7 +534,7 @@
 							"response": []
 						},
 						{
-							"name": "Delete Bid",
+							"name": "Bid",
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -512,7 +555,7 @@
 							"response": []
 						},
 						{
-							"name": "Upload Deng",
+							"name": "Photo",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -567,36 +610,7 @@
 					"name": "Publisher",
 					"item": [
 						{
-							"name": "New Publisher",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"username\": \"jan\",\n    \"password\": \"123\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "localhost:8080/juice/publisher/publisher",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"juice",
-										"publisher",
-										"publisher"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "New Domain",
+							"name": "Domain",
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -610,7 +624,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/publisher/PUBLISHER",
+									"raw": "localhost:8080/juice/publisher/domain",
 									"host": [
 										"localhost"
 									],
@@ -618,14 +632,14 @@
 									"path": [
 										"juice",
 										"publisher",
-										"PUBLISHER"
+										"domain"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Update Publisher",
+							"name": "Publisher",
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -655,7 +669,7 @@
 							"response": []
 						},
 						{
-							"name": "Update Domain",
+							"name": "Domain 1",
 							"request": {
 								"method": "PUT",
 								"header": [],
@@ -669,7 +683,7 @@
 									}
 								},
 								"url": {
-									"raw": "localhost:8080/juice/publisher/domain/40",
+									"raw": "localhost:8080/juice/publisher/domain/1",
 									"host": [
 										"localhost"
 									],
@@ -678,14 +692,14 @@
 										"juice",
 										"publisher",
 										"domain",
-										"40"
+										"1"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Delete Publisher",
+							"name": "Publisher",
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -706,7 +720,7 @@
 							"response": []
 						},
 						{
-							"name": "Delete Domain",
+							"name": "Domain",
 							"request": {
 								"method": "DELETE",
 								"header": [],
@@ -727,7 +741,7 @@
 							"response": []
 						},
 						{
-							"name": "Download Deng",
+							"name": "Photo",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -752,7 +766,7 @@
 					"name": "Misc",
 					"item": [
 						{
-							"name": "localhost:8080/authenticated",
+							"name": "Authenticated",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -804,64 +818,123 @@
 			]
 		},
 		{
-			"name": "authentication Admin",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"ADMIN\",\n    \"password\": \"ADMIN\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Login",
+			"item": [
+				{
+					"name": "authentication Admin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"ADMIN\",\n    \"password\": \"ADMIN\",\n    \"type\" : \"Admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/authenticate",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:8080/authentication",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"authentication"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "authentication Customer",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"CUSTOMER\",\n    \"password\": \"CUSTOMER\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "authentication Customer",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"CUSTOMER\",\n    \"password\": \"CUSTOMER\",\n    \"type\" : \"Customer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/authenticate",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"authenticate"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "localhost:8080/authentication",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"authentication"
-					]
+				{
+					"name": "New Customer chris",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\" : \"chris\",\n    \"password\" : \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/customer",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Publisher peter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"peter\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/publisher",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"publisher"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }

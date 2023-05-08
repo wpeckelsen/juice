@@ -76,9 +76,9 @@ public class DealService {
 
 
     public CreatedDealDto newDeal(CreateDealDto createDealDto,
-                        Long bidID,
-                        Long domainID,
-                        String publisherName) {
+                                  Long bidID,
+                                  Long domainID,
+                                  String publisherName) {
         String currentPrincipalName = SecurityContextHolder.getContext().getAuthentication().getName();
         if (domainRepository.findById(domainID).isPresent()
                 && customerRepository.findById(currentPrincipalName).isPresent()
@@ -120,12 +120,10 @@ public class DealService {
 
         if (currentPrincipalName.equalsIgnoreCase(dealPrincipal)) {
             Deal deal = dealRepository.findById(dealID).get();
-//            Deal updatedDeal = dealMaker(createDealDto);
-//            deal.setDealID(deal.getDealID());
             deal.setDone(true);
             dealRepository.save(deal);
             dealDtoMaker(deal);
-        } else{
+        } else {
             throw new ForbiddenException();
         }
     }

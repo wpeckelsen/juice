@@ -43,7 +43,7 @@ public class PhotoService {
         return photo;
     }
 
-//    returns a single photo
+    //    returns a single photo
     @Transactional
     public ResponseEntity<byte[]> DownloadSinglePhoto(String fileName, HttpServletRequest request) {
         Photo photo = photoRepository.findPhotoByFileName(fileName);
@@ -56,7 +56,7 @@ public class PhotoService {
                 .body(photo.getDocFile());
     }
 
-//    returns the full database of pictures
+    //    returns the full database of pictures
     public Resource downloadDatabasePhoto(String filename) {
         String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/downloadFromDB/").path(filename).toUriString();
         Resource resource;

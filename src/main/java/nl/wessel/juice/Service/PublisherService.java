@@ -1,8 +1,7 @@
 package nl.wessel.juice.Service;
 
-import nl.wessel.juice.DTO.Domain.CreateDomainDto;
-import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.DTO.Publisher.PublicPublisherDto;
+import nl.wessel.juice.DTO.Publisher.PublisherDto;
 import nl.wessel.juice.Exception.BadRequestException;
 import nl.wessel.juice.Exception.RecordNotFoundException;
 import nl.wessel.juice.Exception.UsernameNotFoundException;
@@ -10,7 +9,6 @@ import nl.wessel.juice.Model.Authority;
 import nl.wessel.juice.Model.Deal;
 import nl.wessel.juice.Model.Domain;
 import nl.wessel.juice.Model.Publisher;
-import nl.wessel.juice.Repository.DomainRepository;
 import nl.wessel.juice.Repository.PublisherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +22,10 @@ import java.util.Optional;
 @Transactional
 public class PublisherService {
 
-    private final DomainRepository domainRepository;
     private final PublisherRepository publisherRepository;
 
     @Autowired
-    public PublisherService(DomainRepository domainRepository, PublisherRepository publisherRepository) {
-        this.domainRepository = domainRepository;
+    public PublisherService(PublisherRepository publisherRepository) {
         this.publisherRepository = publisherRepository;
     }
 
@@ -120,7 +116,8 @@ public class PublisherService {
     }
 
     public void update(String publisherName, PublisherDto publisherDto) {
-        if (!publisherRepository.existsById(publisherName)) throw new BadRequestException();
+        if (!publisherRepository.existsById(publisherName))
+            throw new BadRequestException("This Publisher does not show up in the Database. Are you sure you made it?");
         var optionalPublisher = publisherRepository.findById(publisherName);
 
         if (optionalPublisher.isPresent()) {

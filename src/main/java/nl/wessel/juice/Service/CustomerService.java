@@ -9,7 +9,6 @@ import nl.wessel.juice.Model.Authority;
 import nl.wessel.juice.Model.Bid;
 import nl.wessel.juice.Model.Customer;
 import nl.wessel.juice.Model.Deal;
-import nl.wessel.juice.Repository.BidRepository;
 import nl.wessel.juice.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,13 +26,11 @@ import java.util.Optional;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final BidRepository bidRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, BidRepository bidRepository, PasswordEncoder passwordEncoder) {
+    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
-        this.bidRepository = bidRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -68,7 +65,7 @@ public class CustomerService {
         String encodedPassword = passwordEncoder.encode(customerDto.getPassword());
         customer.setPassword(encodedPassword);
         customer.setUsername(customerDto.getUsername());
-//        customer.setPassword(customerDto.getPassword());
+
 
         return customer;
 
@@ -128,16 +125,18 @@ public class CustomerService {
         return customer.getUsername();
     }
 
-    public String principal(){
+    public String principal() {
         String principal = SecurityContextHolder.getContext().getAuthentication().getName();
         return principal;
     }
+
     public void delete(String customerName) {
         customerRepository.deleteById(customerName);
     }
 
     public void update(String customerName, CustomerDto customerDto) {
-        if (!customerRepository.existsById(customerName)) throw new BadRequestException();
+        if (!customerRepository.existsById(customerName))
+            throw new BadRequestException("This Customer does not show up in the Database. Are you sure you made it?");
 
         Optional<Customer> optionalCustomer = customerRepository.findById(customerName);
         if (optionalCustomer.isPresent()) {

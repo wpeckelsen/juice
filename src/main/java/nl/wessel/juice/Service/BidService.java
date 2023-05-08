@@ -22,14 +22,12 @@ import java.util.Optional;
 public class BidService {
 
     private final BidRepository bidRepository;
-    private final CustomerService customerService;
     private final CustomerRepository customerRepository;
 
 
     @Autowired
-    public BidService(BidRepository bidRepository, CustomerService customerService, CustomerRepository customerRepository) {
+    public BidService(BidRepository bidRepository, CustomerRepository customerRepository) {
         this.bidRepository = bidRepository;
-        this.customerService = customerService;
         this.customerRepository = customerRepository;
     }
 
@@ -45,11 +43,8 @@ public class BidService {
 
     public static CreatedBidDto bidDtoMaker(Bid bid) {
         CreatedBidDto createdBidDTO = new CreatedBidDto();
-
         // gets the current time stamp
         ZonedDateTime rightNow = ZonedDateTime.now();
-
-
         createdBidDTO.setCreationTime(rightNow);
         createdBidDTO.setBidID(bid.getBidID());
         createdBidDTO.setWords(bid.getWords());
@@ -73,9 +68,8 @@ public class BidService {
             List<Bid> currentBids = customer.getBids();
 
             int size = currentBids.size();
-
             if (size >= 501) {
-                throw new BadRequestException("You have reached your limit of 500 Domains.");
+                throw new BadRequestException("You have reached your limit of 500 Bids.");
             } else {
                 currentBids.add(newBid);
             }
@@ -128,7 +122,6 @@ public class BidService {
         return createdBidDto.getPrincipal();
     }
 
-
     public CreatedBidDto update(Long bidID, CreateBidDto createBidDto) {
 //        this string gets the name of the principal. Meaning: it gets the username of the
 //        current user (the principal) that's logged in.
@@ -139,10 +132,10 @@ public class BidService {
             Bid bid = bidRepository.findById(bidID).get();
 
             if (currentPrincipalName.equalsIgnoreCase(bidPrincipal)) {
-                Bid bid1 = bidMaker(createBidDto);
-                bid1.setBidID(bid.getBidID());
-                bidRepository.save(bid1);
-                return bidDtoMaker(bid1);
+                Bid updatedBid = bidMaker(createBidDto);
+                updatedBid.setBidID(bid.getBidID());
+                bidRepository.save(updatedBid);
+                return bidDtoMaker(updatedBid);
             } else {
 //                if another user tries to update, it will return an exception because the principal name doesn't match
                 throw new ForbiddenException();

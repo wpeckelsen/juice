@@ -35,7 +35,6 @@ public class JwtUtil {
     }
 
 
-
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
@@ -61,10 +60,9 @@ public class JwtUtil {
 
 //     JWT token gets validated here.
 
-        if(isTokenExpired(token)){
+        if (isTokenExpired(token)) {
             throw new ExpiredJWTException();
-        }
-        else {
+        } else {
             final String username = extractUsername(token);
             return username.equals(userDetails.getUsername()) /*&& !isTokenExpired(token)*/;
         }

@@ -19,8 +19,6 @@ import java.util.Set;
 public class CustomPublisherDetailsService implements UserDetailsService {
 
 
-
-
     private final PublisherService publisherService;
 
 
@@ -30,7 +28,7 @@ public class CustomPublisherDetailsService implements UserDetailsService {
     }
 
 
-//    this method returns a new User as Publisher if in controller layer a Publisher is picked over customer
+    //    this method returns a new User as Publisher if in controller layer a Publisher is picked over customer
     @Override
     public UserDetails loadUserByUsername(String username) {
         PublisherDto publisherDto = publisherService.getPublisher(username);

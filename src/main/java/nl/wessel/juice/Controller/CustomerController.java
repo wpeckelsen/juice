@@ -89,7 +89,7 @@ public class CustomerController {
     }
 
     @GetMapping("principal/{bidID}")
-    public ResponseEntity<String> bidPrincipal (@PathVariable("bidID")Long bidID){
+    public ResponseEntity<String> bidPrincipal(@PathVariable("bidID") Long bidID) {
         return ResponseEntity.ok().body(bidService.bidPrincipal(bidID));
     }
 }

@@ -20,7 +20,6 @@ import java.util.Set;
 public class CustomCustomerDetailsService implements UserDetailsService {
 
 
-
     private final CustomerService customerService;
 
 

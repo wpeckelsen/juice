@@ -21,13 +21,12 @@ public class DomainService {
 
     private final DomainRepository domainRepository;
     private final PublisherRepository publisherRepository;
-    private final PublisherService publisherService;
 
     @Autowired
-    public DomainService(DomainRepository domainRepository, PublisherRepository publisherRepository, PublisherService publisherService) {
+    public DomainService(DomainRepository domainRepository, PublisherRepository publisherRepository) {
         this.domainRepository = domainRepository;
         this.publisherRepository = publisherRepository;
-        this.publisherService = publisherService;
+
     }
 
     public static Domain domainMaker(CreateDomainDto createDomainDto) {
@@ -77,8 +76,8 @@ public class DomainService {
             List<Domain> TLDs = new ArrayList<>();
 
             for (Domain domain : domains) {
-                CreatedDomainDto createdDomainDTO = domainDtoMaker(domain);
-                if (createdDomainDTO.getTLD().matches(TLD)) {
+
+                if (domain.getTLD().equalsIgnoreCase(TLD)) {
                     TLDs.add(domain);
                 }
             }
@@ -139,15 +138,11 @@ public class DomainService {
             List<Domain> currentDomains = publisher.getDomains();
             int size = currentDomains.size();
 
-            if(size >= 501){
+            if (size >= 501) {
                 throw new BadRequestException("You have reached your limit of 500 Domains.");
-            } else{
+            } else {
                 currentDomains.add(newDomain);
             }
-
-
-
-
             for (Domain domain : currentDomains) {
                 domain.setPublisher(publisher);
                 domain.setPrincipal(currentPrincipalName);
