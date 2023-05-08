@@ -83,7 +83,7 @@ Hiervoor importeer je juice.postman_collection.json in Postman. Dit bestand is t
 
 In Postman voeg je het bestand in. Linksboven in beeld vind je hiervoor de knop.
 
-###Foto's
+### Foto's
 De applicatie kan zowel foto’s uploaden als downloaden. In het meegeleverde json bestand dat je in Postman hebt geplakt zit een foto. Die foto kun je vinden in Postman onder het endpoint “localhost:8080/juice/customer/photo “ met de naam deng-cool-hat.jpeg.
 
 Je kunt zelf ook een foto toevoegen. In deze endpoint, ga naar Body>key>file>select files.
@@ -106,7 +106,7 @@ Rechtsklik, op de folder JWT. “Run Folder” om alle requests direct na elkaar
 
 
 
-##Gebruikers
+## Gebruikers
 Dit zijn alle gebruikers met hun rollen die aanwezig zijn in de applicatie. Meer Customers en Publishers kunnen naar wens aangemaakt worden.
 
 Admin
